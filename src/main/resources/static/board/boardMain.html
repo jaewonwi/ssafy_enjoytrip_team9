@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>boardMain.html</h1>
+	<table>
+		<thead>
+			<tr><td>글 번호</td><td>제목</td><td>등록일자</td><td>하트</td><td>조회수</td><td>작성자</td></tr>
+		</thead>
+		<tbody id="tbodyBoard">
+		</tbody>
+	</table>
+	
+	<button id="btnBoardWrite">글 작성</button>
+	
+	
+</body>
+<script>
+	var CURRENT_ID;
+	
+	window.onload = function() {
+		boardList();
+		
+		document.querySelector("#btnBoardWrite").onclick = boardWrite;	
+	}
+	
+	async function boardList(){
+		try {
+			let response = await fetch('/boards');
+			let data = await response.json();
+			
+			// js로 listHTML을 이용해서 HTML 파일에 list를 보여준다.
+			
+			console.log(data);
+			makeListHtml(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+		
+	function makeListHtml(list) {
+	    let listHtml = ``;
+	    list.forEach( el => {
+	        // data-: 특정한 column이 아닌 모든 column을 클릭해도, 즉 <tr> tag를 클릭하면 studentId 값을 조작할 수 있다.
+	        console.log(list)
+	        listHtml += `<tr style="cursor: pointer;" data-boardId=${el.boardId}><td>${el.boardTitle}</td><td>${el.boardRegDate}</td><td>${el.boardLike}</td><td>${el.boardViewCnt}</td><td>${el.userNm}</td></tr>\n`
+	        // listHtml += `<button id=btnDelete${el.boardId}>삭제</button>`
+	    });
+	    
+	    console.log(listHtml);
+	    document.querySelector("#tbodyBoard").innerHTML = listHtml;
+	    
+	    makeListHtmlEventHandler();
+	}
+	
+	function makeListHtmlEventHandler() {
+	    // tbodyStudent의 자식들 중 모든 <tr> tag를 선택
+	    document.querySelectorAll("#tbodyBoard tr").forEach( el => {
+	        el.onclick = function() {
+	            // this: 현재 클릭한 <tr> tag
+	            let boardId = this.getAttribute("data-boardId");
+	            boardDetail(boardId);
+	        }
+	    })
+	}
+	
+	// board 상세 보기
+	async function boardDetail(boardId) {
+		let url = `/boards/${boardId}`
+		try {
+			let response = await fetch(url);
+			let data = await response.json();
+			console.log(data);
+			
+			makeDetailHtml(data);
+		} catch (error){
+			console.error(error);
+		}
+	}
+	
+	async function makeDetailHtml(detail) {		
+		CURRENT_ID = detail.boardId;
+		// let response = await fetch('/boards/' + CURRENT_ID);
+		// let data = await response.json();
+		
+		window.location.href = '/goBoardDetail/' + CURRENT_ID;
+	}
+	
+	function boardWrite(){
+		window.location.href="/goBoardWrite";
+	}
+	
+	// board 상세 보기
+//	document.querySelector("#btnBoardDetail").onclick = async function() {
+//		try {
+//			let response = await fetch('/boards/1');
+//			let data = await response.json();		
+//			console.log(data);
+//		} catch (error) {
+//			console.error(error);
+//		}
+//	}
+	
+	
+
+</script>
+</html>

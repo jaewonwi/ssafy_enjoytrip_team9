@@ -15,7 +15,7 @@
         <a href="/main" class="logo ml-5">Tour <span class="text-primary">.</span></a>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right mr-5">
           <li class="active">
-            <router-link to="/main" class="text-primary">Home</router-link>
+            <router-link to="/" class="text-primary">Home</router-link>
           </li>
           <li><router-link to="/board">게시판</router-link></li>
           <li><a href="#">Search</a></li>

@@ -10,7 +10,7 @@ import BoardList from '@/components/board/BoardList.vue'
 import BoardDetail from '@/components/board/BoardDetail.vue'
 import BoardEditor from '@/components/board/BoardEditor.vue'
 
-
+import MapPage from '@/views/map/MapPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +40,10 @@ const router = createRouter({
         {path: 'editor', component: BoardEditor},
       ]
     },
+    {
+      path: '/map',
+      component: MapPage,
+    }
   ]
 })
 

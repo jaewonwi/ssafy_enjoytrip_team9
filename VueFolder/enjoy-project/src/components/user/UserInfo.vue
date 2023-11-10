@@ -1,25 +1,13 @@
 <script setup></script>
 
 <template>
-  <div class="hero hero-inner">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 mx-auto text-center">
-          <div class="intro-wrap">
-            <h1 class="mb-0">마이페이지</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="untree_co-section">
     <div class="container justify-content-center">
       <div class="row">
         <div class="col">
           <div class="p-5">
             <div class="text-center">
-              <h1 class="h2 text-gray-900 mb-4">마이페이지</h1>
+              <h1 class="h2 text-gray-900 mb-4 section-title text-center">내 정보</h1>
             </div>
             <div class="form-group">
               <input

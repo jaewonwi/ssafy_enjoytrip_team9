@@ -14,7 +14,7 @@
 
 	<div class="m-5">
         <board-list v-bind:board-list="boardList" v-on:call-parent-detail="detail"></board-list>
-
+		<board-detail v-bind:board-detail-data="board"></board-detail>
 		<div id="paginationWrapper"></div>
 
 		<div class="row m-4 justify-content-end">
@@ -166,6 +166,8 @@
     import axios from 'axios';
     import { ref } from 'vue';
     import BoardList from '@/components/board/BoardList.vue';
+	import BoardDetail from '@/components/board/BoardDetail.vue';
+	// import BoardEditor from '@/components/board/BoardEditor.vue'
 
     const board = ref({});
     const boardList = ref([]);
@@ -186,7 +188,6 @@
         try {
             let { data } = await axios.get('http://localhost:8080/boards/'+boardId);
             board.value = data;
-            // console.log(data);
         } catch (error) {
             console.error(error);
         }

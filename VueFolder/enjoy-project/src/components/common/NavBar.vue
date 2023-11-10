@@ -12,10 +12,10 @@
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
-        <a href="/main" class="logo m-0">Tour <span class="text-primary">.</span></a>
+        <a href="/" class="logo m-0">Tour <span class="text-primary">.</span></a>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
           <li class="active">
-            <router-link to="/main" class="text-primary">Home</router-link>
+            <router-link to="/" class="text-primary">Home</router-link>
           </li>
           <li><router-link to="/board">게시판</router-link></li>
           <li><a href="#">Search</a></li>

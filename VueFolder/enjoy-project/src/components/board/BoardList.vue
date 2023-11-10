@@ -1,5 +1,11 @@
 <template>
-    <div class="col-md-12 col-12 px-5">
+    <div class="input-group col-12">
+        <!-- mb-3 mt-3  추가 -->
+        <input id="inputSearchWord" type="text" class="form-control" style="border-radius: 10px;" placeholder="Search">
+        <button id="btnSearchWord" class="btn btn-primary" type="button">Search</button>
+    </div>
+
+    <div class="col-12 mt-3">
         <div class="table-responsive">
             <table class="text-nowrap mb-0 table">
                 <thead class="table-light">

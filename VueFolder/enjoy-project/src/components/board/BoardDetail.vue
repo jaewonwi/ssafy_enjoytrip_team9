@@ -5,6 +5,7 @@
 
 <script setup>
     const props = defineProps(['board']);
+    
 </script>
 
 <style>

@@ -12,8 +12,9 @@
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
-        <a href="/main" class="logo ml-5">Tour <span class="text-primary">.</span></a>
-        <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right mr-5">
+        <a href="/" class="logo m-0">Tour <span class="text-primary">.</span></a>
+        <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
+
           <li class="active">
             <router-link to="/" class="text-primary">Home</router-link>
           </li>

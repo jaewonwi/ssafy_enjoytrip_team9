@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '@/views/MainPage.vue'
 import BoardPage from '@/views/BoardPage.vue'
 
-import RegistPage from '@/components/user/RegistPage.vue'
-import LoginPage from '@/components/user/LoginPage.vue'
-import MyPage from '@/components/user/MyPage.vue'
+import RegistPage from '@/views/user/RegistPage.vue'
+import LoginPage from '@/views/user/LoginPage.vue'
+import MyPage from '@/views/user/MyPage.vue'
 
 
 const router = createRouter({

@@ -6,6 +6,7 @@ import RegistPage from '@/views/user/RegistPage.vue'
 import LoginPage from '@/views/user/LoginPage.vue'
 import MyPage from '@/views/user/MyPage.vue'
 
+import MapPage from '@/views/map/MapPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,10 @@ const router = createRouter({
       // ]
 
     },
+    {
+      path: '/map',
+      component: MapPage,
+    }
   ]
 })
 

@@ -1,0 +1,74 @@
+<template>
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mx-auto text-center">
+          <div class="intro-wrap">
+            <h1 class="mb-0">지도</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section">
+    <div class="container justify-content-center" style="height: 750px">
+      <div id="map" class="h-100"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+var nMap
+
+export default {
+  name: 'NaverMap',
+  components: {},
+  data() {
+    return {}
+  },
+
+  mounted() {
+    this.initMap()
+  },
+  methods: {
+    initMap() {
+      var mapOptions = {
+        scaleControl: true, //우하단 축척
+        logoControl: true, //네이버 로고 뭔지 모르겠음.
+        mapDataControl: false, //좌하단 네이버 로고
+        mapTypeControl: true, //지도 유형 컨트롤
+        zoom: 15,
+        zoomControl: true, //줌 컨트롤
+        // , zoomControlOptions: {     //줌 컨트롤 스타일
+        //     style: naver.maps.ZoomControlStyle.SMALL,
+        //     position: naver.maps.Position.TOP_RIGHT
+        //     }                        //주석 풀면 우측에 +-로만 생김
+        maxZoom: 19, //최대 줌 레벨
+        minZoom: 6, //최소 줌 레벨
+        disableDoubleClickZoom: true, //더블 클릭해 지도를 확대하는 기능의 사용하지 않음( true )
+        mapTypeId: naver.maps.MapTypeId.NORMAL //NORMAL SATELLITE HYBRID  지도의 초기 지도 유형 id입니다.
+        //keyboardShortcuts: true //키보드 방향 키를 이용한 지도 이동(패닝) 허용 여부입니다.
+      }
+
+      nMap = new naver.maps.Map('map', mapOptions) //map event
+      //var listener = naver.maps.Event.addListener(nMap.getElement(), 'click', this.mapClick) //삭제할 경우
+      //naver.maps.Event.removeDOMListener(listener); 삭제할 경우
+
+      naver.maps.Event.addListener(nMap, 'click', this.mapClick)
+      naver.maps.Event.addListener(nMap, 'dblclick', this.mapDblClick)
+      naver.maps.Event.addListener(nMap, 'rightclick', this.mapRightClick)
+
+      nMap.setCenter(new naver.maps.LatLng(37.5216223, 126.9788689))
+    }
+
+    // mapClick(e) {
+    //   alert('현좌표(left click)' + e.coord.x + '-' + e.coord.y)
+    // }
+    // mapDblClick(e) {
+    //   //클릭이 먼저 타서 안탐.
+    //   alert('map dblclick' + e.coord.x + '-' + e.coord.y)
+    // }
+  }
+}
+</script>

@@ -4,7 +4,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 mx-auto text-center">
 					<div class="intro-wrap">
-						<h1 class="mb-0">Board</h1>
+						<h1 class="mb-0">게시판</h1>
 					</div>
 				</div>
 			</div>
@@ -20,23 +20,7 @@
 			<button id="btnSearchWord" class="btn btn-primary" type="button">Search</button>
 		</div>
 
-		<div class="col-md-12 col-12 px-5">
-			<div class="table-responsive">
-				<table class="text-nowrap mb-0 table">
-					<thead class="table-light">
-						<tr>
-							<th>#</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일</th>
-							<th>좋아요</th>
-						</tr>
-					</thead>
-					<tbody id="boardTbody">
-					</tbody>
-				</table>
-			</div>
-		</div>
+        <board-list v-bind:board-list="boardList" v-on:call-parent-detail="detail"></board-list>
 
 		<div id="paginationWrapper"></div>
 
@@ -186,447 +170,479 @@
 
 
 <script setup>
-	var LIST_ROW_COUNT = 10;    //limit
-	var OFFSET = 0;   // limit 10 offet 10
-	var SEARCH_WORD = "";
+    import axios from 'axios';
+    import { ref } from 'vue';
+    import BoardList from '@/components/board/BoardList.vue';
+
+    const board = ref({});
+    const boardList = ref([]);
+
+    const list = async () => {
+        try {
+            let response = await axios.get('http://localhost:8080/boards');
+            console.log(response);
+            let { data } = response;
+            console.log(data);
+            boardList.value = data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const detail = async (boardId) => {
+        try {
+            let { data } = await axios.get('http://localhost:8080/boards/'+boardId);
+            board.value = data;
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    list();
+
+
+
+
+// 	var LIST_ROW_COUNT = 10;    //limit
+// 	var OFFSET = 0;   // limit 10 offet 10
+// 	var SEARCH_WORD = "";
 	
-	var PAGE_LINK_COUNT = 10;    // pagination link 갯수
-	var TOTAL_LIST_ITEM_COUNT = 0;
-	var CURRENT_PAGE_INDEX = 1;
+// 	var PAGE_LINK_COUNT = 10;    // pagination link 갯수
+// 	var TOTAL_LIST_ITEM_COUNT = 0;
+// 	var CURRENT_PAGE_INDEX = 1;
 	
-	window.onload = function(){
+// 	window.onload = function(){
 
-    boardList();
+//     boardList();
 
-    // 검색어 검색 
-    document.querySelector("#btnSearchWord").onclick = function(){
+//     // 검색어 검색 
+//     document.querySelector("#btnSearchWord").onclick = function(){
+//         SEARCH_WORD = document.querySelector("#inputSearchWord").value;
+//         // 처음 페이지로 초기화
+//         OFFSET = 0;
+//         CURRENT_PAGE_INDEX = 1;
 
-        SEARCH_WORD = document.querySelector("#inputSearchWord").value;
-        // 처음 페이지로 초기화
-        OFFSET = 0;
-        CURRENT_PAGE_INDEX = 1;
-
-        boardList();
-    }
+//         boardList();
+//     }
 
 
-    // 글 등록 모달
-    document.querySelector("#btnBoardInsertUI").onclick = function(){
+//     // 글 등록 모달
+//     document.querySelector("#btnBoardInsertUI").onclick = function(){
+//         document.querySelector("#titleInsert").value = "";
+//         document.querySelector("#contentInsert").value = "";
 
-        document.querySelector("#titleInsert").value = "";
-        document.querySelector("#contentInsert").value = "";
+//         let modal = new bootstrap.Modal(document.querySelector("#boardInsertModal"));
+//         modal.show();
+//     };
 
-        let modal = new bootstrap.Modal(document.querySelector("#boardInsertModal"));
-        modal.show();
-    };
 
-    // 글 등록
-    document.querySelector("#btnBoardInsert").onclick = function(){
+//     // 글 등록
+//     document.querySelector("#btnBoardInsert").onclick = function(){
 
-        if( validateInsert() ){
-            boardInsert();
-        }
-    }
+//         if( validateInsert() ){
+//             boardInsert();
+//         }
+//     }
 
-    // 글 수정 모달
-    document.querySelector("#btnBoardUpdateUI").onclick = function(){
+//     // 글 수정 모달
+//     document.querySelector("#btnBoardUpdateUI").onclick = function(){
 
-        var boardId = document.querySelector("#boardDetailModal").getAttribute("data-boardId");
-        document.querySelector("#boardUpdateModal").setAttribute("data-boardId", boardId);
+//         var boardId = document.querySelector("#boardDetailModal").getAttribute("data-boardId");
+//         document.querySelector("#boardUpdateModal").setAttribute("data-boardId", boardId);
 
-        document.querySelector("#titleUpdate").value = document.querySelector("#titleDetail").innerHTML;
-        document.querySelector("#contentUpdate").value = document.querySelector("#contentDetail").innerHTML;
+//         document.querySelector("#titleUpdate").value = document.querySelector("#titleDetail").innerHTML;
+//         document.querySelector("#contentUpdate").value = document.querySelector("#contentDetail").innerHTML;
 
-        let detailModal = new bootstrap.Modal( document.querySelector("#boardDetailModal") );
-        detailModal.hide();
-        let updatelModal = new bootstrap.Modal( document.querySelector("#boardUpdateModal") );
-        updatelModal.show();
-    };
+//         let detailModal = new bootstrap.Modal( document.querySelector("#boardDetailModal") );
+//         detailModal.hide();
+//         let updatelModal = new bootstrap.Modal( document.querySelector("#boardUpdateModal") );
+//         updatelModal.show();
+//     };
 
-    // 글 수정
-    document.querySelector("#btnBoardUpdate").onclick = function(){
+//     // 글 수정
+//     document.querySelector("#btnBoardUpdate").onclick = function(){
 
-        if( validateUpdate() ){
-            boardUpdate();
-        }
-    };
+//         if( validateUpdate() ){
+//             boardUpdate();
+//         }
+//     };
 
-    // 글 삭제
-    document.querySelector("#btnBoardDeleteUI").onclick = function(){
-         alertify.confirm('삭제 확인', '이 글을 삭제하시겠습니까?',
-             function() {
-                boardDelete();
-             },
-            function(){
-                 console.log('cancel');
-            }
-        );
-    };
+//     // 글 삭제
+//     document.querySelector("#btnBoardDeleteUI").onclick = function(){
+//          alertify.confirm('삭제 확인', '이 글을 삭제하시겠습니까?',
+//              function() {
+//                 boardDelete();
+//              },
+//             function(){
+//                  console.log('cancel');
+//             }
+//         );
+//     };
 
-    // logout
-};
+//     // logout
+// };
 
-async function boardList(){
-	console.log("boardList 들어오니?");
+// async function boardList(){
 	
-    let url = '/board/boardList';
-    let urlParams = '?limit=' + LIST_ROW_COUNT + '&offset=' + OFFSET + "&searchWord=" + SEARCH_WORD;
+//     let url = '/board/boardList';
+//     let urlParams = '?limit=' + LIST_ROW_COUNT + '&offset=' + OFFSET + "&searchWord=" + SEARCH_WORD;
 
-    try{
-        let response = await fetch(url + urlParams);
-        let data = await response.json();
-        makeListHtml(data);
+//     try{
+//         let response = await fetch(url + urlParams);
+//         let data = await response.json();
+//         makeListHtml(data);
 
-    }catch(error){
- 		console.log(error);
-   	    alertify.error('글 조회 과정에 문제가 생겼습니다.');
-    }
+//     }catch(error){
+//  		console.log(error);
+//    	    alertify.error('글 조회 과정에 문제가 생겼습니다.');
+//     }
 
-}
+// }
 
-function makeListHtml(list){
+// function makeListHtml(list){
 
-    console.log("makeListHtml: "+list);
+//     console.log("makeListHtml: "+list);
 
-    let listHTML = ``;
-    console.log(list.length);
+//     let listHTML = ``;
+//     console.log(list.length);
 
-    list.forEach( el => {
-        let boardId = el.boardId;
-        let userName = el.userName;
-        let title = el.title;
-        let content = el.content;
-        let regDt = el.regDt;    // javascript of parsed from LocalDateTime
-        console.log(regDt);
-        let regDtStr = makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.');
+//     list.forEach( el => {
+//         let boardId = el.boardId;
+//         let userName = el.userName;
+//         let title = el.title;
+//         let content = el.content;
+//         let regDt = el.regDt;    // javascript of parsed from LocalDateTime
+//         console.log(regDt);
+//         let regDtStr = makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.');
 
-        let likes = el.likes;
+//         let likes = el.likes;
 
-        listHTML +=
-            `<tr style="cursor:pointer" data-boardId=\${boardId}><td>\${boardId}</td><td>\${title}</td><td>\${userName}</td>
-                <td>\${regDtStr}</td><td>\${likes}</td></tr>`;
-//----------------------------------------------------------------------------------------------------------------------//
-        console.log("listHTML: "+listHTML);
-    } );
+//         listHTML +=
+//             `<tr style="cursor:pointer" data-boardId=\${boardId}><td>\${boardId}</td><td>\${title}</td><td>\${userName}</td>
+//                 <td>\${regDtStr}</td><td>\${likes}</td></tr>`;
+// //----------------------------------------------------------------------------------------------------------------------//
+//         console.log("listHTML: "+listHTML);
+//     } );
 
-    document.querySelector("#boardTbody").innerHTML = listHTML;
-
-
-    makeListHtmlEventHandler();
-
-    boardListTotalCnt();
-}
-
-function makeListHtmlEventHandler(){
-    document.querySelectorAll("#boardTbody tr").forEach( el => {
-        el.onclick = function(){
-            var boardId = this.getAttribute("data-boardId");
-            boardDetail(boardId);
-        }
-    });
-}
-
-async function boardListTotalCnt(){
-    let url = '/board/boardListTotalCnt';
-    let urlParams = '?searchWord=' + SEARCH_WORD;
-
-    try{
-        let response = await fetch(url + urlParams);
-        let data = await response.json();
-        TOTAL_LIST_ITEM_COUNT = data.totalCnt;
-        makePaginationHtml(LIST_ROW_COUNT, PAGE_LINK_COUNT, CURRENT_PAGE_INDEX, TOTAL_LIST_ITEM_COUNT, "paginationWrapper" );
-
-    }catch(error){
-        console.log(error);
-        alertify.error('글 전체 수 조회 과정에 문제가 생겼습니다.');
-    }
-}
-
-function movePage(pageIndex){
-    OFFSET = (pageIndex - 1) * LIST_ROW_COUNT;
-    CURRENT_PAGE_INDEX = pageIndex;
-    boardList();
-}
+//     document.querySelector("#boardTbody").innerHTML = listHTML;
 
 
-// insert
-function validateInsert(){
-    var isTitleInsertValid = false;
-    var isContentInsertValid = false;
+//     makeListHtmlEventHandler();
 
-    var titleInsertValue = document.querySelector("#titleInsert").value;
-    if( titleInsertValue.length > 0 ){
-        isTitleInsertValid = true;
-    }
+//     boardListTotalCnt();
+// }
 
-    var contentInsertValue = document.querySelector("#contentInsert").value;
-    if( contentInsertValue.length > 0 ){
-        isContentInsertValid = true;
-    }
+// function makeListHtmlEventHandler(){
+//     document.querySelectorAll("#boardTbody tr").forEach( el => {
+//         el.onclick = function(){
+//             var boardId = this.getAttribute("data-boardId");
+//             boardDetail(boardId);
+//         }
+//     });
+// }
 
-    if(    isTitleInsertValid && isContentInsertValid ){
-        return true;
-    }else{
-        return false;
-    }
-}
+// async function boardListTotalCnt(){
+//     let url = '/board/boardListTotalCnt';
+//     let urlParams = '?searchWord=' + SEARCH_WORD;
 
-async function boardInsert(){
+//     try{
+//         let response = await fetch(url + urlParams);
+//         let data = await response.json();
+//         TOTAL_LIST_ITEM_COUNT = data.totalCnt;
+//         makePaginationHtml(LIST_ROW_COUNT, PAGE_LINK_COUNT, CURRENT_PAGE_INDEX, TOTAL_LIST_ITEM_COUNT, "paginationWrapper" );
 
-    let title = document.querySelector("#titleInsert").value;
-    let content = document.querySelector("#contentInsert").value;
+//     }catch(error){
+//         console.log(error);
+//         alertify.error('글 전체 수 조회 과정에 문제가 생겼습니다.');
+//     }
+// }
 
-    let urlParams = new URLSearchParams({
-        title: title,
-        content: content,
-    });
-
-    let fetchOptions = {
-        method: "POST",
-        body: urlParams,
-    }
-
-    let url = '/board/boardInsert';
-
-    try{
-        let response = await fetch(url, fetchOptions );
-        let data = await response.json();
-        if( data.result == "success" ){ // 백엔드 로그인 필터에서 session timeout 이 발생하면 내려주는 json 값
-            alertify.success('글이 등록되었습니다.');
-            boardList();
-        }else{
-            alertify.error('글 등록 과젱에 문제가 있습니다.')
-        }
-    }catch( error ){
-        console.error( error );
-        alertify.error('글 등록 과정에 문제가 있습니다.');
-    }
-}
+// function movePage(pageIndex){
+//     OFFSET = (pageIndex - 1) * LIST_ROW_COUNT;
+//     CURRENT_PAGE_INDEX = pageIndex;
+//     boardList();
+// }
 
 
-//detail
-async function boardDetail(boardId){
+// // insert
+// function validateInsert(){
+//     var isTitleInsertValid = false;
+//     var isContentInsertValid = false;
 
-    var url = '/board/boardDetail';
-    var urlParams = '?boardId=' + boardId;
+//     var titleInsertValue = document.querySelector("#titleInsert").value;
+//     if( titleInsertValue.length > 0 ){
+//         isTitleInsertValid = true;
+//     }
 
-    try{
-        let response = await fetch(url + urlParams);
-        let data = await response.json();
-        console.log(data);
-        makeDetailHtml(data);
-    }catch( error ){
-        console.error( error );
-        alertify.error("글 조회 과정에 문제가 생겼습니다.");
-    }
-}
+//     var contentInsertValue = document.querySelector("#contentInsert").value;
+//     if( contentInsertValue.length > 0 ){
+//         isContentInsertValid = true;
+//     }
 
-function makeDetailHtml(detail){
-    console.log("makeDetailHtml: "+detail);
-    var boardId = detail.boardId;
-    var userSeq = detail.userSeq;
-    var userName = detail.userName;
-    var title = detail.title;
-    var content = detail.content;
-    //var regDt = detail.regDt;
+//     if(    isTitleInsertValid && isContentInsertValid ){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 
-    //var regDtStr = makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.') + ' ' + makeTimeStr(regDt.time.hour, regDt.time.minute, regDt.time.second, ':');
+// async function boardInsert(){
 
-    var likes = detail.likes;
-    var sameUser = detail.sameUser;
-    //var fileList = detail.fileList;
+//     let title = document.querySelector("#titleInsert").value;
+//     let content = document.querySelector("#contentInsert").value;
+
+//     let urlParams = new URLSearchParams({
+//         title: title,
+//         content: content,
+//     });
+
+//     let fetchOptions = {
+//         method: "POST",
+//         body: urlParams,
+//     }
+
+//     let url = '/board/boardInsert';
+
+//     try{
+//         let response = await fetch(url, fetchOptions );
+//         let data = await response.json();
+//         if( data.result == "success" ){ // 백엔드 로그인 필터에서 session timeout 이 발생하면 내려주는 json 값
+//             alertify.success('글이 등록되었습니다.');
+//             boardList();
+//         }else{
+//             alertify.error('글 등록 과젱에 문제가 있습니다.')
+//         }
+//     }catch( error ){
+//         console.error( error );
+//         alertify.error('글 등록 과정에 문제가 있습니다.');
+//     }
+// }
+
+
+// //detail
+// async function boardDetail(boardId){
+
+//     var url = '/board/boardDetail';
+//     var urlParams = '?boardId=' + boardId;
+
+//     try{
+//         let response = await fetch(url + urlParams);
+//         let data = await response.json();
+//         console.log(data);
+//         makeDetailHtml(data);
+//     }catch( error ){
+//         console.error( error );
+//         alertify.error("글 조회 과정에 문제가 생겼습니다.");
+//     }
+// }
+
+// function makeDetailHtml(detail){
+//     console.log("makeDetailHtml: "+detail);
+//     var boardId = detail.boardId;
+//     var userSeq = detail.userSeq;
+//     var userName = detail.userName;
+//     var title = detail.title;
+//     var content = detail.content;
+//     //var regDt = detail.regDt;
+
+//     //var regDtStr = makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.') + ' ' + makeTimeStr(regDt.time.hour, regDt.time.minute, regDt.time.second, ':');
+
+//     var likes = detail.likes;
+//     var sameUser = detail.sameUser;
+//     //var fileList = detail.fileList;
     
-    document.querySelector("#boardDetailModal").setAttribute("data-boardId", boardId);
-    document.querySelector("#boardIdDetail").innerHTML = "#" + boardId;
-    document.querySelector("#titleDetail").innerHTML = title;
-    document.querySelector("#contentDetail").innerHTML = content;
-    document.querySelector("#userNameDetail").innerHTML = userName;
-    //document.querySelector("#regDtDetail").innerHTML = regDtStr;
-    document.querySelector("#likesDetail").innerHTML = likes;
+//     document.querySelector("#boardDetailModal").setAttribute("data-boardId", boardId);
+//     document.querySelector("#boardIdDetail").innerHTML = "#" + boardId;
+//     document.querySelector("#titleDetail").innerHTML = title;
+//     document.querySelector("#contentDetail").innerHTML = content;
+//     document.querySelector("#userNameDetail").innerHTML = userName;
+//     //document.querySelector("#regDtDetail").innerHTML = regDtStr;
+//     document.querySelector("#likesDetail").innerHTML = likes;
 
-    if( sameUser ){
-        document.querySelector("#btnBoardUpdateUI").style.display = "inline-block";
-        document.querySelector("#btnBoardDeleteUI").style.display = "inline-block";
-    }else{
-        document.querySelector("#btnBoardUpdateUI").style.display = "none";
-        document.querySelector("#btnBoardDeleteUI").style.display = "none";
-    }
+//     if( sameUser ){
+//         document.querySelector("#btnBoardUpdateUI").style.display = "inline-block";
+//         document.querySelector("#btnBoardDeleteUI").style.display = "inline-block";
+//     }else{
+//         document.querySelector("#btnBoardUpdateUI").style.display = "none";
+//         document.querySelector("#btnBoardDeleteUI").style.display = "none";
+//     }
 
-    let modal = new bootstrap.Modal(document.querySelector("#boardDetailModal"));
-    modal.show();
-}
+//     let modal = new bootstrap.Modal(document.querySelector("#boardDetailModal"));
+//     modal.show();
+// }
 
-// update
-function validateUpdate(){
-    var isTitleUpdateValid = false;
-    var isContentUpdateValid = false;
+// // update
+// function validateUpdate(){
+//     var isTitleUpdateValid = false;
+//     var isContentUpdateValid = false;
 
-    var titleUpdate = document.querySelector("#titleUpdate").value;
-    var titleUpdateLength = titleUpdate.length;
+//     var titleUpdate = document.querySelector("#titleUpdate").value;
+//     var titleUpdateLength = titleUpdate.length;
 
-    if( titleUpdateLength > 0 ){
-        isTitleUpdateValid = true;
-    }
+//     if( titleUpdateLength > 0 ){
+//         isTitleUpdateValid = true;
+//     }
 
-    var contentUpdateValue = document.querySelector("#contentUpdate").value;
-    var contentUpdateLength = contentUpdateValue.length;
+//     var contentUpdateValue = document.querySelector("#contentUpdate").value;
+//     var contentUpdateLength = contentUpdateValue.length;
 
-    if( contentUpdateLength > 0 ){
-        isContentUpdateValid = true;
-    }
+//     if( contentUpdateLength > 0 ){
+//         isContentUpdateValid = true;
+//     }
 
-    if(    isTitleUpdateValid && isContentUpdateValid ){
-        return true;
-    }else{
-        return false;
-    }
-}
+//     if(    isTitleUpdateValid && isContentUpdateValid ){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 
-async function boardUpdate(){
+// async function boardUpdate(){
 
-    let boardId = document.querySelector("#boardUpdateModal").getAttribute("data-boardId");
-    let title = document.querySelector("#titleUpdate").value;
-    let content = document.querySelector("#contentUpdate").value;
+//     let boardId = document.querySelector("#boardUpdateModal").getAttribute("data-boardId");
+//     let title = document.querySelector("#titleUpdate").value;
+//     let content = document.querySelector("#contentUpdate").value;
 
-    let urlParams = new URLSearchParams({
-        boardId: boardId,
-        title: title,
-        content: content,
-    });
+//     let urlParams = new URLSearchParams({
+//         boardId: boardId,
+//         title: title,
+//         content: content,
+//     });
 
-    let fetchOptions = {
-        method: "POST",
-        body: urlParams,
-    }
+//     let fetchOptions = {
+//         method: "POST",
+//         body: urlParams,
+//     }
 
-    let url = '/board/boardUpdate';
+//     let url = '/board/boardUpdate';
 
-    try{
-        let response = await fetch(url, fetchOptions );
-        let data = await response.json();
-        if( data.result == "success" ){
-            alertify.success('글이 수정되었습니다.');
-            boardList();
-        }else{
-            alertify.error('글 수정 과젱에 문제가 있습니다.');
-        }
-    }catch( error ){
-        console.error( error );
-        alertify.error('글 수정 과젱에 문제가 있습니다.');
-    }
-}
+//     try{
+//         let response = await fetch(url, fetchOptions );
+//         let data = await response.json();
+//         if( data.result == "success" ){
+//             alertify.success('글이 수정되었습니다.');
+//             boardList();
+//         }else{
+//             alertify.error('글 수정 과젱에 문제가 있습니다.');
+//         }
+//     }catch( error ){
+//         console.error( error );
+//         alertify.error('글 수정 과젱에 문제가 있습니다.');
+//     }
+// }
 
-//delete
-async function boardDelete(){
+// //delete
+// async function boardDelete(){
 
-    var url = '/board/boardDelete';
-    var urlParams = '?boardId=' + document.querySelector("#boardDetailModal").getAttribute("data-boardId");
+//     var url = '/board/boardDelete';
+//     var urlParams = '?boardId=' + document.querySelector("#boardDetailModal").getAttribute("data-boardId");
 
-    try{
-        let response = await fetch(url + urlParams);
-        let data = await response.json();
+//     try{
+//         let response = await fetch(url + urlParams);
+//         let data = await response.json();
 
-        if(data.result == "success"){
-            alertify.success("글이 삭제되었습니다.");
-            boardList();
-        }else{
-            alertify.error("글 삭제 과정에 문제가 생겼습니다.");
-        }
-    }catch( error ){
-        console.error( error );
-        alertify.error("글 삭제 과정에 문제가 생겼습니다.");
-    }
-}
-
-
-//htmltargetId 어느 html에 사영해줄지
-async function makePaginationHtml(listRowCount, pageLinkCount, currentPageIndex,
-		totalListItemCount, htmlTargetId) {
-
-	var targetUI = document.querySelector("#" + htmlTargetId);
-
-	var pageCount = Math.ceil(totalListItemCount / listRowCount);
-
-	var startPageIndex = 0;
-	if ((currentPageIndex % pageLinkCount) == 0) { // 10, 20...맨마지막
-		// 현재 페이지 index가 20 일 때, 11로
-		// 20 - 10 => 10, 10 + 1 => 11
-		startPageIndex = currentPageIndex - pageLinkCount + 1;
-	} else {
-		// 현재 페이지 index가 23 일 때, 21로
-		// 23 / 10 => 2.3 => 2, 2*10 => 20, 20+1 => 21
-		startPageIndex = Math.floor(currentPageIndex / pageLinkCount)
-				* pageLinkCount + 1
-	}
-
-	var endPageIndex = 0;
-	if ((currentPageIndex % pageLinkCount) == 0) { // 10, 20...맨마지막
-		endPageIndex = currentPageIndex;
-	} else {
-		endPageIndex = Math.floor(currentPageIndex / pageLinkCount)
-				* pageLinkCount + pageLinkCount;
-	}
-
-	var prev;
-	if (currentPageIndex <= pageLinkCount) {
-		prev = false;
-	} else {
-		prev = true;
-	}
-
-	var next;
-	// 127 건 / 10 => 12.7 => 13 <-- pageCount
-	// 위 계산이 13 보다 크면 13으로
-	if (endPageIndex > pageCount) {
-		endPageIndex = pageCount
-		next = false;
-	} else {
-		next = true;
-	}
-
-	var paginationHtml = '<ul class="pagination justify-content-center">';
-	if (prev) {
-		paginationHtml += '<li class="page-item">'
-				+ '<a class="page-link" href="javascript:movePage('
-				+ (startPageIndex - 1) + ')" aria-label="Previous">'
-				+ '<span aria-hidden="true">&laquo;</span>' + '</a>' + '</li>';
-	}
-
-	for (var i = startPageIndex; i <= endPageIndex; i++) {
-
-		if (i == currentPageIndex) {
-			paginationHtml += '<li class="page-item active"><a class="page-link" href="javascript:movePage('
-					+ i + ')">' + i + '</a></li>';
-		} else {
-			paginationHtml += '<li class="page-item"><a class="page-link" href="javascript:movePage('
-					+ i + ')">' + i + '</a></li>';
-		}
-	}
-
-	if (next) {
-		paginationHtml += '<li class="page-item">'
-				+ '<a class="page-link" href="javascript:movePage('
-				+ (endPageIndex + 1) + ')" aria-label="Next">'
-				+ '<span aria-hidden="true">&raquo;</span>' + '</a>' + '</li>';
-	}
-
-	paginationHtml += '</ul>';
-
-	targetUI.innerHTML = paginationHtml;
-	}
+//         if(data.result == "success"){
+//             alertify.success("글이 삭제되었습니다.");
+//             boardList();
+//         }else{
+//             alertify.error("글 삭제 과정에 문제가 생겼습니다.");
+//         }
+//     }catch( error ){
+//         console.error( error );
+//         alertify.error("글 삭제 과정에 문제가 생겼습니다.");
+//     }
+// }
 
 
-	async function makeDateStr(year, month, day, type) {
-		// 2010.05.05
-		return year + type + ((month < 10) ? '0' + month : month) + type
-				+ ((day < 10) ? '0' + day : day);
-	}
+// //htmltargetId 어느 html에 사영해줄지
+// async function makePaginationHtml(listRowCount, pageLinkCount, currentPageIndex,
+// 		totalListItemCount, htmlTargetId) {
+
+// 	var targetUI = document.querySelector("#" + htmlTargetId);
+
+// 	var pageCount = Math.ceil(totalListItemCount / listRowCount);
+
+// 	var startPageIndex = 0;
+// 	if ((currentPageIndex % pageLinkCount) == 0) { // 10, 20...맨마지막
+// 		// 현재 페이지 index가 20 일 때, 11로
+// 		// 20 - 10 => 10, 10 + 1 => 11
+// 		startPageIndex = currentPageIndex - pageLinkCount + 1;
+// 	} else {
+// 		// 현재 페이지 index가 23 일 때, 21로
+// 		// 23 / 10 => 2.3 => 2, 2*10 => 20, 20+1 => 21
+// 		startPageIndex = Math.floor(currentPageIndex / pageLinkCount)
+// 				* pageLinkCount + 1
+// 	}
+
+// 	var endPageIndex = 0;
+// 	if ((currentPageIndex % pageLinkCount) == 0) { // 10, 20...맨마지막
+// 		endPageIndex = currentPageIndex;
+// 	} else {
+// 		endPageIndex = Math.floor(currentPageIndex / pageLinkCount)
+// 				* pageLinkCount + pageLinkCount;
+// 	}
+
+// 	var prev;
+// 	if (currentPageIndex <= pageLinkCount) {
+// 		prev = false;
+// 	} else {
+// 		prev = true;
+// 	}
+
+// 	var next;
+// 	// 127 건 / 10 => 12.7 => 13 <-- pageCount
+// 	// 위 계산이 13 보다 크면 13으로
+// 	if (endPageIndex > pageCount) {
+// 		endPageIndex = pageCount
+// 		next = false;
+// 	} else {
+// 		next = true;
+// 	}
+
+// 	var paginationHtml = '<ul class="pagination justify-content-center">';
+// 	if (prev) {
+// 		paginationHtml += '<li class="page-item">'
+// 				+ '<a class="page-link" href="javascript:movePage('
+// 				+ (startPageIndex - 1) + ')" aria-label="Previous">'
+// 				+ '<span aria-hidden="true">&laquo;</span>' + '</a>' + '</li>';
+// 	}
+
+// 	for (var i = startPageIndex; i <= endPageIndex; i++) {
+
+// 		if (i == currentPageIndex) {
+// 			paginationHtml += '<li class="page-item active"><a class="page-link" href="javascript:movePage('
+// 					+ i + ')">' + i + '</a></li>';
+// 		} else {
+// 			paginationHtml += '<li class="page-item"><a class="page-link" href="javascript:movePage('
+// 					+ i + ')">' + i + '</a></li>';
+// 		}
+// 	}
+
+// 	if (next) {
+// 		paginationHtml += '<li class="page-item">'
+// 				+ '<a class="page-link" href="javascript:movePage('
+// 				+ (endPageIndex + 1) + ')" aria-label="Next">'
+// 				+ '<span aria-hidden="true">&raquo;</span>' + '</a>' + '</li>';
+// 	}
+
+// 	paginationHtml += '</ul>';
+
+// 	targetUI.innerHTML = paginationHtml;
+// 	}
+
+
+// 	async function makeDateStr(year, month, day, type) {
+// 		// 2010.05.05
+// 		return year + type + ((month < 10) ? '0' + month : month) + type
+// 				+ ((day < 10) ? '0' + day : day);
+// 	}
 	
-	async function makeTimeStr(hour, minute, second, type) {
-		// 07:25:33
-		return ((hour < 10) ? '0' + hour : hour) + type
-				+ ((minute < 10) ? '0' + minute : minute) + type
-				+ ((second < 10) ? '0' + second : second);
-	}
+// 	async function makeTimeStr(hour, minute, second, type) {
+// 		// 07:25:33
+// 		return ((hour < 10) ? '0' + hour : hour) + type
+// 				+ ((minute < 10) ? '0' + minute : minute) + type
+// 				+ ((second < 10) ? '0' + second : second);
+// 	}
 </script>
 

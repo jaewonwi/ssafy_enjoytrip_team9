@@ -7,7 +7,6 @@ import MyPage from '@/views/user/MyPage.vue'
 
 import BoardPage from '@/components/board/BoardPage.vue'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

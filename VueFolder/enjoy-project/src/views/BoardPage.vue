@@ -13,8 +13,11 @@
 
 
 	<div class="m-5">
-        <board-list v-bind:board-list="boardList" v-on:call-parent-detail="detail"></board-list>
+        <!-- <board-list v-bind:board-list="boardList" v-on:call-parent-detail="detail"></board-list>
 		<board-detail v-bind:board-detail-data="board"></board-detail>
+		<board-editor></board-editor> -->
+		<p>여기!</p>
+		<router-view></router-view>
 		<div id="paginationWrapper"></div>
 
 		<div class="row m-4 justify-content-end">
@@ -165,35 +168,38 @@
 <script setup>
     import axios from 'axios';
     import { ref } from 'vue';
-    import BoardList from '@/components/board/BoardList.vue';
-	import BoardDetail from '@/components/board/BoardDetail.vue';
-	// import BoardEditor from '@/components/board/BoardEditor.vue'
+	import { RouterView } from 'vue-router'
 
-    const board = ref({});
-    const boardList = ref([]);
+    // const board = ref({});
+    // const boardList = ref([]);
 
-    const list = async () => {
-        try {
-            let response = await axios.get('http://localhost:8080/boards');
-            console.log(response);
-            let { data } = response;
-            console.log(data);
-            boardList.value = data;
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // const list = async () => {
+    //     try {
+    //         let response = await axios.get('http://localhost:8080/boards');
+    //         console.log(response);
+    //         let { data } = response;
+    //         console.log(data);
+    //         boardList.value = data;
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
-    const detail = async (boardId) => {
-        try {
-            let { data } = await axios.get('http://localhost:8080/boards/'+boardId);
-            board.value = data;
-        } catch (error) {
-            console.error(error);
-        }
-    }
+	const props = defineProps(['call-parent-detail']);
 
-    list();
+    // const detail = async (boardId) => {
+    //     try {
+    //         let { data } = await axios.get('http://localhost:8080/boards/'+boardId);
+    //         board.value = data;
+	// 		router.push({
+	// 			path: `/board/detail/${boardId}`
+	// 		})
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+    // list();
 
 
 

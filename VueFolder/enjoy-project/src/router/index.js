@@ -6,6 +6,11 @@ import RegistPage from '@/views/user/RegistPage.vue'
 import LoginPage from '@/views/user/LoginPage.vue'
 import MyPage from '@/views/user/MyPage.vue'
 
+import BoardList from '@/components/board/BoardList.vue'
+import BoardDetail from '@/components/board/BoardDetail.vue'
+import BoardEditor from '@/components/board/BoardEditor.vue'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,10 +34,11 @@ const router = createRouter({
     {
       path: '/board',
       component: BoardPage,
-      // children: [
-      //   {path: '/board/editor', BoardEdior}
-      // ]
-
+      children: [
+        {path: '', component: BoardList},
+        {path: 'detail', name: 'Detail', component: BoardDetail},
+        {path: 'editor', component: BoardEditor},
+      ]
     },
   ]
 })

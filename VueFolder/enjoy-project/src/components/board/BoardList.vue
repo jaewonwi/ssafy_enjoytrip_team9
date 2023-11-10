@@ -34,9 +34,41 @@
 </template>
 
 <script setup>
-    const props = defineProps(['boardList']);
+    // const props = defineProps(['boardList']);
+    import axios from 'axios';
+    import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
     const emit = defineEmits(['call-parent-detail'])
-    const detail = (boardId) => emit('call-parent-detail', boardId);
+    const detail = (boardId) => {
+        emit('call-parent-detail', boardId);
+        // router.push({
+        //     path: `/board/detail/${boardId}`,
+        //     params: boardId
+        // })
+        router.push({
+            name: 'Detail',
+            query: boardId
+        })
+    }
+
+    const boardList = ref([]);
+
+    const list = async () => {
+        try {
+            let response = await axios.get('http://localhost:8080/boards');
+            console.log(response);
+            let { data } = response;
+            console.log(data);
+            boardList.value = data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    list();
+
 </script>
 
 <style scoped>

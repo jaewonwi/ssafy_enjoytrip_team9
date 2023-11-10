@@ -39,9 +39,11 @@
                   value="1234"
                 />
               </div>
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <div class="text-center">
                 <button class="btn btn-primary" id="btnLogin" type="button">로그인</button>
-                <button class="btn btn-primary" id="btnRegist" type="button">회원가입</button>
+                <button class="btn btn-primary" id="btnRegist" type="button" @click="goRegist">
+                  회원가입
+                </button>
               </div>
             </form>
           </div>
@@ -50,3 +52,15 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goRegist = () => {
+  router.push({
+    path: `/regist`
+  })
+}
+</script>

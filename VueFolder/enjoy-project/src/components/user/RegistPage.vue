@@ -5,7 +5,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6 mx-auto text-center">
           <div class="intro-wrap">
-            <h1 class="mb-0">regist</h1>
+            <h1 class="mb-0">회원가입</h1>
           </div>
         </div>
       </div>
@@ -17,9 +17,6 @@
       <div class="row">
         <div class="col">
           <div class="p-5">
-            <div class="text-center">
-              <h1 class="h2 text-gray-900 mb-4">Create an Account!</h1>
-            </div>
             <form class="user">
               <div class="form-group">
                 <div class="mb-sm-0">
@@ -38,7 +35,7 @@
                   class="form-control form-control-user"
                   id="userEmail"
                   name="userEmail"
-                  placeholder="Email Address for Id"
+                  placeholder="Email Address for ID"
                 />
               </div>
               <div class="form-group row">
@@ -61,13 +58,9 @@
                   />
                 </div>
               </div>
-              <button
-                class="login-btn btn btn-primary btn-user btn-block"
-                id="btnRegist"
-                type="button"
-              >
-                회원가입
-              </button>
+              <div class="text-center">
+                <button class="btn btn-primary" id="btnRegist" type="button">회원가입</button>
+              </div>
             </form>
           </div>
         </div>

@@ -59,7 +59,9 @@
                 </div>
               </div>
               <div class="text-center">
-                <button class="btn btn-primary" id="btnRegist" type="button">회원가입</button>
+                <button class="btn btn-primary" id="btnRegist" type="button" @click="regist">
+                  회원가입
+                </button>
               </div>
             </form>
           </div>
@@ -69,4 +71,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+// 회원가입에 성공했다고 가정
+const regist = () => {
+  router.push({
+    path: `/login`
+  })
+}
+</script>

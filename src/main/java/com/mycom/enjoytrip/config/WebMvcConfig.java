@@ -44,14 +44,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		
 		
 		// 일반 회원
-		registry.addInterceptor(userInterceptor).addPathPatterns("/**") // 모든 경로에 적용한다.
-				.excludePathPatterns( // 적용하지 않는 경로( URI 및 Path )
-						// static
-						"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
-
-						// RestController: 페이지는 통제는 vue에서 관리
-						"/", "/users/login", "/codes/**"
-				);
+//		registry.addInterceptor(userInterceptor).addPathPatterns("/**") // 모든 경로에 적용한다.
+//				.excludePathPatterns( // 적용하지 않는 경로( URI 및 Path )
+//						// static
+//						"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
+//
+//						// RestController: 페이지는 통제는 vue에서 관리
+//						"/", "/users/login", "/codes/**"
+//				);
 
 		// 관리자
 

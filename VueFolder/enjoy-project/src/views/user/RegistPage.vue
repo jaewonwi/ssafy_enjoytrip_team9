@@ -23,9 +23,9 @@
                   <input
                     type="text"
                     class="form-control form-control-user"
-                    id="userNm"
                     name="userNm"
                     placeholder="Name"
+                    v-model="userNm"
                   />
                 </div>
               </div>
@@ -33,7 +33,7 @@
                 <input
                   type="email"
                   class="form-control form-control-user"
-                  id="userEmail"
+                  v-model="userEmail"
                   name="userEmail"
                   placeholder="Email Address for ID"
                 />
@@ -43,7 +43,7 @@
                   <input
                     type="password"
                     class="form-control form-control-user"
-                    id="userPwd"
+                    v-model="userPwd"
                     name="userPwd"
                     placeholder="Password"
                   />
@@ -52,7 +52,7 @@
                   <input
                     type="password"
                     class="form-control form-control-user"
-                    id="userRepeatPwd"
+                    v-model="userRepeatPwd"
                     name="userRepeatPwd"
                     placeholder="Repeat Password"
                   />
@@ -72,13 +72,38 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import http from '@/common/axios.js'
 const router = useRouter()
 
-// 회원가입에 성공했다고 가정
-const regist = () => {
-  router.push({
-    path: `/login`
-  })
+// 사용자가 입력한 정보
+const userNm = ref('')
+const userEmail = ref('')
+const userPwd = ref('')
+const userRepeatPwd = ref('')
+
+const regist = async () => {
+  let userObj = {
+    userNm: userNm.value,
+    userEmail: userEmail.value,
+    userPwd: userPwd.value,
+    userRepeatPwd: userRepeatPwd.value
+  }
+
+  try {
+    console.log(userObj)
+    let { data } = await http.post('/users', userObj)
+    console.log(data)
+    if (data == 1) {
+      // 로그인 페이지로 이동
+      router.push('/login')
+    } else {
+      // 아이디가 이미 있는 경우 - 다시 입력
+      alert('아이디가 이미 존재합니다.')
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>

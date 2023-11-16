@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserDto {
+public class LoginDto {
 
 	private int userId;
 	private String userEmail;
@@ -19,9 +19,5 @@ public class UserDto {
 	private String userNm;
 	private String userPhone;
 	private String userProfile;
-	
-	// 회원 구분( 일반 회원(001, 002), 관리자(001, 001) )
-	private String userClsf;
-	private String userClsfName;
 	
 }

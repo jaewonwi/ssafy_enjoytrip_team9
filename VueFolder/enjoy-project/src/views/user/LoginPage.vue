@@ -27,7 +27,7 @@
                   id="userId"
                   aria-describedby="emailHelp"
                   placeholder="Enter Email Address..."
-                  value="ssafy@email.com"
+                  value="kdh@n.com"
                 />
               </div>
               <div class="form-group">
@@ -59,8 +59,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const goRegist = () => {
-  router.push({
-    path: `/regist`
-  })
+  router.push('/regist')
 }
 </script>

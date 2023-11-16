@@ -3,14 +3,9 @@
 <mapper namespace="com.mycom.enjoytrip.dao.UserDao">
 
 	<insert id="regist" parameterType="com.mycom.enjoytrip.dto.UserDto">
-		insert into users (userEmail, userPwd, userNm) 
-		 values ( #{userEmail}, #{userPwd}, #{userNm})
+		insert into users (userEmail, userPwd, userNm, userClsf) 
+		 values ( #{userEmail}, #{userPwd}, #{userNm}, "002")
 	</insert>
-
-	<select id="login" parameterType="com.mycom.enjoytrip.dto.UserDto" resultType="com.mycom.enjoytrip.dto.UserDto">
-		select userId, userEmail, userPwd, userNm, userPhone, userProfile 
-		 from users where userEmail = #{userEmail}
-	</select>
 	
 	<select id="detail" parameterType="int" resultType="com.mycom.enjoytrip.dto.UserDto">
 		select userId, userEmail, userNm, userPhone, userProfile 

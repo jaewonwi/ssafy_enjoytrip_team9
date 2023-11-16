@@ -15,7 +15,7 @@ import com.mycom.enjoytrip.dto.BoardDto;
 import com.mycom.enjoytrip.service.BoardService;
 
 @RestController
-@CrossOrigin(origins="*", allowedHeaders="*")
+// @CrossOrigin(origins="*", allowedHeaders="*")
 public class BoardController {
 	
 	@Autowired

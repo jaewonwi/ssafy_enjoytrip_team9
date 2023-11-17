@@ -2,9 +2,10 @@
     <!-- search -->
     <div class="input-group col-12">
         <input id="inputSearchWord" type="text" class="form-control" style="border-radius: 10px;" placeholder="Search">
-        <button id="btnSearchWord" class="btn btn-primary" type="button">Search</button>
+        &nbsp;
+        <button id="btnSearchWord" class="btn btn-primary rounded-3" type="button">Search</button>
     </div>
-
+    
     <!-- board List -->
     <div class="col-12 mt-3">
         <div class="table-responsive rounded-4">
@@ -24,7 +25,7 @@
                         <td>{{board.boardId}}</td>
                         <td>{{board.boardTitle}}</td>
                         <td>{{board.userNm}}</td>
-                        <td>{{board.boardRegDate}}</td>
+                        <td>{{util.makeDateStr(board.boardRegDate.date, '.')}}</td>
                         <td>{{board.boardViewCnt}}</td>
                         <td>{{board.boardLike}}</td>
                     </tr>
@@ -36,7 +37,7 @@
             
             <div class="row m-4 justify-content-end">
                 <div class="mx-4">
-                    <button class="btn btn-sm btn-primary" id="btnBoardInsertUI" >글쓰기</button>
+                    <button class="btn btn-primary" id="btnBoardInsertUI" >글쓰기</button>
                 </div>
             </div>
         </div>
@@ -45,9 +46,12 @@
 
 <script setup>
     // const props = defineProps(['boardList']);
-    import axios from 'axios';
+    import axios from '@/common/axios.js'
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
+
+    // common
+    import util from '@/common/util.js'
 
     const router = useRouter();
     const emit = defineEmits(['call-parent-detail'])
@@ -65,7 +69,7 @@
 
     const list = async () => {
         try {
-            let response = await axios.get('http://localhost:8080/boards');
+            let response = await axios.get('/boards');
             // console.log(response);
             let { data } = response;
             console.log(data);

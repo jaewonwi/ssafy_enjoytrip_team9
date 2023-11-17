@@ -1,12 +1,13 @@
 <template>
+    <!-- search -->
     <div class="input-group col-12">
-        <!-- mb-3 mt-3  추가 -->
         <input id="inputSearchWord" type="text" class="form-control" style="border-radius: 10px;" placeholder="Search">
         <button id="btnSearchWord" class="btn btn-primary" type="button">Search</button>
     </div>
 
+    <!-- board List -->
     <div class="col-12 mt-3">
-        <div class="table-responsive">
+        <div class="table-responsive rounded-4">
             <table class="text-nowrap mb-0 table">
                 <thead class="table-light">
                     <tr>
@@ -29,6 +30,15 @@
                     </tr>
                 </tbody>
             </table>
+            
+		    <div id="paginationWrapper"></div>
+
+            
+            <div class="row m-4 justify-content-end">
+                <div class="mx-4">
+                    <button class="btn btn-sm btn-primary" id="btnBoardInsertUI" >글쓰기</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -43,13 +53,11 @@
     const emit = defineEmits(['call-parent-detail'])
     const detail = (boardId) => {
         emit('call-parent-detail', boardId);
-        // router.push({
-        //     path: `/board/detail/${boardId}`,
-        //     params: boardId
-        // })
+
+        console.log(boardId)
         router.push({
-            name: 'Detail',
-            query: boardId
+            name: 'BoardDetail',
+            params: { boardId: boardId}
         })
     }
 
@@ -58,7 +66,7 @@
     const list = async () => {
         try {
             let response = await axios.get('http://localhost:8080/boards');
-            console.log(response);
+            // console.log(response);
             let { data } = response;
             console.log(data);
             boardList.value = data;

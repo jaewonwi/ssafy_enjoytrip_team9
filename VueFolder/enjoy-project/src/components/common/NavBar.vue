@@ -16,9 +16,9 @@
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
 
           <li class="active">
-            <router-link to="/" class="text-primary">Home</router-link>
+            <router-link to="/" class="nav-link">Home</router-link>
           </li>
-          <li><router-link to="/board">게시판</router-link></li>
+          <li><router-link to="/board" class="nav-link">게시판</router-link></li>
           <li><a href="#">Search</a></li>
           <li><a href="map/map.html">Map</a></li>
 
@@ -46,3 +46,9 @@
     </div>
   </nav>
 </template>
+
+<style scoped>
+.logo {
+  text-decoration: none;
+}
+</style>

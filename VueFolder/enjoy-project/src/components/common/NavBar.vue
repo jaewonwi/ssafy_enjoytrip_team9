@@ -36,11 +36,18 @@
           <li class="nav-item"><a class="nav-link text-white" href="#">Map</a></li>
 
           <!-- User 기능  -->
+          <li class="nav-item pt-2" v-show="loginStore.isLogin">
+            <img
+              v-bind:src="loginStore.userProfileImageUrl"
+              alt=""
+              style="width: 24px; height: 24px; border-radius: 50%"
+            />
+          </li>
           <li class="nav-item" v-show="!loginStore.isLogin">
             <router-link to="/login" class="nav-link text-white">로그인</router-link>
           </li>
           <li class="nav-item" v-show="loginStore.isLogin">
-            <a class="nav-link text-white" href="#">마이페이지</a>
+            <router-link to="/mypage" class="nav-link text-white">마이페이지</router-link>
           </li>
           <li class="nav-item" v-show="loginStore.isLogin">
             <a class="nav-link text-white" href="#" @click="logout">로그아웃</a>
@@ -69,15 +76,17 @@ const logout = async () => {
       // session storage 삭제
       sessionStorage.removeItem('isLogin')
       sessionStorage.removeItem('userEmail')
-      sessionStorage.removeItem('userName')
+      sessionStorage.removeItem('userNm')
       sessionStorage.removeItem('userProfileImageUrl')
+      sessionStorage.removeItem('userClsf')
 
       // loginStore 변경: 로그아웃 이후에 페이지 이동을 막는다.
       setLogin({
         isLogin: false,
         userNm: '',
         userEmail: '',
-        userProfileImageUrl: notLoginUserProfileImageUrl
+        userProfileImageUrl: notLoginUserProfileImageUrl,
+        userClsf: ''
       })
 
       // 메인 페이지로 이동

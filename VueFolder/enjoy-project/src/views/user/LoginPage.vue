@@ -31,10 +31,11 @@
               </div>
               <div class="form-group">
                 <input
+                  id="inputUserPwd"
                   type="password"
                   class="form-control form-control-user"
                   placeholder="비밀번호를 입력해주세요"
-                  v-model="loginStore.userPwd"
+                  v-model="userPwd"
                 />
               </div>
               <div class="text-center">
@@ -51,17 +52,22 @@
 
 <script setup>
 import http from '@/common/axios.js'
+import { ref } from 'vue'
 import { useLoginStore } from '@/stores/loginStore'
 import { useRouter } from 'vue-router'
 
 const { loginStore, setLogin } = useLoginStore()
 const router = useRouter()
 
+// 로그아웃 -> 로그인 페이지: 비밀번호가 남아있다.
+// 이를 방지하기 위해서 userPwd를 store에서 관리하지 않는다.
+const userPwd = ref('1234')
+
 const login = async () => {
   let loginObj = {
     // v-model은 input tag의 value와 연결하기 때문에 value 속성에 기본값이 있으면 안 된다.
     userEmail: loginStore.userEmail,
-    userPwd: loginStore.userPwd
+    userPwd: userPwd.value
   }
 
   try {
@@ -74,13 +80,15 @@ const login = async () => {
       sessionStorage.setItem('userNm', data.userNm)
       sessionStorage.setItem('userProfileImageUrl', data.userProfileImageUrl)
       sessionStorage.setItem('userEmail', data.userEmail)
+      sessionStorage.setItem('userClsf', data.userClsf)
 
       // authStore에 반영
       setLogin({
         isLogin: true,
         userNm: data.userNm,
         userEmail: data.userEmail,
-        userProfileImageUrl: data.userProfileImageUrl
+        userProfileImageUrl: data.userProfileImageUrl,
+        userClsf: data.userClsf
       })
 
       // 메인 페이지로 이동

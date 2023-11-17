@@ -30,6 +30,7 @@ public class LoginController {
 		Map<String, String> map = new HashMap<>();
 		
 		if (userDto != null) {
+			System.out.println("session에 저장할 userDto: " + userDto);
 			session.setAttribute("userDto", userDto);
 			
 			// client가 필요한 정보
@@ -38,6 +39,7 @@ public class LoginController {
 			map.put("userNm", userDto.getUserNm());
 			map.put("userProfileImageUrl", userDto.getUserProfile());
 			map.put("userEmail", userDto.getUserEmail());	// 내정보 수정할 때 필요한 정보
+			map.put("userClsf", userDto.getUserClsf());
 			
 			return map;
 		}

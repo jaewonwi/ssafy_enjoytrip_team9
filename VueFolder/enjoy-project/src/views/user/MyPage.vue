@@ -1,8 +1,3 @@
-<script setup>
-import UserInfo from '../../components/user/UserInfo.vue'
-import BookmarkList from '../../components/user/BookMarkList.vue'
-</script>
-
 <template>
   <div class="hero hero-inner">
     <div class="container">
@@ -19,3 +14,8 @@ import BookmarkList from '../../components/user/BookMarkList.vue'
   <hr />
   <bookmark-list></bookmark-list>
 </template>
+
+<script setup>
+import UserInfo from '@/components/user/UserInfo.vue'
+import BookmarkList from '@/components/user/BookMarkList.vue'
+</script>

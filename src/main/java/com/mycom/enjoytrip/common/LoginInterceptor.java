@@ -19,6 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		HttpSession session = request.getSession();
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		System.out.println("loginInterceptor의 userDto: " + userDto);
 		
 		if (userDto == null) {
 			// login이 필요하다는 응답을 보내준다.

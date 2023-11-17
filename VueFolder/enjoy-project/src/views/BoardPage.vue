@@ -11,22 +11,11 @@
 		</div>
 	</div>
 
-
-	<div class="m-5">
-        <!-- <board-list v-bind:board-list="boardList" v-on:call-parent-detail="detail"></board-list>
-		<board-detail v-bind:board-detail-data="board"></board-detail>
-		<board-editor></board-editor> -->
-		<p>여기!</p>
-		<router-view></router-view>
-		<div id="paginationWrapper"></div>
-
-		<div class="row m-4 justify-content-end">
-			<div class="mx-4">
-				<button class="btn btn-sm btn-primary" id="btnBoardInsertUI" >글쓰기</button>
-			</div>
+	<div class="row justify-content-center">
+		<div class="untree_co-section col-lg-10">
+			<router-view></router-view>
 		</div>
 	</div>
-
 	<!-- modal begin ------------------------------------------------------------------------->
 
 	<!-- Modal insert-->

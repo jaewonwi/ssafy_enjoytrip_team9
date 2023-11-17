@@ -7,11 +7,12 @@
           from board b 
          inner join users u 
             on u.userId = b.userId
+         order by b.boardId desc
     </select>
     
     <select id="boardDetail" parameterType="int"
         resultType="com.mycom.enjoytrip.dto.BoardDto">
-        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardViewCnt, b.userId, u.userNm, u.userProfile 
+        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardViewCnt, b.userId, u.userEmail, u.userNm, u.userProfile 
           from board b, users u 
          where b.boardId = #{boardId} 
            and u.userId = b.userId 

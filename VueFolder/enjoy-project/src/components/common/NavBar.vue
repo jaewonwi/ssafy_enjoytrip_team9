@@ -17,7 +17,7 @@
           <li class="active">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
-          <li><router-link to="/board">게시판</router-link></li>
+          <li><router-link to="/board" class="nav-link">게시판</router-link></li>
           <li><a href="#">Search</a></li>
           <li><a href="map/map.html">Map</a></li>
 

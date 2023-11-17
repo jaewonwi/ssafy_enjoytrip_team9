@@ -36,7 +36,7 @@ const router = createRouter({
       component: BoardPage,
       children: [
         {path: '', component: BoardList},
-        {path: 'detail', name: 'Detail', component: BoardDetail},
+        {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
         {path: 'editor', component: BoardEditor},
       ]
     },

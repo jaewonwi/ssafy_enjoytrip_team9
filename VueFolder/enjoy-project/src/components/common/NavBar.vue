@@ -12,9 +12,8 @@
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
-        <a href="/" class="logo m-0">Tour <span class="text-primary">.</span></a>
+        <a href="/" class="logo m-0 under-line-none">Tour</a>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-
           <li class="active">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
@@ -48,7 +47,7 @@
 </template>
 
 <style scoped>
-.logo {
+.under-line-none {
   text-decoration: none;
 }
 </style>

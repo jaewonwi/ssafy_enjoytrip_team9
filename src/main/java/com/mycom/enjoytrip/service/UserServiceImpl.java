@@ -8,37 +8,34 @@ import com.mycom.enjoytrip.dto.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
-	UserDao dao;
+	UserDao userDao;
+	
+	private static final int SUCCESS = 1;
+	private static final int FAIL = -1;
 
 	@Override
 	public int regist(UserDto dto) {
-		System.out.println("UserService regist");
-		return dao.regist(dto);
-	}
-
-	@Override
-	public UserDto login(UserDto dto) {
-		System.out.println("로그인 시도");
-		return dao.login(dto);
+		if (userDao.regist(dto) == 1)
+			return SUCCESS;
+		else
+			return FAIL;
 	}
 
 	@Override
 	public UserDto detail(int userId) {
-		return dao.detail(userId);
+		return userDao.detail(userId);
 	}
 
 	@Override
 	public int update(UserDto dto) {
-		return dao.update(dto);
+		return userDao.update(dto);
 	}
 
 	@Override
 	public int delete(int userId) {
-		return dao.delete(userId);
+		return userDao.delete(userId);
 	}
-	
-	
 
 }

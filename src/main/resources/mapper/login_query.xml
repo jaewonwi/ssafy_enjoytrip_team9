@@ -3,7 +3,7 @@
 <mapper namespace="com.mycom.enjoytrip.dao.LoginDao">
 
 	<select id="login" parameterType="string" resultType="com.mycom.enjoytrip.dto.UserDto">
-		select userId, userEmail, userPwd, userNm, userPhone, userProfile 
+		select userId, userEmail, userPwd, userNm, userPhone, userProfile, userClsf
 		 from users 
 		 where userEmail = #{userEmail}
 	</select>

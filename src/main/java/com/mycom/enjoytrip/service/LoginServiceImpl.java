@@ -22,6 +22,7 @@ public class LoginServiceImpl implements LoginService {
 			
 			return userDto;
 		}
+		System.out.println("LoginService(login): userDto가 null");
 		return null;
 	}
 

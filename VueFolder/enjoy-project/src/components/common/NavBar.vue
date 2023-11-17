@@ -22,14 +22,14 @@
           <li><a href="map/map.html">Map</a></li>
 
           <!-- User 기능  -->
-          <li><a href="/login">Sign In</a></li>
-          <li class="has-children">
-            <a href="#">My Page</a>
-            <ul class="dropdown">
-              <li><a href="#">My Info</a></li>
-              <li><a href="#">Bookmark</a></li>
-              <li><a href="#">Logout</a></li>
-            </ul>
+          <li class="nav-item" v-show="!loginStore.isLogin">
+            <router-link to="/login" class="nav-link">로그인</router-link>
+          </li>
+          <li class="nav-item" v-show="loginStore.isLogin">
+            <a href="#">마이페이지</a>
+          </li>
+          <li class="nav-item" v-show="loginStore.isLogin">
+            <a href="#" @click="logout">로그아웃</a>
           </li>
         </ul>
 
@@ -45,6 +45,44 @@
     </div>
   </nav>
 </template>
+
+<script setup>
+import http from '@/common/axios.js'
+import notLoginUserProfileImageUrl from '/src/assets/noProfile.png'
+import { useLoginStore } from '@/stores/loginStore'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const { loginStore, setLogin } = useLoginStore()
+
+const logout = async () => {
+  try {
+    let { data } = await http.get('/logout')
+    console.log(data)
+
+    if (data.result == 'success') {
+      // session storage 삭제
+      sessionStorage.removeItem('isLogin')
+      sessionStorage.removeItem('userEmail')
+      sessionStorage.removeItem('userName')
+      sessionStorage.removeItem('userProfileImageUrl')
+
+      // loginStore 변경: 로그아웃 이후에 페이지 이동을 막는다.
+      setLogin({
+        isLogin: false,
+        userNm: '',
+        userEmail: '',
+        userProfileImageUrl: notLoginUserProfileImageUrl
+      })
+
+      // 메인 페이지로 이동
+      router.push('/')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+</script>
 
 <style scoped>
 .under-line-none {

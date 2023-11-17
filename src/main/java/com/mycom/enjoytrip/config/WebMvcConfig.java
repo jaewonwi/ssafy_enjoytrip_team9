@@ -37,8 +37,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				
 				// RestController
 				"/",
-				"/login/**",
-				"/users/**",				// 회원
+				"/login",
+				"/users",					// 회원가입
 				"/codes/**"					// 공통 코드
 		);	
 		

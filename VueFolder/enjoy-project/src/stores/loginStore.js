@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
-import notLoginUserProfileImageUrl from '/src/assets/noProfile.png'
+import notLoginUserProfileImageUrl from '/src/assets/profile/noProfile.png'
 
 export const useLoginStore = defineStore('loginStore', () => {
   const router = useRouter()

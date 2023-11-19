@@ -24,13 +24,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto detail(int userId) {
-		return userDao.detail(userId);
+	public UserDto detail(String userEmail) {
+		return userDao.detail(userEmail);
 	}
 
 	@Override
 	public int update(UserDto dto) {
-		return userDao.update(dto);
+		if (userDao.update(dto) == 1)
+			return SUCCESS;
+		else
+			return FAIL;
 	}
 
 	@Override

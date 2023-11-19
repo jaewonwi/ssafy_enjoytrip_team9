@@ -13,7 +13,31 @@
                 class="form-control form-control-user"
                 id="inputName"
                 v-model="loginStore.userNm"
+                :class="{
+                  'is-valid': isUserNmFocusAndValid,
+                  'is-invalid': isUserNmFocusAndInValid
+                }"
+                @input="validateUserNm"
+                @focus="isUserNmFocus = true"
+                @blur="isUserNmFocus = false"
               />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control form-control-user"
+                id="inputPhone"
+                v-model="loginStore.userPhone"
+                :class="{
+                  'is-valid': isUserPhoneFocusAndValid,
+                  'is-invalid': isUserPhoneFocusAndInValid
+                }"
+                @input="validateUserPhone"
+                @focus="isUserPhoneFocus = true"
+                @blur="isUserPhoneFocus = false"
+              />
+              <div class="valid-feedback">Valid.</div>
+              <div class="invalid-feedback">000-0000-0000 양식으로 작성해주세요</div>
             </div>
             <div class="form-group">
               <p class="form-control form-control-user">{{ loginStore.userEmail }}</p>
@@ -35,9 +59,7 @@
                     @blur="isUserPwdFocus = false"
                   />
                   <div class="valid-feedback">Valid.</div>
-                  <div class="invalid-feedback">
-                    1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.
-                  </div>
+                  <div class="invalid-feedback">1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.</div>
                 </div>
                 <div class="col-sm">
                   <input
@@ -59,7 +81,7 @@
               </div>
             </div>
             <div class="text-center">
-              <button class="btn btn-primary" type="button">수정하기</button>
+              <button class="btn btn-primary" type="button" @click="update">수정하기</button>
               <button class="btn btn-secondary" type="button">탈퇴하기</button>
             </div>
           </div>
@@ -74,60 +96,61 @@ import { ref, computed } from 'vue'
 import { useLoginStore } from '@/stores/loginStore'
 import http from '@/common/axios.js'
 
-const { loginStore } = useLoginStore()
+const { loginStore, updateUser } = useLoginStore()
 
-const userNm = loginStore.userNm
 const userPwd = ref('')
 const userPwd2 = ref('')
 
 // focus: focus와 blur가 있는 tag에 마우스 클릭을 했을 경우와 안 했을 경우를 판단한다.
 const isUserNmFocus = ref(false)
+const isUserPhoneFocus = ref(false)
 const isUserPwdFocus = ref(false)
 const isUserPwd2Focus = ref(false)
-const isUserEmailFocus = ref(false)
 
 // validation
-const isUserNmValid = ref(false)
+const isUserNmValid = ref(true)   // 처음 input tag를 클릭할 때, 유효성 검사가 false인 상태가 아니다.
+const isUserPhoneValid = ref(false)
 const isUserPwdValid = ref(false)
 const isUserPwd2Valid = ref(false)
-const isUserEmailValid = ref(false)
 
 // focus + valid/invalid <= computed 를 적용
 const isUserNmFocusAndValid = computed(() => isUserNmFocus.value && isUserNmValid.value)
+const isUserPhoneFocusAndValid = computed(() => isUserPhoneFocus.value && isUserPhoneValid.value)
 const isUserPwdFocusAndValid = computed(() => isUserPwdFocus.value && isUserPwdValid.value)
 const isUserPwd2FocusAndValid = computed(() => isUserPwd2Focus.value && isUserPwd2Valid.value)
-const isUserEmailFocusAndValid = computed(() => isUserEmailFocus.value && isUserEmailValid.value)
 
 // invalid
 const isUserNmFocusAndInValid = computed(() => isUserNmFocus.value && !isUserNmValid.value)
+const isUserPhoneFocusAndInValid = computed(() => isUserPhoneFocus.value && !isUserPhoneValid.value)
 const isUserPwdFocusAndInValid = computed(() => isUserPwdFocus.value && !isUserPwdValid.value)
 const isUserPwd2FocusAndInValid = computed(() => isUserPwd2Focus.value && !isUserPwd2Valid.value)
-const isUserEmailFocusAndInValid = computed(() => isUserEmailFocus.value && !isUserEmailValid.value)
 
 const validateUserNm = () => {
-  isUserNmValid.value = userNm.value.length > 0 ? true : false
+  isUserNmValid.value = loginStore.userNm.length > 0 ? true : false
 }
+
+const validateUserPhone = () => {
+  let pattern = new RegExp(/(\d{3})-(\d{4})-(\d{4})$/)
+
+  isUserPhoneValid.value = pattern.test(loginStore.userPhone) ? true : false
+}
+
 const validateUserPwd = () => {
   let patternEngAtListOne = new RegExp(/[a-zA-Z]+/) // + for at least one
   let patternSpeAtListOne = new RegExp(/[~!@#$%^&*()_+|<>?:{}]+/) // + for at least one
   let patternNumAtListOne = new RegExp(/[0-9]+/) // + for at least one
 
-  isUserPwdValid.value =
-    patternEngAtListOne.test(userPwd.value) &&
-    patternSpeAtListOne.test(userPwd.value) &&
-    patternNumAtListOne.test(userPwd.value) &&
-    userPwd.value.length >= 8
-      ? true
-      : false
+  isUserPwdValid.value = patternEngAtListOne.test(userPwd.value) && patternSpeAtListOne.test(userPwd.value) && patternNumAtListOne.test(userPwd.value) && userPwd.value.length >= 8 ? true : false
 }
 const validateUserPwd2 = () => {
   isUserPwd2Valid.value = userPwd.value == userPwd2.value
 }
-const validateUserEmail = () => {
-  let regexp = new RegExp(
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-  )
-  // true 또는 false로 리턴
-  isUserEmailValid.value = regexp.test(userEmail.value)
+
+const update = () => {
+  updateUser({
+    userNm: loginStore.userNm,
+    userPhone: loginStore.userPhone,
+    userPwd: userPwd.value
+  })
 }
 </script>

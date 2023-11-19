@@ -37,8 +37,9 @@ public class LoginController {
 			// useLoginStore와 맞춘다.
 			map.put("result", "success");
 			map.put("userNm", userDto.getUserNm());
+			map.put("userPhone", userDto.getUserPhone());
+			map.put("userEmail", userDto.getUserEmail());
 			map.put("userProfileImageUrl", userDto.getUserProfile());
-			map.put("userEmail", userDto.getUserEmail());	// 내정보 수정할 때 필요한 정보
 			map.put("userClsf", userDto.getUserClsf());
 			
 			return map;

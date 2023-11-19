@@ -1,5 +1,10 @@
 package com.mycom.enjoytrip.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +30,33 @@ public class UserController {
 		return userService.regist(dto);
 	}
 	
-	@GetMapping("users/{userId}")
-	public UserDto detail(@PathVariable int userId) {
-		return userService.detail(userId);
+	@GetMapping("users/{userEmail}")
+	public UserDto detail(@PathVariable String userEmail) {
+		return userService.detail(userEmail);
 	}
 	
-	@PutMapping("/users/{userId}")
-	public int update(@PathVariable int userId, UserDto dto) {
-		return userService.update(dto);
+	@PutMapping("users")
+	public Map<String, String> update(@RequestBody UserDto dto, HttpSession session) {
+		System.out.println("UserController-update: " + dto);
+		Map<String, String> map = new HashMap<>();
+		
+		if (userService.update(dto) == 1) {
+			UserDto userDto = detail(dto.getUserEmail());
+			System.out.println("session에 저장할 userDto: " + userDto);
+			session.setAttribute("userDto", userDto);
+			
+			map.put("result", "success");
+			
+			map.put("userNm", userDto.getUserNm());
+			map.put("userPhone", userDto.getUserPhone());
+			map.put("userEmail", userDto.getUserEmail());
+			map.put("userProfileImageUrl", userDto.getUserProfile());
+			map.put("userClsf", userDto.getUserClsf());
+			return map;
+		}
+		
+		map.put("result", "fail");
+		return map;
 	}
 	
 	@DeleteMapping("/users/{userId}")

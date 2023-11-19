@@ -35,7 +35,7 @@
                   type="password"
                   class="form-control form-control-user"
                   placeholder="비밀번호를 입력해주세요"
-                  v-model="userPwd"
+                  v-model="loginStore.userPwd"
                 />
               </div>
               <div class="text-center">
@@ -59,15 +59,11 @@ import { useRouter } from 'vue-router'
 const { loginStore, setLogin } = useLoginStore()
 const router = useRouter()
 
-// 로그아웃 -> 로그인 페이지: 비밀번호가 남아있다.
-// 이를 방지하기 위해서 userPwd를 store에서 관리하지 않는다.
-const userPwd = ref('1234')
-
 const login = async () => {
   let loginObj = {
     // v-model은 input tag의 value와 연결하기 때문에 value 속성에 기본값이 있으면 안 된다.
     userEmail: loginStore.userEmail,
-    userPwd: userPwd.value
+    userPwd: loginStore.userPwd
   }
 
   try {
@@ -75,17 +71,12 @@ const login = async () => {
     console.log(data)
 
     if (data.result == 'success') {
-      // session storage에 login한 user 정보를 저장
-      sessionStorage.setItem('isLogin', 'true')
-      sessionStorage.setItem('userNm', data.userNm)
-      sessionStorage.setItem('userProfileImageUrl', data.userProfileImageUrl)
-      sessionStorage.setItem('userEmail', data.userEmail)
-      sessionStorage.setItem('userClsf', data.userClsf)
 
       // authStore에 반영
       setLogin({
         isLogin: true,
         userNm: data.userNm,
+        userPhone: data.userPhone,
         userEmail: data.userEmail,
         userProfileImageUrl: data.userProfileImageUrl,
         userClsf: data.userClsf

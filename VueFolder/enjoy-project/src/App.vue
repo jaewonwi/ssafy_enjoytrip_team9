@@ -18,6 +18,7 @@ const { setLogin } = useLoginStore()
 let isLogin = sessionStorage.getItem('isLogin')
 if (isLogin == 'true') {
   let userNm = sessionStorage.getItem('userNm')
+  let userPhone = sessionStorage.getItem('userPhone')
   let userProfileImageUrl = sessionStorage.getItem('userProfileImageUrl')
   let userEmail = sessionStorage.getItem('userEmail')
   let userClsf = sessionStorage.getItem('userClsf')
@@ -25,6 +26,7 @@ if (isLogin == 'true') {
   setLogin({
     isLogin: true,
     userNm: userNm,
+    userPhone: userPhone,
     userProfileImageUrl: userProfileImageUrl,
     userEmail: userEmail,
     userClsf: userClsf

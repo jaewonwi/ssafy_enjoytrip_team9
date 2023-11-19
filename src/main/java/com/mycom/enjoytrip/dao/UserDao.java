@@ -8,7 +8,7 @@ import com.mycom.enjoytrip.dto.UserDto;
 public interface UserDao {
 
 	int regist(UserDto dto);
-	UserDto detail(int userId);			// 마이페이지 내 정보
+	UserDto detail(String userEmail);			// 마이페이지 내 정보
 	int update(UserDto dto);			// 마이페이지 내 정보 수정
 	int delete(int userId);				// 마이페이지 회원 탈퇴
 	

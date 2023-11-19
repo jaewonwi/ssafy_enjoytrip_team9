@@ -59,43 +59,9 @@
 </template>
 
 <script setup>
-import http from '@/common/axios.js'
-import notLoginUserProfileImageUrl from '/src/assets/noProfile.png'
 import { useLoginStore } from '@/stores/loginStore'
-import { useRouter } from 'vue-router'
+const { loginStore, logout } = useLoginStore()
 
-const router = useRouter()
-const { loginStore, setLogin } = useLoginStore()
-
-const logout = async () => {
-  try {
-    let { data } = await http.get('/logout')
-    console.log(data)
-
-    if (data.result == 'success') {
-      // session storage 삭제
-      sessionStorage.removeItem('isLogin')
-      sessionStorage.removeItem('userEmail')
-      sessionStorage.removeItem('userNm')
-      sessionStorage.removeItem('userProfileImageUrl')
-      sessionStorage.removeItem('userClsf')
-
-      // loginStore 변경: 로그아웃 이후에 페이지 이동을 막는다.
-      setLogin({
-        isLogin: false,
-        userNm: '',
-        userEmail: '',
-        userProfileImageUrl: notLoginUserProfileImageUrl,
-        userClsf: ''
-      })
-
-      // 메인 페이지로 이동
-      router.push('/')
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
 </script>
 
 <style scoped>

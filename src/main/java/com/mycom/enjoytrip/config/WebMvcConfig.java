@@ -64,7 +64,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	// login이 없으면 위 코드 하나로 가능하지만, login이 추가되면 여러 설정이 필요하다.
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("http://localhost:5173") // port 변경 유의!!
+		registry.addMapping("/**").allowedOrigins("http://127.0.0.1:5173") // port 변경 유의!!
 				// GET/PUT은 모든 웹서버가 구현했다고 가정하기 때문에 OPTIONS가 필요없다.
 				// PUT/DELETE/PATCH는 신뢰할 수 없는 HTTP method이다.
 				// put/delete/patch를 요청 받았을 때, 이를 처리하기 전에

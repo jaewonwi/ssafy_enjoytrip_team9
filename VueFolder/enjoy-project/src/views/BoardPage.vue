@@ -14,33 +14,17 @@
 	<div class="row justify-content-center">
 		<div class="untree_co-section col-10">
 			<router-view></router-view>
+            <!-- <board-list></board-list> -->
 		</div>
 	</div>
 	
 </template>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script setup>
     
     import { ref } from 'vue';
 	import { RouterView } from 'vue-router'
+    import BoardList from '../components/board/BoardList.vue';
 
     // const board = ref({});
     // const boardList = ref([]);

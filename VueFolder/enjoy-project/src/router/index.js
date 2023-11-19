@@ -12,6 +12,8 @@ import BoardEditor from '@/components/board/BoardEditor.vue'
 
 import MapPage from '@/views/map/MapPage.vue'
 
+// import { useAuthStore } from '@/stores/authStore'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,10 +34,22 @@ const router = createRouter({
       component: MyPage
     },
     {
+      name: 'Board',
       path: '/board',
       component: BoardPage,
+      // beforeEnter: (to, from, next) => {
+      //   const { authStore } = useAuthStore()
+
+      //   let isLogin = sessionStorage.getItem('isLogin')
+      //   if (authStore.isLogin || isLogin == 'true'){
+      //     return next();
+      //   } else {
+      //     next('/login');
+      //   }
+      
+      // jaewon
       children: [
-        {path: '', component: BoardList},
+        {path: '', name: 'BoardList',component: BoardList},
         {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
         {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]

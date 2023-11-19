@@ -1,8 +1,8 @@
 export default {
     makeDateStr : function(date, type){
 
-      console.log(date)
-      console.log(type)
+      // console.log(date)
+      // console.log(type)
 
       let tempMonth = (date.month < 10) ? `0${date.month}` : date.month
       let tempDay = (date.day < 10) ? `0${date.day}` : date.day

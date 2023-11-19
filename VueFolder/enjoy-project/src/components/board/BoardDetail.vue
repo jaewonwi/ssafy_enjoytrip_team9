@@ -16,22 +16,22 @@
                     <div class="user-info">
                         <span class="fw-bold">{{ board.userNm }}</span> <br />
                         <span class="text-secondary fw-light">
+                            <!-- {{ util.makeDateStr(board.boardRegDate.date, '.') }} &nbsp; -->
                             <span class="icon-eye"></span> {{ board.boardViewCnt }} &nbsp;
                             <span class="icon-heart-o me-2"></span> {{ board.boardLike }} &nbsp;
                             <span class="icon-commenting-o me-2"></span> 0
                         </span>
                     </div>
-                    <br /><br /><br /><br /><br /><br /><br />
-                    {{ board }} <br>{{ board.boardRegDate }}<br> 
+                    <!-- <br /><br /><br /><br /><br /><br /><br />
+                    {{ board }} <br>{{ board.boardRegDate }}<br>  -->
                 </div>
             </div>
         </div>
 
         <!-- content -->
+        <hr>
         <div class="row">
-            <div class="text-secondary">
-                {{ board.boardContent }}
-            </div>
+            <div class="text-secondary" v-html="board.boardContent"></div>
             <div class="divider my-5"></div>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="deleteBoard">
@@ -43,13 +43,12 @@
             </div>
         </div>
         <br>
-        <!-- {{ board.boardRegDate.date }} -->
     </div>
     
 </template>
 
 <script setup>
-    import axios from '@/common/axios.js';
+    import http from '@/common/axios.js';
     import { ref } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     
@@ -65,14 +64,11 @@
     const board = ref({});
 
     const getDetail = async () => {
-        console.log('0-000000000000000000000000000000000000000000000')
-        console.log(boardId)
         try {
-            let { data } = await axios.get('/boards/'+boardId);
-            board.value = data;
-            console.log("getdetail....")
-            console.log(data)
-            console.log(board.value)
+            let { data } = await http.get('/boards/'+boardId);
+            board.value = data.dto;
+            // console.log("getdetail....")
+            // console.log(data.dto)
         } catch (error) {
             console.error(error);
         }
@@ -82,6 +78,10 @@
     const moveModify = () => {
         // 로그인된 사용자가 쓴 글이라면
         try {
+            router.push({
+                name: 'BoardEditor',
+                params: { boardId: boardId }
+            })
             console.log(boardId)
         } catch (error) {
             console.log(error)

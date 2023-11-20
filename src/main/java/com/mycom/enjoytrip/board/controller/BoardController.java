@@ -87,8 +87,7 @@ public class BoardController {
     
     @PostMapping(value="/boards/{boardId}/boardLike")
     public void boardLikeUpdate(@PathVariable int temp){
-
-        System.out.println("가능?");
+    	
 
     }
 }

@@ -5,7 +5,13 @@
         <div class="col">
           <div class="p-5">
             <div class="text-center">
-              <h1 class="h2 text-gray-900 mb-4 section-title text-center">내 정보</h1>
+              <h1 class="h2 text-gray-900 mb-3 section-title text-center">내 정보</h1>
+              <div class="row mb-3 thumbnail-wrapper">
+                <div class="container">
+                  <img id="imgFileUploadUpdateThumbnail" class="col" v-bind:src="loginStore.userProfileImageUrl" alt="" style="width: 100px; height: 100px; border-radius: 50%" />
+                  <input id="inputFileUploadUpdate" class="col" @change="changeProfile" type="file" />
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <input
@@ -27,6 +33,7 @@
                 type="text"
                 class="form-control form-control-user"
                 id="inputPhone"
+                placeholder="전화번호"
                 v-model="loginStore.userPhone"
                 :class="{
                   'is-valid': isUserPhoneFocusAndValid,
@@ -147,14 +154,42 @@ const validateUserPwd2 = () => {
 }
 
 const update = () => {
-  updateUser({
-    userNm: loginStore.userNm,
-    userPhone: loginStore.userPhone,
-    userPwd: userPwd.value
-  })
+  if (loginStore.userPhone == '') {
+    loginStore.userPhone = ''
+  }
+
+  let formData = new FormData()
+  formData.append('userId', loginStore.userId)
+  formData.append('userNm', loginStore.userNm)
+  formData.append('userPhone', loginStore.userPhone)
+  formData.append('userPwd', loginStore.userPwd)
+  // changeProfile에서 프로필 경로 가져온다.
+  formData.append('userProfileImageUrl', loginStore.userProfileImageUrl)
+
+  let options = {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }
+
+  updateUser(formData, options)
+
+  // updateUser({
+  //   userNm: loginStore.userNm,
+  //   userPhone: loginStore.userPhone,
+  //   userPwd: userPwd.value,
+  //   userProfileImageUrl: loginStore.userProfileImageUrl
+  // })
 }
 
 const del = () => {
   deleteUser(loginStore.userEmail)
+}
+
+const changeProfile = (fileEvent) => {
+  console.log(fileEvent)
+  const file = fileEvent.target.files[0]
+  if (file) {
+    loginStore.userProfileImageUrl = URL.createObjectURL(file)
+    console.log(file.name)
+  }
 }
 </script>

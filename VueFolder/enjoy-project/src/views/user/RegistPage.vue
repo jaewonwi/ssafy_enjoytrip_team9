@@ -73,9 +73,7 @@
                     @blur="isUserPwdFocus = false"
                   />
                   <div class="valid-feedback">Valid.</div>
-                  <div class="invalid-feedback">
-                    1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.
-                  </div>
+                  <div class="invalid-feedback">1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.</div>
                 </div>
                 <div class="col-sm-6">
                   <input
@@ -97,9 +95,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <button class="btn btn-primary" id="btnRegist" type="button" @click="regist">
-                  회원가입
-                </button>
+                <button class="btn btn-primary" id="btnRegist" type="button" @click="regist">회원가입</button>
               </div>
             </form>
           </div>
@@ -153,26 +149,19 @@ const validateUserPwd = () => {
   let patternSpeAtListOne = new RegExp(/[~!@#$%^&*()_+|<>?:{}]+/) // + for at least one
   let patternNumAtListOne = new RegExp(/[0-9]+/) // + for at least one
 
-  isUserPwdValid.value =
-    patternEngAtListOne.test(userPwd.value) &&
-    patternSpeAtListOne.test(userPwd.value) &&
-    patternNumAtListOne.test(userPwd.value) &&
-    userPwd.value.length >= 8
-      ? true
-      : false
+  isUserPwdValid.value = patternEngAtListOne.test(userPwd.value) && patternSpeAtListOne.test(userPwd.value) && patternNumAtListOne.test(userPwd.value) && userPwd.value.length >= 8 ? true : false
 }
 const validateUserPwd2 = () => {
   isUserPwd2Valid.value = userPwd.value == userPwd2.value
 }
 const validateUserEmail = () => {
-  let regexp = new RegExp(
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-  )
+  let regexp = new RegExp(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i)
   // true 또는 false로 리턴
   isUserEmailValid.value = regexp.test(userEmail.value)
 }
 
 // 회원가입
+// 기본 프로필은 DB에서 관리한다.
 const regist = async () => {
   let userObj = {
     userNm: userNm.value,

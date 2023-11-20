@@ -17,6 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println("LoginInterceptor >>> " + request.getRequestURI());
 		
+		// CORS 에서  put, delete 등 오류 해결 코드
 		if (request.getMethod().equals("OPTIONS")) {
 			return true;
 		}

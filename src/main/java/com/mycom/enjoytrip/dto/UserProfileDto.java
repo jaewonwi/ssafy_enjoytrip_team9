@@ -19,7 +19,7 @@ public class UserProfileDto {
 	private int profileId;
 	private int userId;
 	private String profileNm;
-	private int profileSize;
+	private long profileSize;
 	private String profileContentType;
 	private String profileUrl;
 	private LocalDateTime regDt;

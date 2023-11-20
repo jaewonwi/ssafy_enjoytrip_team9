@@ -9,7 +9,7 @@
               <div class="row mb-3 thumbnail-wrapper">
                 <div class="container">
                   <img id="imgFileUploadUpdateThumbnail" class="col" v-bind:src="loginStore.userProfileImageUrl" alt="" style="width: 100px; height: 100px; border-radius: 50%" />
-                  <input id="inputFileUploadUpdate" class="col" @change="changeProfile" type="file" />
+                  <input name="myFile" id="inputFileUploadUpdate" class="col" @change="changeProfile" type="file" multiple />
                 </div>
               </div>
             </div>
@@ -103,7 +103,9 @@ import { ref, computed } from 'vue'
 import { useLoginStore } from '@/stores/loginStore'
 import http from '@/common/axios.js'
 
-const { loginStore, updateUser, deleteUser } = useLoginStore()
+const { loginStore, updateUser, deleteUser, detail } = useLoginStore()
+
+detail()
 
 const userPwd = ref('')
 const userPwd2 = ref('')
@@ -160,24 +162,27 @@ const update = () => {
 
   let formData = new FormData()
   formData.append('userId', loginStore.userId)
+  formData.append('userEmail', loginStore.userEmail)
   formData.append('userNm', loginStore.userNm)
   formData.append('userPhone', loginStore.userPhone)
   formData.append('userPwd', loginStore.userPwd)
   // changeProfile에서 프로필 경로 가져온다.
-  formData.append('userProfileImageUrl', loginStore.userProfileImageUrl)
+  let attachFiles = document.querySelector('#inputFileUploadUpdate').files
+  if (attachFiles.length > 0) {
+    const fileArray = Array.from(attachFiles)
+    fileArray.forEach((file) => {
+      console.log('file: ', file)
+      formData.append('myFile', file)
+    })
+  }
+
+  console.log('formData: ', formData.get('myFile'))
 
   let options = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }
 
   updateUser(formData, options)
-
-  // updateUser({
-  //   userNm: loginStore.userNm,
-  //   userPhone: loginStore.userPhone,
-  //   userPwd: userPwd.value,
-  //   userProfileImageUrl: loginStore.userProfileImageUrl
-  // })
 }
 
 const del = () => {

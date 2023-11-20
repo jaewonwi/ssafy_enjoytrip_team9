@@ -1,19 +1,21 @@
 package com.mycom.enjoytrip.service;
 
 import java.io.File;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.dao.UserDao;
 import com.mycom.enjoytrip.dto.UserDto;
 import com.mycom.enjoytrip.dto.UserProfileDto;
+import com.mycom.enjoytrip.dto.UserResultDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,76 +43,131 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto detail(String userEmail) {
-		return userDao.detail(userEmail);
-	}
-
-	@Override
-	public int update(UserDto dto, int flag) {
-		if (flag == UPDATE_PWD) {
-			if (userDao.update(dto) == 1)
-				return UPDATE_PWD;
-			else
-				return FAIL;
-		} else {
-			System.out.println("비밀번호 수정 안함");
-			if (userDao.updateNoPwd(dto) == 1)
-				return NO_PWD;
-			else
-				return FAIL;
+	@Transactional
+	public UserResultDto detail(String userEmail) {
+		
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			UserDto userDto = userDao.detail(userEmail);
+			// userId를 이용해서 userProfileDto를 가져온다.
+			UserProfileDto userProfileDto = userDao.profileDetail(userDto.getUserId());
+			
+			// userProfileDto를 userDto에 저장한다.
+			userDto.setUserProfileDto(userProfileDto);
+			
+			// userDto를 userResultDto에 저장한다.
+			userResultDto.setUserDto(userDto);
+			userResultDto.setResult(SUCCESS);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(FAIL);
 		}
+		
+		return userResultDto;
 	}
+	
+	
+
+//	@Override
+//	public int update(UserDto dto, int flag) {
+//		if (flag == UPDATE_PWD) {
+//			if (userDao.update(dto) == 1)
+//				return UPDATE_PWD;
+//			else
+//				return FAIL;
+//		} else {
+//			System.out.println("비밀번호 수정 안함");
+//			if (userDao.updateNoPwd(dto) == 1)
+//				return NO_PWD;
+//			else
+//				return FAIL;
+//		}
+//	}
 	
 	@Override
 	public int delete(String userEmail) {
-		int userId = detail(userEmail).getUserId();
+		int userId = userDao.detail(userEmail).getUserId();
 		return userDao.delete(userId);
 	}
 
 	@Override
-	public UserDto update(UserDto dto, MultipartHttpServletRequest request) {
+	@Transactional
+	public UserResultDto update(UserDto dto, MultipartHttpServletRequest request) {
 		
-		File rollbackFile;
+//		File rollbackFile;
+		String savingFileName = null;
+		UserResultDto userResultDto = new UserResultDto();
 		
 		try {
-			MultipartFile file = request.getFile("userProfileImageUrl");
+			System.out.println("userProfile: " + request.getFiles("myFile").get(0));
+			MultipartFile file = request.getFiles("myFile").get(0);
 			File uploadDir = new File(uploadPath + File.separator + uploadFolder);
+			System.out.println("uploadDir: " + uploadDir);
 			
 			// 폴더가 없으면 해당 이름으로 폴더 생성
-			if (!uploadDir.exists()) uploadDir.mkdir();
+			if (!uploadDir.exists()) {
+				uploadDir.mkdir();
+				System.out.println("uploadDir: " + uploadDir.mkdir());
+			}
 			
 			// 폴더에 저장된 기존 프로필 경로를 삭제
-			// 칼럼만 삭제 -> update 사용
+			String fileUrl = userDao.profileUrlSelect(dto.getUserId());
+			File tempFile = new File(uploadPath + File.separator + fileUrl);
+			if (tempFile.exists()) {
+				tempFile.delete();
+			}
+			
+			// DB에 저장된 프로필 삭제
+			userDao.profileUrlDelete(dto.getUserId());
+			
 			
 			// 파일 이름
 			String fileName = file.getOriginalFilename();
+			System.out.println("fileName: " + fileName);
 			UUID uuid = UUID.randomUUID();
 			String extension = FilenameUtils.getExtension(fileName);
-			String savingFileName = uuid + "." + extension;
+			savingFileName = uuid + "." + extension;
 			File destFile = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
 			
-			rollbackFile = destFile;
+//			rollbackFile = destFile;
 			
 			file.transferTo(destFile);
 			
 			// DB저장
-			private int profileId;
-			private int userId;
-			private String profileNm;
-			private int profileSize;
-			private String profileContentType;
-			private String profileUrl;
-			private LocalDateTime regDt;
-			
 			UserProfileDto profileDto = new UserProfileDto();
 			profileDto.setUserId(dto.getUserId());
+			profileDto.setProfileNm(fileName);
+			profileDto.setProfileSize(file.getSize());
+			profileDto.setProfileContentType(file.getContentType());
 			
+			String profileUrl = uploadFolder + "/" + savingFileName;
+			profileDto.setProfileUrl(profileUrl);
 			
+			userDao.profileInsert(profileDto);
+			userResultDto.setResult(SUCCESS);
+			userResultDto.setUserProfileDto(profileDto);
+			
+			// 무조건 모두 수정하도록: 경로 저장
+			dto.setUserProfile(profileUrl);
+			userDao.update(dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			// rollback
+			if (savingFileName != null) {
+				File file = new File(uploadPath + File.separator + uploadFolder + File.separator + savingFileName);
+				if (file.exists()) {
+					file.delete();
+				}
+			}
+			
+			userResultDto.setResult(FAIL);
 		}
-		return null;
+		
+		return userResultDto;
 	}
 
 }

@@ -13,8 +13,8 @@ export const useLoginStore = defineStore('loginStore', () => {
     userId: '',
     userNm: '',
     userPhone: '',
-    userEmail: 'jaewon@n.com',
-    userPwd: 'qwer1234!',
+    userEmail: 'kdh@n.com',
+    userPwd: '1234',
     userProfileImageUrl: notLoginUserProfileImageUrl, // build했을 때 image를 가져올 수 있도록 세팅
 
     // 일반 사용자와 관리자
@@ -36,50 +36,32 @@ export const useLoginStore = defineStore('loginStore', () => {
   }
 
   const updateUser = async (formData, options) => {
+    console.log(options)
+    
+    try { 
+      // put이 아니라 post
+      let { data } = await http.post('/users/profiles', formData, options)
+      console.log(data)
 
-    let updateUserObj = {
-      userEmail: loginStore.userEmail,
-      userNm: formData.userNm,
-      userPwd: formData.userPwd,
-      userPhone: formData.userPhone,
-      userProfileImageUrl: formData.userProfileImageUrl
-    }
-
-    // 이름, 전화번호, 비밀번호, 프로필 경로를 받는다.
-    // 프로필을 제외한 업데이트
-    if (formData.userProfileImageUrl == loginStore.userProfileImageUrl) {
-      try { 
-        // put이 아니라 post
-        let { data } = await http.post('/users/profiles', updateUserObj, options)
-        console.log(data)
-
-
-  
-        if (data.result == 'success') {
-          // sessionStorage와 loginStore 갱신
-          setUpdate({
-            userNm: data.userNm,
-            userPhone: data.userPhone,
-            userEmail: data.userEmail,
-            userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
-            userClsf: data.userClsf
-          })
-        } if (data.result == 'login') {
-          setLogout()
-          alert('time-out으로 인한 로그아웃!')
-        } else {
-          alert('수정 형식에 맞춰주세요!!')
-        }
-      } catch (error) {
-        console.log(error)
+      if (data.result == 'success') {
+        // sessionStorage와 loginStore 갱신
+        setUpdate({
+          userPhone: data.userPhone,
+          userEmail: data.userEmail,
+          userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
+        })
+      } else if (data.result == 'inputPwd') {
+        alert('비밀번호를 입력하세요')
+      } else if (data.result == 'inputPhone') {
+        alert('전화번호를 입력하세요')
+      } else if (data.result == 'login') {
+        setLogout()
+        alert('time-out으로 인한 로그아웃!')
+      } else {
+        alert('수정 형식에 맞춰주세요!!')
       }
-    } else {  // 프로필을 포함한 업데이트 -> post
-      try {
-
-      } catch (error) {
-        console.log(error)
-      }
-
+    } catch (error) {
+      console.log(error)
     }
     
     // try { 
@@ -180,5 +162,37 @@ export const useLoginStore = defineStore('loginStore', () => {
     console.log('setUpdate: ' + loginStore)
   }
 
-  return { loginStore, setLogin, logout, updateUser }
+  const detail = async () => {
+    try {
+      let { data } = await http.get('/users/' + loginStore.userEmail)
+      console.log(data) // userResultDto 확인
+
+      if (data.result == 'login') {
+        setLogout();
+        alert("time-out으로 인한 로그아웃")
+      } else if (data.result == "success") {
+        // loginStore 및 sessionStorage에 저장
+        let { userDto, userProfileDto } = data
+
+        sessionStorage.setItem('userId', userDto.userId)
+        sessionStorage.setItem('userEmail', userDto.userEmail)
+        sessionStorage.setItem('userPwd', userDto.userPwd)
+        sessionStorage.setItem('userNm', userDto.userNm)
+        sessionStorage.setItem('userPhone', userDto.userPhone)
+        sessionStorage.setItem('userProfileImageUrl', userDto.userProfile)
+
+        loginStore.userId = userDto.userId;
+        loginStore.userEmail = userDto.useruserEmailId;
+        loginStore.userPwd = userDto.userPwd;
+        loginStore.userNm = userDto.userNm;
+        loginStore.userPhone = userDto.userPhone;
+        loginStore.userProfileImageUrl = userDto.userProfile;
+        console.log(loginStore)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { loginStore, setLogin, logout, updateUser, deleteUser, detail }
 })

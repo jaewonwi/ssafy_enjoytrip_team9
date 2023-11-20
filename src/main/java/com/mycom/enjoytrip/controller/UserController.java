@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.dto.UserDto;
+import com.mycom.enjoytrip.dto.UserResultDto;
 import com.mycom.enjoytrip.service.UserService;
 
 @RestController
@@ -25,8 +26,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	private static final int NO_PWD = -2;
-	private static final int UPDATE_PWD = 2;
+//	private static final int NO_PWD = -2;
+//	private static final int UPDATE_PWD = 2;
 
 	@PostMapping("users")
 	public int regist(@RequestBody UserDto dto) {
@@ -35,57 +36,81 @@ public class UserController {
 	}
 	
 	@GetMapping("users/{userEmail}")
-	public UserDto detail(@PathVariable String userEmail) {
-		return userService.detail(userEmail);
+	public UserResultDto detail(@PathVariable String userEmail) {
+		// userResultDto - result, userDto, userProfileDto가 들어있다.
+		UserResultDto userResultDto = userService.detail(userEmail);
+		
+		return userResultDto;
 	}
 	
-	@PutMapping("users")
-	public Map<String, String> update(@RequestBody UserDto dto, HttpSession session) {
-		System.out.println("UserController-update: " + dto);
+	// 전화번호 비밀번호만 수정하는 코드
+//	@PutMapping("users")
+//	public Map<String, String> update(@RequestBody UserDto dto, HttpSession session) {
+//		System.out.println("UserController-update: " + dto);
+//		Map<String, String> map = new HashMap<>();
+//		if (dto.getUserPwd().length() >= 4) {
+//			if (userService.update(dto, UPDATE_PWD) == UPDATE_PWD) {
+//				UserDto userDto = detail(dto.getUserEmail()).getUserDto();
+//				System.out.println("session에 저장할 userDto: " + userDto);
+//				session.setAttribute("userDto", userDto);
+//				
+//				map.put("result", "success");
+//				
+//				map.put("userNm", userDto.getUserNm());
+//				map.put("userPhone", userDto.getUserPhone());
+//				map.put("userEmail", userDto.getUserEmail());
+//				map.put("userProfileImageUrl", userDto.getUserProfile());
+//				map.put("userClsf", userDto.getUserClsf());
+//				return map;
+//			}
+//		} else if (dto.getUserPwd().length() == 0) {
+//			if (userService.update(dto, NO_PWD) == NO_PWD) {
+//				UserDto userDto = detail(dto.getUserEmail()).getUserDto();
+//				System.out.println("session에 저장할 userDto: " + userDto);
+//				session.setAttribute("userDto", userDto);
+//				
+//				map.put("result", "success");
+//				map.put("noUpdatePwd", "ok");
+//				
+//				map.put("userNm", userDto.getUserNm());
+//				map.put("userPhone", userDto.getUserPhone());
+//				map.put("userEmail", userDto.getUserEmail());
+//				map.put("userProfileImageUrl", userDto.getUserProfile());
+//				map.put("userClsf", userDto.getUserClsf());
+//				return map;
+//			}
+//		}
+//		
+//		map.put("result", "fail");
+//		return map;
+//	}
+	
+	// 프로필, 전화번호, 비밀번호를 수정한다.
+	@PostMapping("users/profiles")
+	public Map<String, String> updateProfile(UserDto dto, MultipartHttpServletRequest request) {
+		System.out.println(dto);
 		Map<String, String> map = new HashMap<>();
-		if (dto.getUserPwd().length() >= 4) {
-			if (userService.update(dto, UPDATE_PWD) == UPDATE_PWD) {
-				UserDto userDto = detail(dto.getUserEmail());
-				System.out.println("session에 저장할 userDto: " + userDto);
-				session.setAttribute("userDto", userDto);
-				
-				map.put("result", "success");
-				
-				map.put("userNm", userDto.getUserNm());
-				map.put("userPhone", userDto.getUserPhone());
-				map.put("userEmail", userDto.getUserEmail());
-				map.put("userProfileImageUrl", userDto.getUserProfile());
-				map.put("userClsf", userDto.getUserClsf());
-				return map;
-			}
-		} else if (dto.getUserPwd().length() == 0) {
-			if (userService.update(dto, NO_PWD) == NO_PWD) {
-				UserDto userDto = detail(dto.getUserEmail());
-				System.out.println("session에 저장할 userDto: " + userDto);
-				session.setAttribute("userDto", userDto);
-				
-				map.put("result", "success");
-				map.put("noUpdatePwd", "ok");
-				
-				map.put("userNm", userDto.getUserNm());
-				map.put("userPhone", userDto.getUserPhone());
-				map.put("userEmail", userDto.getUserEmail());
-				map.put("userProfileImageUrl", userDto.getUserProfile());
-				map.put("userClsf", userDto.getUserClsf());
-				return map;
-			}
+		
+		if (dto.getUserPwd().length() == 0) {
+			System.out.println("비밀번호를 입력하세요");
+			map.put("result", "inputPwd");
+			return map;
+		}
+		if (dto.getUserPhone().length() == 0) {
+			System.out.println("전화번호를 입력하세요");
+			map.put("result", "inputPhone");
+			return map;
 		}
 		
-		map.put("result", "fail");
-		return map;
-	}
-	
-	@PostMapping("users/profiles/")
-	public Map<String, String> updateProfile(@RequestBody UserDto dto, HttpSession session, MultipartHttpServletRequest request) {
-		
-		Map<String, String> map = new HashMap<>();
-		UserDto userDto = userService.update(dto, request);
-		// 
+		UserResultDto userResultDto = userService.update(dto, request);
+		if (userResultDto.getResult() == 1) {
+			map.put("result", "success");
+			map.put("userPhone", dto.getUserPhone());
+			map.put("userEmail", dto.getUserEmail());
+			map.put("userProfileImageUrl", userResultDto.getUserProfileDto().getProfileUrl());
+		} else {
+			map.put("result", "fail");
+		}
 		return map;
 	}
 	

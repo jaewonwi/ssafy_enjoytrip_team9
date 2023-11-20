@@ -24,4 +24,7 @@ public class UserDto {
 	private String userClsf;
 	private String userClsfName;
 	
+	// 프로필 저장
+	UserProfileDto userProfileDto;
+	
 }

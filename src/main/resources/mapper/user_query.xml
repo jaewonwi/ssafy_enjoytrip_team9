@@ -13,6 +13,13 @@
 		 where userEmail = #{userEmail}
 	</select>
 	
+	<select id="profileDetail" parameterType="int" resultType="com.mycom.enjoytrip.dto.UserProfileDto">
+        SELECT profileId, userId, profileNm, profileSize, profileContentType, 
+               profileUrl, regDt
+          FROM user_profile
+         WHERE userId = #{userId}
+    </select>
+	
 	<update id="update" parameterType="com.mycom.enjoytrip.dto.UserDto">
 		update users
 		 set userPwd = #{userPwd},
@@ -22,17 +29,32 @@
 		 where userEmail = #{userEmail}
 	</update>
 	
-	<update id="updateNoPwd" parameterType="com.mycom.enjoytrip.dto.UserDto">
+	<!-- <update id="updateNoPwd" parameterType="com.mycom.enjoytrip.dto.UserDto">
 		update users
 		 set userNm = #{userNm},
 		 	 userPhone = #{userPhone},
 		 	 userProfile = #{userProfile}  
 		 where userEmail = #{userEmail}
-	</update>
+	</update> -->
 	
 	<delete id="delete" parameterType="int">
 		delete from users
 		 where userId = #{userId}
 	</delete>
 	
+	<select id="profileUrlSelect" parameterType="int" resultType="string">
+		select profileUrl 
+		 from user_profile 
+		 where userId = ${userId}
+	</select>
+	
+	<delete id="profileUrlDelete" parameterType="int">
+        DELETE FROM user_profile 
+         WHERE userId = #{userId}
+    </delete>
+    
+    <insert id="profileInsert" parameterType="com.mycom.enjoytrip.dto.UserProfileDto">
+        INSERT INTO user_profile ( userId, profileNm, profileSize, profileContentType, profileUrl )
+         VALUES ( #{userId}, #{profileNm}, #{profileSize}, #{profileContentType}, #{profileUrl} )
+    </insert>
 </mapper>

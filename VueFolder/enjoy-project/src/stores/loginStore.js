@@ -10,11 +10,11 @@ export const useLoginStore = defineStore('loginStore', () => {
 
   const loginStore = reactive({
     isLogin: false,
-
+    userId: '',
     userNm: '',
     userPhone: '',
-    userEmail: 'kdh@n.com',
-    userPwd: '1234',
+    userEmail: 'jaewon@n.com',
+    userPwd: 'qwer1234!',
     userProfileImageUrl: notLoginUserProfileImageUrl, // build했을 때 image를 가져올 수 있도록 세팅
 
     // 일반 사용자와 관리자
@@ -36,7 +36,6 @@ export const useLoginStore = defineStore('loginStore', () => {
   }
 
   const updateUser = async (payload) => {
-
     let updateUserObj = {
       userEmail: loginStore.userEmail,
       userNm: payload.userNm,
@@ -45,7 +44,7 @@ export const useLoginStore = defineStore('loginStore', () => {
       userProfileImageUrl: loginStore.userProfileImageUrl
     }
     // 이름, 전화번호, 비밀번호를 받는다.
-    try { 
+    try {
       let { data } = await http.put('/users', updateUserObj)
       console.log(data)
 
@@ -54,28 +53,9 @@ export const useLoginStore = defineStore('loginStore', () => {
           userNm: data.userNm,
           userPhone: data.userPhone,
           userEmail: data.userEmail,
-          userProfileImageUrl: notLoginUserProfileImageUrl,  // data.userProfileImageUrl
+          userProfileImageUrl: data.userProfileImageUrl,
           userClsf: data.userClsf
         })
-      } else {
-        alert('수정 형식에 맞춰주세요!!')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const deleteUser = async (payload) => {
-    try {
-      let { data } = await http.delete('/users/' + payload)
-      console.log(data)
-      if (data.result == 'success') {
-        // session 삭제는 백에서 진행
-        setLogout()
-        alert('탈퇴!!')
-      } else if (data.result == 'login') {
-        logout()
-        alert('time-out으로 로그아웃 되었습니다. 다시 로그인해주세요')
       }
     } catch (error) {
       console.log(error)
@@ -86,6 +66,7 @@ export const useLoginStore = defineStore('loginStore', () => {
   const setLogin = (payload) => {
     console.log('setLogin: ' + payload)
     sessionStorage.setItem('isLogin', 'true')
+    sessionStorage.setItem('userId', payload.userId)
     sessionStorage.setItem('userNm', payload.userNm)
     sessionStorage.setItem('userPhone', payload.userPhone)
     sessionStorage.setItem('userProfileImageUrl', payload.userProfileImageUrl)
@@ -93,6 +74,7 @@ export const useLoginStore = defineStore('loginStore', () => {
     sessionStorage.setItem('userClsf', payload.userClsf)
 
     loginStore.isLogin = payload.isLogin
+    loginStore.userId = payload.userId
     loginStore.userNm = payload.userNm
     loginStore.userPhone = payload.userPhone
     loginStore.userEmail = payload.userEmail
@@ -104,6 +86,7 @@ export const useLoginStore = defineStore('loginStore', () => {
   const setLogout = () => {
     // sessionStorage
     sessionStorage.removeItem('isLogin')
+    sessionStorage.removeItem('userId', '')
     sessionStorage.removeItem('userNm', '')
     sessionStorage.removeItem('userPhone', '')
     sessionStorage.removeItem('userProfileImageUrl')
@@ -112,6 +95,7 @@ export const useLoginStore = defineStore('loginStore', () => {
 
     // loginStore
     loginStore.isLogin = false
+    loginStore.userId = ''
     loginStore.userNm = ''
     loginStore.userPhone = ''
     loginStore.userEmail = ''
@@ -135,5 +119,5 @@ export const useLoginStore = defineStore('loginStore', () => {
     console.log('setUpdate: ' + loginStore)
   }
 
-  return { loginStore, setLogin, logout, updateUser, deleteUser }
+  return { loginStore, setLogin, logout, updateUser }
 })

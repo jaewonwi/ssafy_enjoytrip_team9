@@ -60,13 +60,12 @@
 
     // store
     import { useBoardStore } from '@/stores/boardStore'
-    // import { useAuthStore } from '@/stores/authStore'
-
+    import { useLoginStore } from '@/stores/loginStore'
 
     const router = useRouter();
     
     const { boardStore, boardList, setBoardMovePage, setBoardDetail } = useBoardStore();
-    // const { authStore } = useAuthStore()
+    const { loginStore } = useLoginStore();
 
     const boardDetail = async (boardId) => {
         try {
@@ -91,6 +90,8 @@
     // 초기 작업
     boardStore.searchWord = ''
     boardList();
+    console.log("login : ")  // login 확인
+    console.log(loginStore)
 
     // pagination
     const movePage= (pageIndex) => {

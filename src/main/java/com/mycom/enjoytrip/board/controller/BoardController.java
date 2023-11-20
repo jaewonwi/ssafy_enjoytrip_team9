@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.board.dto.BoardDto;
 import com.mycom.enjoytrip.board.dto.BoardParamDto;
 import com.mycom.enjoytrip.board.dto.BoardResultDto;
 import com.mycom.enjoytrip.board.service.BoardService;
+import com.mycom.enjoytrip.dto.UserDto;
 
 @RestController
 // @CrossOrigin(origins="*", allowedHeaders="*")
@@ -40,14 +42,15 @@ public class BoardController {
     public BoardResultDto boardDetail(@PathVariable int boardId, HttpSession session){
 
         BoardParamDto boardParamDto = new BoardParamDto();
-//        boardParamDto.setUserId( ((UserDto) session.getAttribute("userDto")).getUserId());
+        boardParamDto.setUserId( ((UserDto) session.getAttribute("userDto")).getUserId());
         boardParamDto.setBoardId(boardId);
 
         BoardResultDto boardResultDto = service.boardDetail(boardParamDto);
         // 게시글 작성자와 현 사용자가 동일
-//        if( ((UserDto) session.getAttribute("userDto")).getUserId() == boardResultDto.getDto().getUserId() ) {
-//            boardResultDto.getDto().setSameUser(true);
-//        }                
+        if( ((UserDto) session.getAttribute("userDto")).getUserId() == boardResultDto.getDto().getUserId() ) {
+            boardResultDto.getDto().setSameUser(true);
+            System.out.println("같은사용자인가요?" + boardResultDto.getDto().isSameUser());
+        }                
                 
         return boardResultDto;     
     }
@@ -69,6 +72,7 @@ public class BoardController {
 //        boardDto.setUserId( ((UserDto) request.getSession().getAttribute("userDto")).getUserId());
 //        BoardResultDto boardResultDto = service.boardUpdate(boardDto, request);
     	System.out.println(boardDto.toString());
+    	
         BoardResultDto boardResultDto = service.boardUpdate(boardDto);
 
         return boardResultDto;        
@@ -78,6 +82,18 @@ public class BoardController {
     public BoardResultDto boardDelete(@PathVariable(value="boardId") int boardId){
         BoardResultDto boardResultDto = service.boardDelete(boardId);
         
-        return boardResultDto;         
+        return boardResultDto;
     }
+    
+//    @PostMapping(value=/*"/boards/{boardId}")
+//    public BoardResultDto boardLikeUpdate(@PathVariable int boardId, HttpSession session){
+//
+//        BoardParamDto boardParamDto = new BoardParamDto();
+//        boardParamDto.setUserId( ((UserDto) session.getAttribute("userDto")).getUserId());
+//        boardParamDto.setBoardId(boardId);
+//
+//        BoardResultDto boardResultDto = service.boardLikeUpdate(boardParamDto);
+//                
+//        return boardResultDto;
+//    }*/
 }

@@ -23,4 +23,6 @@ public interface BoardService {
     //int boardListTotalCount();    
     BoardResultDto boardListSearchWord(BoardParamDto boardParamDto);
     //int boardListSearchWordTotalCount(boardParamDto boardParamDto);
+    
+    BoardResultDto boardLikeUpdate(BoardParamDto boardParamDto);
 }

@@ -3,7 +3,7 @@
     
     <div>
         <!-- detail head -->
-        <div class="row detail-head bg-light p-3 rounded-2">
+        <div class="row detail-head p-3 rounded-2">
             <!-- title -->
             <div class="row">
                 <h2 class="title">{{ board.boardId }}. {{ board.boardTitle }}</h2>  
@@ -17,13 +17,11 @@
                         <span class="fw-bold">{{ board.userNm }}</span> <br />
                         <span class="text-secondary fw-light">
                             <!-- {{ util.makeDateStr(board.boardRegDate.date, '.') }} &nbsp; -->
-                            <span class="icon-eye"></span> {{ board.boardViewCnt }} &nbsp;
+                            <span class="icon-eye"></span> {{ board.boardReadCount }} &nbsp;
                             <span class="icon-heart-o me-2"></span> {{ board.boardLike }} &nbsp;
                             <span class="icon-commenting-o me-2"></span> 0
                         </span>
                     </div>
-                    <!-- <br /><br /><br /><br /><br /><br /><br />
-                    {{ board }} <br>{{ board.boardRegDate }}<br>  -->
                 </div>
             </div>
         </div>
@@ -33,11 +31,12 @@
         <div class="row">
             <div class="text-secondary" v-html="board.boardContent"></div>
             <div class="divider my-5"></div>
+            <div class="divider my-5"></div>
             <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="deleteBoard">
-                    글삭제 </button>
-                <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
-                    글수정 </button>
+                <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="deleteBoard" v-show="sameUser">
+                    글삭제 </button> &nbsp;
+                <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify" v-show="sameUser">
+                    글수정 </button> &nbsp;
                 <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
                     글목록 </button>
             </div>
@@ -55,20 +54,37 @@
     // common
     import util from '@/common/util.js'
 
+    // store
+    import { useLoginStore } from '../../stores/loginStore';
+
     const route = useRoute();
     const router = useRouter();
+
+    const { loginStore } = useLoginStore();
+
     
     const boardId = route.params.boardId;
     console.log(boardId)
 
     const board = ref({});
 
+    let sameUser = false;
+    
     const getDetail = async () => {
         try {
             let { data } = await http.get('/boards/'+boardId);
             board.value = data.dto;
-            // console.log("getdetail....")
-            // console.log(data.dto)
+            console.log("getdetail....")
+            console.log(data)
+            console.log(data.dto)
+
+            if (data.dto.userId == loginStore.userId ){
+                console.log('작성자와 로그인한 사용자가 일치합니다.')
+                sameUser = true;
+            } else {
+                console.log('작성자와 로그인한 사용자가 일치하지 않습니다.')
+            }
+
         } catch (error) {
             console.error(error);
         }

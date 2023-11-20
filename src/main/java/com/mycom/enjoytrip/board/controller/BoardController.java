@@ -85,15 +85,10 @@ public class BoardController {
         return boardResultDto;
     }
     
-//    @PostMapping(value=/*"/boards/{boardId}")
-//    public BoardResultDto boardLikeUpdate(@PathVariable int boardId, HttpSession session){
-//
-//        BoardParamDto boardParamDto = new BoardParamDto();
-//        boardParamDto.setUserId( ((UserDto) session.getAttribute("userDto")).getUserId());
-//        boardParamDto.setBoardId(boardId);
-//
-//        BoardResultDto boardResultDto = service.boardLikeUpdate(boardParamDto);
-//                
-//        return boardResultDto;
-//    }*/
+    @PostMapping(value="/boards/{boardId}/boardLike")
+    public void boardLikeUpdate(@PathVariable int temp){
+
+        System.out.println("가능?");
+
+    }
 }

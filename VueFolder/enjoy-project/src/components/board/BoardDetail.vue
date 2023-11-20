@@ -27,11 +27,17 @@
         </div>
 
         <!-- content -->
-        <hr>
         <div class="row">
-            <div class="text-secondary" v-html="board.boardContent"></div>
-            <div class="divider my-5"></div>
-            <div class="divider my-5"></div>
+            <div class="text-secondary bg-light rounded-3">
+                <div class="p-4" v-html="board.boardContent"></div>
+                <div class="divider mt-5"></div>
+                <!-- <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-outline-none" @click="clickLike">좋아요</button>
+                    <span class="fs-3 fw-bold icon-heart my-3" v-show="isLiked"></span>
+                    <span class="fs-3 fw-bold icon-heart-o my-3" v-show="!isLiked"></span>
+                </div> -->
+            </div>
+            <div class="divider mt-5"></div>
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="deleteBoard" v-show="sameUser">
                     글삭제 </button> &nbsp;
@@ -64,18 +70,18 @@
 
     
     const boardId = route.params.boardId;
-    console.log(boardId)
+    console.log("boardId : "+boardId)
 
     const board = ref({});
 
     let sameUser = false;
+    // let isLiked = ref(false);
     
     const getDetail = async () => {
         try {
             let { data } = await http.get('/boards/'+boardId);
             board.value = data.dto;
-            console.log("getdetail....")
-            console.log(data)
+            console.log("getDetail : ")
             console.log(data.dto)
 
             if (data.dto.userId == loginStore.userId ){
@@ -103,6 +109,7 @@
             console.log(error)
         }
     }
+
     const deleteBoard = async () => {
         let result = confirm("정말로 삭제하시겠습니까?")
         console.log(result)
@@ -116,6 +123,14 @@
             }
         }
     }
+
+    // const clickLike = async () => {
+    //     console.log("좋아용");
+    //     console.log(isLiked);
+    //     isLiked = !isLiked
+    // }
+
+
 
     getDetail();
 

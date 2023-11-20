@@ -6,8 +6,8 @@
         <div>
             <ckeditor :editor="editor" v-model="editorDataContent" :config="editorConfig"></ckeditor>
             <div class="divider my-2"></div>
-            <button type="button" class="btn btn-primary mt-2" @click="insertBoard">등록</button>
-            <button type="button" class="btn btn-primary mt-2" @click="updateBoard">수정</button>        
+            <button type="button" class="btn btn-primary mt-2" @click="insertBoard" v-show="!boardType">등록</button>
+            <button type="button" class="btn btn-primary mt-2" @click="updateBoard" v-show="boardType">수정</button>        
         </div>
     </div>
 </template>
@@ -41,11 +41,13 @@ const editorDataContent = ref('')
 const editorConfig = {}
 
 const boardId = route.params.boardId;   // 아이디가 있다면 아이디를 받아오자
+let boardType = false;
 console.log("boardId :")
 console.log(boardId)
 
 const initEditor = async () => {
   if (boardId){
+    boardType = true
     let { data } = await http.get('/boards/' + boardId);
     console.log("Load Data : " + data.result)
     editorDataTitle.value = data.dto.boardTitle

@@ -6,19 +6,20 @@
         <div class="row detail-head p-3 rounded-2">
             <!-- title -->
             <div class="row">
-                <h2 class="title">{{ board.boardId }}. {{ board.boardTitle }}</h2>  
+                <h2 class="title">{{ boardStore.boardId }}. {{ boardStore.title }}</h2>  
             </div>
             <!-- profile -->
             <div class="row">
                 <div class="align-start">
-                    <img :src="board.userProfile"
+                    <img :src="boardStore.userProfile"
                         class="avatar d-inline-block me-4 float-md-start rounded-circle img-thumbnail" />
                     <div class="user-info">
-                        <span class="fw-bold">{{ board.userNm }}</span> <br />
+                        <span class="fw-bold">{{ boardStore.userNm }}</span> <br/>
                         <span class="text-secondary fw-light">
+                            <!-- {{ board.boardRegDate.date.year }}. {{ board.boardRegDate.date.month }}. {{ board.boardRegDate.date.day }} &nbsp; -->
                             <!-- {{ util.makeDateStr(board.boardRegDate.date, '.') }} &nbsp; -->
-                            <span class="icon-eye"></span> {{ board.boardReadCount }} &nbsp;
-                            <span class="icon-heart-o me-2"></span> {{ board.boardLike }} &nbsp;
+                            <span class="icon-eye"></span> {{ boardStore.readCount }} &nbsp;
+                            <span class="icon-heart-o me-2"></span> {{ boardStore.like }} &nbsp;
                             <span class="icon-commenting-o me-2"></span> 0
                         </span>
                     </div>
@@ -29,7 +30,7 @@
         <!-- content -->
         <div class="row">
             <div class="text-secondary bg-light rounded-3">
-                <div class="p-4" v-html="board.boardContent"></div>
+                <div class="p-4" v-html="boardStore.content"></div>
                 <div class="divider mt-5"></div>
                 <!-- <div class="d-flex flex-row-reverse">
                     <button class="btn btn-outline-none" @click="clickLike">좋아요</button>
@@ -58,31 +59,36 @@
     import { useRoute, useRouter } from 'vue-router';
     
     // common
-    import util from '@/common/util.js'
+    // import util from '@/common/util.js'
 
     // store
-    import { useLoginStore } from '../../stores/loginStore';
+    import { useBoardStore } from '@/stores/boardStore'
+    import { useLoginStore } from '@/stores/loginStore';
 
     const route = useRoute();
     const router = useRouter();
 
     const { loginStore } = useLoginStore();
-
+    const { boardStore, setBoardDetail } = useBoardStore();
     
     const boardId = route.params.boardId;
-    console.log("boardId : "+boardId)
-
-    const board = ref({});
+    console.log("boardId : " + boardId)
 
     let sameUser = false;
     // let isLiked = ref(false);
-    
+
     const getDetail = async () => {
         try {
             let { data } = await http.get('/boards/'+boardId);
-            board.value = data.dto;
+            // board.value = data.dto;
+
             console.log("getDetail : ")
             console.log(data.dto)
+            // console.log(board)
+
+            setBoardDetail(data.dto)
+
+            console.log(boardStore)
 
             if (data.dto.userId == loginStore.userId ){
                 console.log('작성자와 로그인한 사용자가 일치합니다.')

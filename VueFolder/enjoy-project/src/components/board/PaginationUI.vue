@@ -25,8 +25,9 @@ route url 이 board 에서 / 로 변경되는 문제 발생 -->
 
 <script setup>
 
-  import {useBoardStore} from '@/stores/boardStore'
-  const { boardStore, startPageIndex, endPageIndex, prev, next } = useBoardStore();
+  import { useBoardStore } from '@/stores/boardStore'
+  import { storeToRefs } from 'pinia'
+  const { boardStore, startPageIndex, endPageIndex, prev, next, pageCount } = storeToRefs(useBoardStore());
 
   const emit = defineEmits(['call-parent'])
   const paginationChanged = (pageIndex) => {
@@ -35,3 +36,10 @@ route url 이 board 에서 / 로 변경되는 문제 발생 -->
   }
 
 </script>
+
+<style scoped>
+.pagination {
+  --bs-pagination-color: #1A374D;
+}
+
+</style>

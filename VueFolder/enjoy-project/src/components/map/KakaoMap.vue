@@ -5,7 +5,7 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 
-const KAKAO_MAP_KEY = '031d62f93a0d302ac9151ec448c8abfc';
+const KAKAO_MAP_KEY = '20fe3797349842110f77c1012478ec1d';
 
 var map;
 const positions = ref([]);

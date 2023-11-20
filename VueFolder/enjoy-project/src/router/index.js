@@ -11,6 +11,7 @@ import BoardDetail from '@/components/board/BoardDetail.vue'
 import BoardEditor from '@/components/board/BoardEditor.vue'
 
 import MapPage from '@/views/map/MapPage.vue'
+import SearchPage from '@/views/SearchPage.vue'
 
 // import { useAuthStore } from '@/stores/authStore'
 
@@ -57,6 +58,10 @@ const router = createRouter({
     {
       path: '/map',
       component: MapPage,
+    },
+    {
+      path: '/search',
+      component: SearchPage,
     }
   ]
 })

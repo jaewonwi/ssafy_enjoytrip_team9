@@ -75,6 +75,7 @@ const login = async () => {
       // authStore에 반영
       setLogin({
         isLogin: true,
+        userId: data.userId,
         userNm: data.userNm,
         userPhone: data.userPhone,
         userEmail: data.userEmail,

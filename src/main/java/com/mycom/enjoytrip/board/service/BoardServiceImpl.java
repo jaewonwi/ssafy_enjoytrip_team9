@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.board.dao.BoardDao;
 import com.mycom.enjoytrip.board.dto.BoardDto;
@@ -63,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
         
         try {
             dao.boardReadCountDelete(boardId);
+            dao.boardLikeDelete(boardId);
             dao.boardDelete(boardId);        
             boardResultDto.setResult(SUCCESS);
             
@@ -82,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
         try {
             int userReadCnt = dao.boardUserReadCount(boardParamDto);
             if( userReadCnt == 0 ) {
-                dao.boardUserReadInsert(boardParamDto.getBoardId(), boardParamDto.getUserId());
+                dao.boardUserReadInsert(boardParamDto.getBoardId(), boardParamDto.getUserId());		// 조회할 때마다 조회수 증가(사용자 당 한번)
                 dao.boardReadCountUpdate(boardParamDto.getBoardId());
             }
             
@@ -104,7 +104,7 @@ public class BoardServiceImpl implements BoardService {
         
         try {
             List<BoardDto> list = dao.boardList(boardParamDto);
-            int count = dao.boardListTotalCount();            
+            int count = dao.boardListTotalCount();        
             boardResultDto.setList(list);
             boardResultDto.setCount(count);
             boardResultDto.setResult(SUCCESS);
@@ -136,6 +136,26 @@ public class BoardServiceImpl implements BoardService {
             boardResultDto.setResult(FAIL);
         }
         
+        return boardResultDto;
+    }
+    
+    @Override
+    public BoardResultDto boardLikeUpdate(BoardParamDto boardParamDto) {
+    	BoardResultDto boardResultDto = new BoardResultDto();
+    	
+    	try {
+            int userLikeCnt = dao.boardUserLikeCount(boardParamDto);
+            if( userLikeCnt == 0 ) {
+                dao.boardUserLikeInsert(boardParamDto.getBoardId(), boardParamDto.getUserId());		// 게시글 좋아요 증가(사용자 당 한번)
+                dao.boardLikeUpdate(boardParamDto.getBoardId());
+                
+                boardResultDto.setResult(SUCCESS);
+            }
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		boardResultDto.setResult(FAIL);
+    	}
+    	
         return boardResultDto;
     }
 

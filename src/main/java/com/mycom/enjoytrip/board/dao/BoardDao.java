@@ -19,20 +19,27 @@ public interface BoardDao {
     List<BoardDto> boardListSearchWord(BoardParamDto boardParamDto);
     int boardListSearchWordTotalCount(BoardParamDto boardParamDto);
 
-	// 게시글 한 개
+	// 게시글 하나 조회
 	BoardDto boardDetail(BoardParamDto boardParamDto);
 	
 	// map - Dto
     int boardUserReadCount(BoardParamDto boardParamDto); 
+    int boardUserLikeCount(BoardParamDto boardParamDto); 
    
     // map - @param
     int boardUserReadInsert(
            @Param("boardId") int boardId, 
            @Param("userId") int userId );
-    int boardReadCountUpdate(int boardId);	
+    int boardReadCountUpdate(int boardId);
+    
+    int boardUserLikeInsert(
+            @Param("boardId") int boardId, 
+            @Param("userId") int userId );
+     int boardLikeUpdate(int boardId);	
    
     int boardDelete(int boardId);				// 게시글 삭제    
     int boardReadCountDelete(int boardId);		// 게시글 조회수도 삭제 
+    int boardLikeDelete(int boardId);			// 게시글 좋아요도 삭제 
     
     int boardUpdate(BoardDto dto);
 }

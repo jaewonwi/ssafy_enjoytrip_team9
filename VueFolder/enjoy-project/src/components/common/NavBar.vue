@@ -32,7 +32,9 @@
           <li class="nav-item">
             <router-link to="/board" class="nav-link text-white">게시판</router-link>
           </li>
-          <li class="nav-item"><a class="nav-link text-white" href="#">Search</a></li>
+          <li class="nav-item">
+            <router-link to="/search" class="nav-link text-white">Search</router-link>
+          </li>
           <li class="nav-item">
             <router-link to="/map" class="nav-link text-white">지도</router-link>
           </li>

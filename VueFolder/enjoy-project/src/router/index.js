@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '@/views/MainPage.vue'
 import BoardPage from '@/views/BoardPage.vue'
+import SearchPage from '@/views/SearchPage.vue'
 
 import RegistPage from '@/views/user/RegistPage.vue'
 import LoginPage from '@/views/user/LoginPage.vue'
@@ -11,6 +12,9 @@ import BoardDetail from '@/components/board/BoardDetail.vue'
 import BoardEditor from '@/components/board/BoardEditor.vue'
 
 import MapPage from '@/views/map/MapPage.vue'
+
+import AttractionSearch from '@/components/attraction/AttractionSearch.vue'
+
 
 // import { useAuthStore } from '@/stores/authStore'
 
@@ -49,7 +53,7 @@ const router = createRouter({
       
       // jaewon
       children: [
-        {path: '', name: 'BoardList',component: BoardList},
+        {path: '', name: 'BoardList', component: BoardList},
         {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
         {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]
@@ -57,6 +61,15 @@ const router = createRouter({
     {
       path: '/map',
       component: MapPage,
+    },
+    {
+      path: '/search',
+      component: SearchPage,
+      children: [
+        {path: '', name: 'AttactionSearch', component: AttractionSearch},
+        // {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
+        // {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
+      ]
     }
   ]
 })

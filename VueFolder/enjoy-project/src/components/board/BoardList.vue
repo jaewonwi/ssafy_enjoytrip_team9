@@ -20,7 +20,7 @@
                         <th>작성자</th>
                         <th>등록일</th>
                         <th>조회수</th>
-                        <th>좋아요</th>
+                        <!-- <th>좋아요</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -30,11 +30,13 @@
                         <td>{{ board.userNm }}</td>
                         <td>{{ util.makeDateStr(board.boardRegDate.date, '.') }}</td>
                         <td>{{ board.boardReadCount }}</td>
-                        <td>{{ board.boardLike }}</td>
+                        <!-- <td>{{ board.boardLike }}</td> -->
                     </tr>
                 </tbody>
             </table>
             
+            <div class="divider m-5"></div>
+
             <PaginationUI v-on:call-parent="movePage"></PaginationUI>
             
             <div class="row m-4 justify-content-end">
@@ -61,6 +63,9 @@
     // store
     import { useBoardStore } from '@/stores/boardStore'
     import { useLoginStore } from '@/stores/loginStore'
+
+    // component
+    import PaginationUI from "@/components/board/PaginationUI.vue";
 
     const router = useRouter();
     
@@ -90,8 +95,8 @@
     // 초기 작업
     boardStore.searchWord = ''
     boardList();
-    console.log("login : ")  // login 확인
-    console.log(loginStore)
+    // console.log("login : ")  // login 확인
+    // console.log(loginStore)
 
     // pagination
     const movePage= (pageIndex) => {

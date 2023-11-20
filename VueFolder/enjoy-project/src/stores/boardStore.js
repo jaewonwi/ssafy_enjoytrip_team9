@@ -23,9 +23,11 @@ export const useBoardStore = defineStore('boardStore', () => {
     boardId: 0,
     title: "",
     content: "",
-    userName: "",
-    regDate: "",
-    regTime: "",
+    userNm: "",
+    regDateTime: "",
+    // regDate: "",
+    // regTime: "",
+    userProfile: "",
     readCount: 0,
     like: 0,
     sameUser: false,
@@ -41,11 +43,13 @@ export const useBoardStore = defineStore('boardStore', () => {
     boardStore.boardId = payload.boardId;
     boardStore.title = payload.boardTitle;
     boardStore.content = payload.boardContent;
-    boardStore.userName = payload.userNm;
-    boardStore.regDate = payload.boardRegDate.date;
+    boardStore.userNm = payload.userNm;
+    boardStore.regDateTime = payload.regDateTime;
+    // boardStore.regDate = payload.boardRegDate.date;
     // console.log(boardStore.boardRegDate)
-    boardStore.regTime = payload.boardRegDate.time;
-    boardStore.readCount = payload.boardViewCnt;
+    // boardStore.regTime = payload.boardRegDate.time;
+    boardStore.userProfile = payload.userProfile;
+    boardStore.readCount = payload.boardReadCount;
     boardStore.like = payload.boardLike;
     boardStore.sameUser = payload.sameUser;
   }
@@ -62,12 +66,14 @@ export const useBoardStore = defineStore('boardStore', () => {
       let { data } = await http.get("/boards", { params }); // params: params shorthand property, let response 도 제거
       console.log("boardStore: data : ");
       console.log(data);
-    //    if (data.result == "login") {     // 로그인하지 않았으면 접근 X
-    //       router.push("/login");
-    //    } else {
+       if (data.result == "login") {     // 로그인하지 않았으면 접근 X
+          router.push("/login");
+       } else {
         setBoardList(data.list);
         setTotalListItemCount(data.count);
-    //    }
+        console.log("총 건수 : "+data.count);
+        console.log("pageCount : "+pageCount.value)
+       }
     } catch (error) {
        console.error(error);
     }
@@ -84,14 +90,15 @@ export const useBoardStore = defineStore('boardStore', () => {
     }
   })
 
-  const endPageIndex = computed(() => {
-    if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
-      //10, 20...맨마지막
-      return (boardStore.currentPageIndex / boardStore.pageLinkCount - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-    } else {
-      return Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-    }
-  })
+  const endPageIndex = pageCount
+  // const endPageIndex = computed(() => {
+  //   if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
+  //     //10, 20...맨마지막
+  //     return (boardStore.currentPageIndex / boardStore.pageLinkCount - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+  //   } else {
+  //     return Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+  //   }
+  // })
 
   const prev = computed(() => boardStore.currentPageIndex <= boardStore.pageLinkCount ? false : true)
   const next = computed(() => 

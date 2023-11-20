@@ -14,6 +14,8 @@ public class UserServiceImpl implements UserService {
 	
 	private static final int SUCCESS = 1;
 	private static final int FAIL = -1;
+	private static final int NO_PWD = -2;
+	private static final int UPDATE_PWD = 2;
 
 	@Override
 	public int regist(UserDto dto) {
@@ -29,15 +31,24 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int update(UserDto dto) {
-		if (userDao.update(dto) == 1)
-			return SUCCESS;
-		else
-			return FAIL;
+	public int update(UserDto dto, int flag) {
+		if (flag == UPDATE_PWD) {
+			if (userDao.update(dto) == 1)
+				return UPDATE_PWD;
+			else
+				return FAIL;
+		} else {
+			System.out.println("비밀번호 수정 안함");
+			if (userDao.updateNoPwd(dto) == 1)
+				return NO_PWD;
+			else
+				return FAIL;
+		}
 	}
 
 	@Override
-	public int delete(int userId) {
+	public int delete(String userEmail) {
+		int userId = detail(userEmail).getUserId();
 		return userDao.delete(userId);
 	}
 

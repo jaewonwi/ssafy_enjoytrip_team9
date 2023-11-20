@@ -22,6 +22,14 @@
 		 where userEmail = #{userEmail}
 	</update>
 	
+	<update id="updateNoPwd" parameterType="com.mycom.enjoytrip.dto.UserDto">
+		update users
+		 set userNm = #{userNm},
+		 	 userPhone = #{userPhone},
+		 	 userProfile = #{userProfile}  
+		 where userEmail = #{userEmail}
+	</update>
+	
 	<delete id="delete" parameterType="int">
 		delete from users
 		 where userId = #{userId}

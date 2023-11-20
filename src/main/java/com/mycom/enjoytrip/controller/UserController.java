@@ -23,6 +23,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	private static final int NO_PWD = -2;
+	private static final int UPDATE_PWD = 2;
 
 	@PostMapping("users")
 	public int regist(@RequestBody UserDto dto) {
@@ -39,28 +42,53 @@ public class UserController {
 	public Map<String, String> update(@RequestBody UserDto dto, HttpSession session) {
 		System.out.println("UserController-update: " + dto);
 		Map<String, String> map = new HashMap<>();
-		
-		if (userService.update(dto) == 1) {
-			UserDto userDto = detail(dto.getUserEmail());
-			System.out.println("session에 저장할 userDto: " + userDto);
-			session.setAttribute("userDto", userDto);
-			
-			map.put("result", "success");
-			
-			map.put("userNm", userDto.getUserNm());
-			map.put("userPhone", userDto.getUserPhone());
-			map.put("userEmail", userDto.getUserEmail());
-			map.put("userProfileImageUrl", userDto.getUserProfile());
-			map.put("userClsf", userDto.getUserClsf());
-			return map;
+		if (dto.getUserPwd().length() >= 4) {
+			if (userService.update(dto, UPDATE_PWD) == UPDATE_PWD) {
+				UserDto userDto = detail(dto.getUserEmail());
+				System.out.println("session에 저장할 userDto: " + userDto);
+				session.setAttribute("userDto", userDto);
+				
+				map.put("result", "success");
+				
+				map.put("userNm", userDto.getUserNm());
+				map.put("userPhone", userDto.getUserPhone());
+				map.put("userEmail", userDto.getUserEmail());
+				map.put("userProfileImageUrl", userDto.getUserProfile());
+				map.put("userClsf", userDto.getUserClsf());
+				return map;
+			}
+		} else if (dto.getUserPwd().length() == 0) {
+			if (userService.update(dto, NO_PWD) == NO_PWD) {
+				UserDto userDto = detail(dto.getUserEmail());
+				System.out.println("session에 저장할 userDto: " + userDto);
+				session.setAttribute("userDto", userDto);
+				
+				map.put("result", "success");
+				map.put("noUpdatePwd", "ok");
+				
+				map.put("userNm", userDto.getUserNm());
+				map.put("userPhone", userDto.getUserPhone());
+				map.put("userEmail", userDto.getUserEmail());
+				map.put("userProfileImageUrl", userDto.getUserProfile());
+				map.put("userClsf", userDto.getUserClsf());
+				return map;
+			}
 		}
 		
 		map.put("result", "fail");
 		return map;
 	}
 	
-	@DeleteMapping("/users/{userId}")
-	public int delete(@PathVariable int userId) {
-		return userService.delete(userId);
+	@DeleteMapping("/users/{userEmail}")
+	public Map<String, String> delete(@PathVariable String userEmail, HttpSession session) {
+		session.invalidate();
+		Map<String, String> map = new HashMap<>();
+		if (userService.delete(userEmail) == 1) {
+			map.put("result", "success");
+			return map;
+		}
+		
+		map.put("result", "fail");
+		return map;
 	}
 }

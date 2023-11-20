@@ -82,7 +82,7 @@
             </div>
             <div class="text-center">
               <button class="btn btn-primary" type="button" @click="update">수정하기</button>
-              <button class="btn btn-secondary" type="button">탈퇴하기</button>
+              <button class="btn btn-secondary" type="button" @click="del">탈퇴하기</button>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@ import { ref, computed } from 'vue'
 import { useLoginStore } from '@/stores/loginStore'
 import http from '@/common/axios.js'
 
-const { loginStore, updateUser } = useLoginStore()
+const { loginStore, updateUser, deleteUser } = useLoginStore()
 
 const userPwd = ref('')
 const userPwd2 = ref('')
@@ -108,7 +108,7 @@ const isUserPwdFocus = ref(false)
 const isUserPwd2Focus = ref(false)
 
 // validation
-const isUserNmValid = ref(true)   // 처음 input tag를 클릭할 때, 유효성 검사가 false인 상태가 아니다.
+const isUserNmValid = ref(true) // 처음 input tag를 클릭할 때, 유효성 검사가 false인 상태가 아니다.
 const isUserPhoneValid = ref(false)
 const isUserPwdValid = ref(false)
 const isUserPwd2Valid = ref(false)
@@ -152,5 +152,9 @@ const update = () => {
     userPhone: loginStore.userPhone,
     userPwd: userPwd.value
   })
+}
+
+const del = () => {
+  deleteUser(loginStore.userEmail)
 }
 </script>

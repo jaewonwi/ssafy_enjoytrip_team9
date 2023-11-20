@@ -36,6 +36,7 @@ export const useLoginStore = defineStore('loginStore', () => {
   }
 
   const updateUser = async (payload) => {
+
     let updateUserObj = {
       userEmail: loginStore.userEmail,
       userNm: payload.userNm,
@@ -44,7 +45,7 @@ export const useLoginStore = defineStore('loginStore', () => {
       userProfileImageUrl: loginStore.userProfileImageUrl
     }
     // 이름, 전화번호, 비밀번호를 받는다.
-    try {
+    try { 
       let { data } = await http.put('/users', updateUserObj)
       console.log(data)
 
@@ -53,9 +54,28 @@ export const useLoginStore = defineStore('loginStore', () => {
           userNm: data.userNm,
           userPhone: data.userPhone,
           userEmail: data.userEmail,
-          userProfileImageUrl: data.userProfileImageUrl,
+          userProfileImageUrl: notLoginUserProfileImageUrl,  // data.userProfileImageUrl
           userClsf: data.userClsf
         })
+      } else {
+        alert('수정 형식에 맞춰주세요!!')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteUser = async (payload) => {
+    try {
+      let { data } = await http.delete('/users/' + payload)
+      console.log(data)
+      if (data.result == 'success') {
+        // session 삭제는 백에서 진행
+        setLogout()
+        alert('탈퇴!!')
+      } else if (data.result == 'login') {
+        logout()
+        alert('time-out으로 로그아웃 되었습니다. 다시 로그인해주세요')
       }
     } catch (error) {
       console.log(error)
@@ -115,5 +135,5 @@ export const useLoginStore = defineStore('loginStore', () => {
     console.log('setUpdate: ' + loginStore)
   }
 
-  return { loginStore, setLogin, logout, updateUser }
+  return { loginStore, setLogin, logout, updateUser, deleteUser }
 })

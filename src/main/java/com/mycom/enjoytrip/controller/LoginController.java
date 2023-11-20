@@ -36,6 +36,8 @@ public class LoginController {
 			// client가 필요한 정보
 			// useLoginStore와 맞춘다.
 			map.put("result", "success");
+			
+			map.put("userId", Integer.toString(userDto.getUserId()));
 			map.put("userNm", userDto.getUserNm());
 			map.put("userPhone", userDto.getUserPhone());
 			map.put("userEmail", userDto.getUserEmail());

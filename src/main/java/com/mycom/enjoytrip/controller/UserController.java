@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.dto.UserDto;
 import com.mycom.enjoytrip.service.UserService;
@@ -79,7 +80,16 @@ public class UserController {
 		return map;
 	}
 	
-	@DeleteMapping("/users/{userEmail}")
+	@PostMapping("users/profiles/")
+	public Map<String, String> updateProfile(@RequestBody UserDto dto, HttpSession session, MultipartHttpServletRequest request) {
+		
+		Map<String, String> map = new HashMap<>();
+		UserDto userDto = userService.update(dto, request);
+		// 
+		return map;
+	}
+	
+	@DeleteMapping("/users/{userEmail}") 
 	public Map<String, String> delete(@PathVariable String userEmail, HttpSession session) {
 		session.invalidate();
 		Map<String, String> map = new HashMap<>();

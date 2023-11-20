@@ -35,34 +35,75 @@ export const useLoginStore = defineStore('loginStore', () => {
     }
   }
 
-  const updateUser = async (payload) => {
+  const updateUser = async (formData, options) => {
 
     let updateUserObj = {
       userEmail: loginStore.userEmail,
-      userNm: payload.userNm,
-      userPwd: payload.userPwd,
-      userPhone: payload.userPhone,
-      userProfileImageUrl: loginStore.userProfileImageUrl
+      userNm: formData.userNm,
+      userPwd: formData.userPwd,
+      userPhone: formData.userPhone,
+      userProfileImageUrl: formData.userProfileImageUrl
     }
-    // 이름, 전화번호, 비밀번호를 받는다.
-    try { 
-      let { data } = await http.put('/users', updateUserObj)
-      console.log(data)
 
-      if (data.result == 'success') {
-        setUpdate({
-          userNm: data.userNm,
-          userPhone: data.userPhone,
-          userEmail: data.userEmail,
-          userProfileImageUrl: notLoginUserProfileImageUrl,  // data.userProfileImageUrl
-          userClsf: data.userClsf
-        })
-      } else {
-        alert('수정 형식에 맞춰주세요!!')
+    // 이름, 전화번호, 비밀번호, 프로필 경로를 받는다.
+    // 프로필을 제외한 업데이트
+    if (formData.userProfileImageUrl == loginStore.userProfileImageUrl) {
+      try { 
+        // put이 아니라 post
+        let { data } = await http.post('/users/profiles', updateUserObj, options)
+        console.log(data)
+
+
+  
+        if (data.result == 'success') {
+          // sessionStorage와 loginStore 갱신
+          setUpdate({
+            userNm: data.userNm,
+            userPhone: data.userPhone,
+            userEmail: data.userEmail,
+            userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
+            userClsf: data.userClsf
+          })
+        } if (data.result == 'login') {
+          setLogout()
+          alert('time-out으로 인한 로그아웃!')
+        } else {
+          alert('수정 형식에 맞춰주세요!!')
+        }
+      } catch (error) {
+        console.log(error)
       }
-    } catch (error) {
-      console.log(error)
+    } else {  // 프로필을 포함한 업데이트 -> post
+      try {
+
+      } catch (error) {
+        console.log(error)
+      }
+
     }
+    
+    // try { 
+    //   // put이 아니라 post
+    //   let { data } = await http.put('/users', updateUserObj, formData, options)
+    //   console.log(data)
+
+    //   if (data.result == 'success') {
+    //     setUpdate({
+    //       userNm: data.userNm,
+    //       userPhone: data.userPhone,
+    //       userEmail: data.userEmail,
+    //       userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
+    //       userClsf: data.userClsf
+    //     })
+    //   } if (data.result == 'login') {
+    //     setLogout()
+    //     alert('time-out으로 인한 로그아웃!')
+    //   } else {
+    //     alert('수정 형식에 맞춰주세요!!')
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
   const deleteUser = async (payload) => {
@@ -127,11 +168,11 @@ export const useLoginStore = defineStore('loginStore', () => {
     console.log('setUpdate: ' + payload)
     sessionStorage.setItem('userNm', payload.userNm)
     sessionStorage.setItem('userPhone', payload.userPhone)
-    // 수정하면 userDto의 profileUrl에 null이 들어간다.
-    // sessionStorage.setItem('userProfileImageUrl', payload.userProfileImageUrl)
+    sessionStorage.setItem('userProfileImageUrl', payload.userProfileImageUrl)
 
     loginStore.userNm = payload.userNm
     loginStore.userPhone = payload.userPhone
+    loginStore.userProfileImageUrl = payload.userProfileImageUrl
     console.log('setUpdate: ' + loginStore)
   }
 

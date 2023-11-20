@@ -11,15 +11,12 @@
     </div>
   </div>
 
-  <div class="untree_co-section">
-    
-    <h1>Search.vue</h1>
-    <div class="container justify-content-center" style="height: 750px">
-      
-    </div>
-  </div>
+  <!-- -->
+  <router-view></router-view>
+
 </template>
 
 <script setup>
+import { RouterView } from 'vue-router'
 
 </script>

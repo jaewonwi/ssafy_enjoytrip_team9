@@ -90,14 +90,15 @@ export const useBoardStore = defineStore('boardStore', () => {
     }
   })
 
-  const endPageIndex = computed(() => {
-    if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
-      //10, 20...맨마지막
-      return (boardStore.currentPageIndex / boardStore.pageLinkCount - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-    } else {
-      return Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-    }
-  })
+  const endPageIndex = pageCount
+  // const endPageIndex = computed(() => {
+  //   if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
+  //     //10, 20...맨마지막
+  //     return (boardStore.currentPageIndex / boardStore.pageLinkCount - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+  //   } else {
+  //     return Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+  //   }
+  // })
 
   const prev = computed(() => boardStore.currentPageIndex <= boardStore.pageLinkCount ? false : true)
   const next = computed(() => 

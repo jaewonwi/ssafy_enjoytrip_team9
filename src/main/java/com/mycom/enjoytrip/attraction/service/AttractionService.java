@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.attraction.service;
 
 import java.util.List;
 

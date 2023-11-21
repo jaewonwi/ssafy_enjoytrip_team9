@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.controller;
+package com.mycom.enjoytrip.attraction.controller;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycom.enjoytrip.attraction.service.AttractionService;
 import com.mycom.enjoytrip.dto.AttractionDto;
-import com.mycom.enjoytrip.service.AttractionService;
 
 @RestController
 public class AttractionController {

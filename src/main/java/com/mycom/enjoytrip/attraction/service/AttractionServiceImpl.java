@@ -1,11 +1,11 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.attraction.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mycom.enjoytrip.dao.AttractionDao;
+import com.mycom.enjoytrip.attraction.dao.AttractionDao;
 import com.mycom.enjoytrip.dto.AttractionDto;
 
 @Service

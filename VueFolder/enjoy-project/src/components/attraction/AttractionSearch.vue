@@ -1,22 +1,3 @@
-<script setup>
-import { reactive, computed, watch, ref } from 'vue'
-//import { useAttractionStore } from '@/stores/attractionStore';
-import http from '@/common/axios.js'
-//const store= useAttractionStore();
-
-//   const init = async ()=>{
-
-//     await getSidoList();
-//     console.log("...............................");
-//     console.log(sidoList);
-//   }
-// init();
-
-store.getSidoList()
-
-//console.log(sidoList)
-</script>
-
 <template>
   <div class="untree_co-section">
     <div class="container justify-content-center">
@@ -70,3 +51,26 @@ store.getSidoList()
     </div>
   </div>
 </template>
+
+
+<script setup>
+import { reactive, computed, watch, ref } from 'vue'
+import { useSearchStore } from '@/stores/searchStore';
+import http from '@/common/axios.js'
+//const store= useAttractionStore();
+
+const { searchStore, attractionList } = useSearchStore();
+
+//   const init = async ()=>{
+
+//     await getSidoList();
+//     console.log("...............................");
+//     console.log(sidoList);
+//   }
+// init();
+
+// store.getSidoList()
+
+//console.log(sidoList)
+</script>
+

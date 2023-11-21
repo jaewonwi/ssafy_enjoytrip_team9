@@ -1,7 +1,5 @@
 package com.mycom.enjoytrip.board.service;
 
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.mycom.enjoytrip.board.dto.BoardDto;
 import com.mycom.enjoytrip.board.dto.BoardParamDto;
 import com.mycom.enjoytrip.board.dto.BoardResultDto;

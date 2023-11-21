@@ -1,3 +1,31 @@
+
+
+<script setup>
+  import { reactive, computed, watch,ref } from 'vue'
+  import { useAttractionStore } from '@/stores/attractionStore';
+  import http from "@/common/axios.js";
+  const store= useAttractionStore();
+
+
+//   const init = async ()=>{
+    
+//     await getSidoList();
+//     console.log("...............................");
+//     console.log(sidoList);
+//   }
+// init();
+
+
+
+
+store.getSidoList();
+  
+  //console.log(sidoList)
+
+
+
+</script>
+
 <template>
 
 <div class="untree_co-section">
@@ -10,6 +38,7 @@
       <div class="col-6">
         <select name id="area1List" class="form-control custom-select">
           <option value="">시도</option>
+          <option v-for="(sido) in store.sidoList" :key="sido.sidoCode" :value="sido.sidoCode">{{ sido.sidoName }}</option>
         </select>
       </div>
       <div class="col-6">
@@ -58,6 +87,3 @@
   </div>
 </div>
 </template>
-
-<script setup>
-</script>

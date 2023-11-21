@@ -40,7 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/login",
 				"/users",					// 회원가입
 				"/codes/**",					// 공통 코드
-				"/attractions/**"
+				"/attractions/**",
+				"/search/**"
 				
 		);	
 		

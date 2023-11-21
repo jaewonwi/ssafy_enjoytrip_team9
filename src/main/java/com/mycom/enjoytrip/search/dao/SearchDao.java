@@ -19,7 +19,7 @@ public interface SearchDao {
 	List<SearchAttractionDto> attractionListBySidoGugun(
 						@Param("sidoCode") int sidoCode,
 						@Param("gugunCode") int gugunCode);						// 시도, 구군
-	List<SearchAttractionDto> attractionListByContentTypeId(int contentId);		// 분류코드
+	List<SearchAttractionDto> attractionListByContentTypeId(int contentTypeId);		// 분류코드
 	List<SearchAttractionDto> attractionListBySidoContentTypeId(
 						@Param("sidoCode") int sidoCode,
 						@Param("contentTypeId") int contentTypeId);				// 시도, 분류코드		

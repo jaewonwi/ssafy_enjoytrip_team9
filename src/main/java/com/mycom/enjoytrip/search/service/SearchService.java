@@ -2,9 +2,8 @@ package com.mycom.enjoytrip.search.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
+import com.mycom.enjoytrip.search.dto.SearchAttractionResultDto;
 import com.mycom.enjoytrip.search.dto.SidoGugunDto;
 
 public interface SearchService {
@@ -13,18 +12,11 @@ public interface SearchService {
 	List<SidoGugunDto> gugunList(int sidoCode);
 	
 	// 관광지 목록
-	List<SearchAttractionDto> attractionListBySido(int sidoCode);				// 시도
-	List<SearchAttractionDto> attractionListBySidoGugun(
-						@Param("sidoCode") int sidoCode,
-						@Param("gugunCode") int gugunCode);						// 시도, 구군
-	List<SearchAttractionDto> attractionListByContentTypeId(int contentId);		// 분류코드
-	List<SearchAttractionDto> attractionListBySidoContentTypeId(
-						@Param("sidoCode") int sidoCode,
-						@Param("contentTypeId") int contentTypeId);				// 시도, 분류코드		
-	List<SearchAttractionDto> attractionListBySidoGugunContentTypeId(
-						@Param("sidoCode") int sidoCode,
-						@Param("gugunCode") int gugunCode,
-						@Param("contentTypeId") int contentTypeId);				// 시도, 구군, 분류코드
+	SearchAttractionResultDto attractionListBySido(int sidoCode);															// 시도
+	SearchAttractionResultDto attractionListBySidoGugun(int sidoCode, int gugunCode);										// 시도, 구군
+	SearchAttractionResultDto attractionListByContentTypeId(int contentTypeId);												// 분류코드
+	SearchAttractionResultDto attractionListBySidoContentTypeId(int sidoCode, int contentTypeId);							// 시도, 분류코드		
+	SearchAttractionResultDto attractionListBySidoGugunContentTypeId(int sidoCode, int gugunCode, int contentTypeId);		// 시도, 구군, 분류코드
 	
 	SearchAttractionDto attractionDetail(int contentId); // 관광지 상세정보
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycom.enjoytrip.search.dao.AttractionDao">
+<mapper namespace="com.mycom.enjoytrip.search.dao.SearchDao">
 
 	<select id="sidoList" resultType="com.mycom.enjoytrip.search.dto.SidoGugunDto">
 		select sido_code, sido_name 

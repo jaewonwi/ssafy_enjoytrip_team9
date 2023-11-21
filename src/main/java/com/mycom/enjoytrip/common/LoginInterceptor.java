@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.mycom.enjoytrip.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {

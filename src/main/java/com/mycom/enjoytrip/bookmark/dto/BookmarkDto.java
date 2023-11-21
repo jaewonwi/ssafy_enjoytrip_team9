@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.dto;
+package com.mycom.enjoytrip.bookmark.dto;
 
 public class BookmarkDto {
 	private int bookmarkId;

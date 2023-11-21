@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.controller;
+package com.mycom.enjoytrip.user.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.mycom.enjoytrip.dto.UserDto;
-import com.mycom.enjoytrip.dto.UserResultDto;
-import com.mycom.enjoytrip.service.UserService;
+import com.mycom.enjoytrip.user.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserResultDto;
+import com.mycom.enjoytrip.user.service.UserService;
 
 @RestController
 //@CrossOrigin(origins="*", allowedHeaders="*")
@@ -105,6 +105,7 @@ public class UserController {
 		UserResultDto userResultDto = userService.update(dto, request);
 		if (userResultDto.getResult() == 1) {
 			map.put("result", "success");
+			map.put("userNm", dto.getUserNm());
 			map.put("userPhone", dto.getUserPhone());
 			map.put("userEmail", dto.getUserEmail());
 			map.put("userProfileImageUrl", userResultDto.getUserProfileDto().getProfileUrl());

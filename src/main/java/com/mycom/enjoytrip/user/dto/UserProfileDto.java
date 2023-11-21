@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.dto;
+package com.mycom.enjoytrip.user.dto;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

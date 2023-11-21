@@ -16,10 +16,11 @@
 	
 	<!-- 관광지 목록 -->
 	<!-- 지역별 관광지 정보 목록 (시도) -->
-	<select id="attractionListBySido" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
+	<select id="attractionListBySido" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
 		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
 		  from attraction_info
 		 where sido_code = #{sidoCode}
+		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- 지역별 관광지 정보 목록 (시도, 구군) -->
@@ -27,13 +28,15 @@
 		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
 		  from attraction_info
 		 where sido_code = #{sidoCode} and gugun_code = #{gugunCode}
+		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- (분류코드) 별 관광지 정보 목록 -->
-	<select id="attractionListByContentTypeId" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
+	<select id="attractionListByContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
 		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
 		  from attraction_info
 		 where content_type_id = #{contentTypeId}
+		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- (시도 + 분류코드) 별 관광지 정보 목록 -->
@@ -42,6 +45,7 @@
 		  from attraction_info
 		 where sido_code = #{sidoCode}
 		   and content_type_id = #{contentTypeId}
+		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- ((시도+구군) + 분류코드) 별 관광지 정보 목록 -->
@@ -50,12 +54,13 @@
 		  from attraction_info
 		 where content_type_id = #{contentTypeId}
 		   and sido_code = #{sidoCode} and gugun_code = #{gugunCode}
+		 limit ${limit} offset #{offset}
 	</select>
 	
 	
 	<!-- 관광지 목록 갯수 카운트 -->
 	<!-- 지역별 관광지 정보 목록 (시도) -->
-	<select id="totalCountBySido" parameterType="int" resultType="int">
+	<select id="totalCountBySido" parameterType="map" resultType="int">
 		select count(*)
 		  from attraction_info
 		 where sido_code = #{sidoCode}
@@ -69,7 +74,7 @@
 	</select>
 	
 	<!-- (분류코드) 별 관광지 정보 목록 -->
-	<select id="totalCountByContentTypeId" parameterType="int" resultType="int">
+	<select id="totalCountByContentTypeId" parameterType="map" resultType="int">
 		select count(*)
 		  from attraction_info
 		 where content_type_id = #{contentTypeId}

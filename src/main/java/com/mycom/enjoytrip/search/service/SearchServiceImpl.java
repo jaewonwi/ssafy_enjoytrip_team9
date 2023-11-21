@@ -11,6 +11,7 @@ import com.mycom.enjoytrip.board.dto.BoardResultDto;
 import com.mycom.enjoytrip.search.dao.SearchDao;
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionResultDto;
+import com.mycom.enjoytrip.search.dto.SearchParamDto;
 import com.mycom.enjoytrip.search.dto.SidoGugunDto;
 
 @Service
@@ -35,14 +36,112 @@ public class SearchServiceImpl implements SearchService {
 		System.out.println("gugunList"+list.toString());
 		return list;
 	}
+//
+//	@Override
+//	public SearchAttractionResultDto attractionListBySido(int sidoCode) {
+//		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+//	   
+//	    try {
+//	        List<SearchAttractionDto> list = dao.attractionListBySido(sidoCode);
+// 	        int count = dao.totalCountBySido(sidoCode);        
+//	        searchAttractionResultDto.setList(list);
+//	        searchAttractionResultDto.setCount(count);
+//	        searchAttractionResultDto.setResult(SUCCESS);
+//	        
+//	    }catch(Exception e) {
+//	        e.printStackTrace();
+//	        searchAttractionResultDto.setResult(FAIL);
+//	    }
+//	    
+//	    return searchAttractionResultDto;
+//	}
+//
+//	@Override
+//	public SearchAttractionResultDto attractionListBySidoGugun(int sidoCode, int gugunCode) {
+//		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+//		try {
+//	       List<SearchAttractionDto> list = dao.attractionListBySidoGugun(sidoCode, gugunCode);
+//	       int count = dao.totalCountBySidoGugun(sidoCode, gugunCode);        
+//	       searchAttractionResultDto.setList(list);
+//	       searchAttractionResultDto.setCount(count);
+//	       searchAttractionResultDto.setResult(SUCCESS);
+//	        
+//	    }catch(Exception e) {
+//	       e.printStackTrace();
+//	       searchAttractionResultDto.setResult(FAIL);
+//	    }
+//	    
+//	    return searchAttractionResultDto;
+//	}
+//
+//	@Override
+//	public SearchAttractionResultDto attractionListByContentTypeId(int contentTypeId) {
+//		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+//		try {
+//	       List<SearchAttractionDto> list = dao.attractionListByContentTypeId(contentTypeId);
+//	       int count = dao.totalCountByContentTypeId(contentTypeId);    
+//	       searchAttractionResultDto.setList(list);
+//	       searchAttractionResultDto.setCount(count);
+//	       searchAttractionResultDto.setResult(SUCCESS);
+//	        
+//	    }catch(Exception e) {
+//	       e.printStackTrace();
+//	       searchAttractionResultDto.setResult(FAIL);
+//	    }
+//	    
+//	    return searchAttractionResultDto;
+//	}
+//
+//	@Override
+//	public SearchAttractionResultDto attractionListBySidoContentTypeId(int sidoCode, int contentTypeId) {
+//		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+//		try {
+//	       List<SearchAttractionDto> list = dao.attractionListBySidoContentTypeId(sidoCode, contentTypeId);
+//	       int count = dao.totalCountBySidoContentTypeId(sidoCode, contentTypeId);    
+//	       searchAttractionResultDto.setList(list);
+//	       searchAttractionResultDto.setCount(count);
+//	       searchAttractionResultDto.setResult(SUCCESS);
+//	        
+//	    }catch(Exception e) {
+//	       e.printStackTrace();
+//	       searchAttractionResultDto.setResult(FAIL);
+//	    }
+//	    
+//	    return searchAttractionResultDto;
+//	}
+//
+//	@Override
+//	public SearchAttractionResultDto attractionListBySidoGugunContentTypeId(int sidoCode, int gugunCode, int contentTypeId) {
+//		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+//		try {
+//	       List<SearchAttractionDto> list = dao.attractionListBySidoGugunContentTypeId(sidoCode, gugunCode, contentTypeId);
+//	       int count = dao.totalCountBySidoGugunContentTypeId(sidoCode, gugunCode, contentTypeId);
+//	       searchAttractionResultDto.setList(list);
+//	       searchAttractionResultDto.setCount(count);
+//	       searchAttractionResultDto.setResult(SUCCESS);
+//	        
+//	    }catch(Exception e) {
+//	       e.printStackTrace();
+//	       searchAttractionResultDto.setResult(FAIL);
+//	    }
+//	    
+//	    return searchAttractionResultDto;
+//	}
+
+	
+	@Override
+	public SearchAttractionDto attractionDetail(int contentId) {
+		return dao.attractionDetail(contentId);
+	}
+	
 
 	@Override
-	public SearchAttractionResultDto attractionListBySido(int sidoCode) {
+	public SearchAttractionResultDto attractionListBySido(SearchParamDto searchParamDto) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 	   
 	    try {
-	        List<SearchAttractionDto> list = dao.attractionListBySido(sidoCode);
- 	        int count = dao.totalCountBySido(sidoCode);        
+	        List<SearchAttractionDto> list = dao.attractionListBySido(searchParamDto);
+ 	        int count = dao.totalCountBySido(searchParamDto);        
 	        searchAttractionResultDto.setList(list);
 	        searchAttractionResultDto.setCount(count);
 	        searchAttractionResultDto.setResult(SUCCESS);
@@ -56,11 +155,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchAttractionResultDto attractionListBySidoGugun(int sidoCode, int gugunCode) {
+	public SearchAttractionResultDto attractionListBySidoGugun(SearchParamDto searchParamDto) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 		try {
-	       List<SearchAttractionDto> list = dao.attractionListBySidoGugun(sidoCode, gugunCode);
-	       int count = dao.totalCountBySidoGugun(sidoCode, gugunCode);        
+	       List<SearchAttractionDto> list = dao.attractionListBySidoGugun(searchParamDto);
+	       int count = dao.totalCountBySidoGugun(searchParamDto);        
 	       searchAttractionResultDto.setList(list);
 	       searchAttractionResultDto.setCount(count);
 	       searchAttractionResultDto.setResult(SUCCESS);
@@ -74,11 +173,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchAttractionResultDto attractionListByContentTypeId(int contentTypeId) {
+	public SearchAttractionResultDto attractionListByContentTypeId(SearchParamDto searchParamDto) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 		try {
-	       List<SearchAttractionDto> list = dao.attractionListByContentTypeId(contentTypeId);
-	       int count = dao.totalCountByContentTypeId(contentTypeId);    
+	       List<SearchAttractionDto> list = dao.attractionListByContentTypeId(searchParamDto);
+	       int count = dao.totalCountByContentTypeId(searchParamDto);    
 	       searchAttractionResultDto.setList(list);
 	       searchAttractionResultDto.setCount(count);
 	       searchAttractionResultDto.setResult(SUCCESS);
@@ -92,11 +191,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchAttractionResultDto attractionListBySidoContentTypeId(int sidoCode, int contentTypeId) {
+	public SearchAttractionResultDto attractionListBySidoContentTypeId(SearchParamDto searchParamDto) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 		try {
-	       List<SearchAttractionDto> list = dao.attractionListBySidoContentTypeId(sidoCode, contentTypeId);
-	       int count = dao.totalCountBySidoContentTypeId(sidoCode, contentTypeId);    
+	       List<SearchAttractionDto> list = dao.attractionListBySidoContentTypeId(searchParamDto);
+	       int count = dao.totalCountBySidoContentTypeId(searchParamDto);    
 	       searchAttractionResultDto.setList(list);
 	       searchAttractionResultDto.setCount(count);
 	       searchAttractionResultDto.setResult(SUCCESS);
@@ -110,11 +209,11 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public SearchAttractionResultDto attractionListBySidoGugunContentTypeId(int sidoCode, int gugunCode, int contentTypeId) {
+	public SearchAttractionResultDto attractionListBySidoGugunContentTypeId(SearchParamDto searchParamDto) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 		try {
-	       List<SearchAttractionDto> list = dao.attractionListBySidoGugunContentTypeId(sidoCode, gugunCode, contentTypeId);
-	       int count = dao.totalCountBySidoGugunContentTypeId(sidoCode, gugunCode, contentTypeId);
+	       List<SearchAttractionDto> list = dao.attractionListBySidoGugunContentTypeId(searchParamDto);
+	       int count = dao.totalCountBySidoGugunContentTypeId(searchParamDto);
 	       searchAttractionResultDto.setList(list);
 	       searchAttractionResultDto.setCount(count);
 	       searchAttractionResultDto.setResult(SUCCESS);
@@ -125,12 +224,6 @@ public class SearchServiceImpl implements SearchService {
 	    }
 	    
 	    return searchAttractionResultDto;
-	}
-
-	
-	@Override
-	public SearchAttractionDto attractionDetail(int contentId) {
-		return dao.attractionDetail(contentId);
 	}
 
 }

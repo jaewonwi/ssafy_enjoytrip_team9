@@ -9,12 +9,12 @@ export const useSearchStore = defineStore('searchStore', () => {
   const searchStore = reactive({
     // list
     list: [],
-    limit: 10,
+    limit: 20,
     offset: 0,
 
     // pagination
-    listRowCount: 10,
-    pageLinkCount: 10,
+    listRowCount: 20,
+    pageLinkCount: 20,
     currentPageIndex: 1,
     totalListItemCount: 0,
 
@@ -31,8 +31,8 @@ export const useSearchStore = defineStore('searchStore', () => {
 
     // detail
     contentId: 0,
-	contentTypeId: 0,
-	title: '',
+    contentTypeId: 0,
+    title: '',
     addr1: '',
     addr2: '',
     firstImage: '',

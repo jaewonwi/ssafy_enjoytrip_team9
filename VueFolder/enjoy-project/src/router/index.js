@@ -14,6 +14,7 @@ import BoardEditor from '@/components/board/BoardEditor.vue'
 import MapPage from '@/views/map/MapPage.vue'
 
 import SearchAttraction from '@/components/search/SearchAttraction.vue'
+import SearchAttractionDetail from '@/components/search/SearchAttractionDetail.vue'
 import { useLoginStore } from '@/stores/loginStore'
 
 // import { useAuthStore } from '@/stores/authStore'
@@ -69,7 +70,7 @@ const router = createRouter({
       component: SearchPage,
       children: [
         {path: '', name: 'SearchAttraction', component: SearchAttraction},
-        // {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
+        {path: 'detail/:contentId', name: 'SearchAttractionDetail', component: SearchAttractionDetail},
         // {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]
     }

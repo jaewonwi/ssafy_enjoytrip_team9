@@ -85,7 +85,4 @@ store.getSidoList()
 const getAttractionList = async () => {
   store.attractionList()
 }
-
-// 북마크
-const toggleBookmark = (contentId) => {}
 </script>

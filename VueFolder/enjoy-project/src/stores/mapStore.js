@@ -5,8 +5,6 @@ import { reactive } from 'vue'
 
 export const  useMapStore = defineStore('mapStore', () => {
 
-  // 
-  // sidoList.push({sidoCode: '', sidoName: ''})
   const mapStore = reactive({
     // 시도 구군의 기본 선택값
     selectSido: -1,
@@ -15,10 +13,10 @@ export const  useMapStore = defineStore('mapStore', () => {
     
     sidoList: [{sidoCode: -1, sidoName: '시도 선택'}],       // sidoCode, sidoName
     gugunList: [{gugunCode: -1, gugunName: '구군 선택', sidoCode: -1}],      // gugunCode, gugunName, sidoCode
-    // selectLocList: [],  // contentId, sidoCode, gugunCode, gugunName, latitude, longitude
 
     // pin
-    pinList: [],        // contentId, title, addr1, addr2, firstImage, latitude, longitude
+    // contentId, title, addr1, addr2, firstImage, latitude, longitude
+    pinList: [{ title: 'tesst', latitude: 33.450701, longitude: 126.570667 }],        
 
     // 상세정보
     selectLoc: {
@@ -30,7 +28,7 @@ export const  useMapStore = defineStore('mapStore', () => {
   const getSidoList = async () => {
     try {
       let {data} = await http.get('/attractions')
-      console.log(data)
+      // console.log(data)
       // 기존에 있던 list 삭제
       mapStore.sidoList = []
       mapStore.sidoList.push({ sidoCode: -1, sidoName: '시도 선택' })
@@ -52,10 +50,10 @@ export const  useMapStore = defineStore('mapStore', () => {
   }
 
   const getGugunList = async (sidoCode) => {
-    console.log("getGugunList: " + sidoCode)
+    // console.log("getGugunList: " + sidoCode)
     try {
       let { data } = await http.get('/attractions/gugunList/' + sidoCode)
-      console.log(data)
+      // console.log(data)
       // 기존에 있던 list 삭제
       mapStore.gugunList = []
       mapStore.selectLocList = []
@@ -69,45 +67,22 @@ export const  useMapStore = defineStore('mapStore', () => {
           gugunName: gugun.gugunName,
           sidoCode: gugun.sidoCode,
         })
-
-        // pin을 추가하기 위한 selectLocList에 저장
-        // mapStore.selectLocList.push({
-        //   contentId: locationData.contentId,
-        //   sidoCode: locationData.sidoCode,
-        //   gugunCode: locationData.gugunCode,
-        //   gugunName: locationData.gugunName,
-        //   latitude: locationData.latitude,
-        //   longitude: locationData.longitude,
-        // })
       })
 
-      console.log("gugunList: ", mapStore.gugunList)
+      // console.log("gugunList: ", mapStore.gugunList)
     } catch (error) {
       console.log(error)
     }
   }
 
   const getPinList = async (sidoCode, gugunCode) => {
-    console.log("select sido, gugun Code: ", sidoCode, " | ", gugunCode)
+    // console.log("select sido, gugun Code: ", sidoCode, " | ", gugunCode)
     try {
       let { data } = await http.get('/attractions/' + sidoCode + "/" + gugunCode)
       // console.log(data)
-      
-      // contentId, title, addr1, addr2, firstImage, latitude, longitude
-      data.forEach((pin) => {
-        mapStore.pinList.push({
-          contentId: pin.contentId,
-          title: pin.title,
-          addr1: pin.addr1,
-          addr2: pin.addr2,
-          contenfirstImagetId: pin.firstImage,
-          latitude: pin.latitude,
-          longitude: pin.longitude,
-        })  
-      })
 
-      console.log("pinList: ", mapStore.pinList[0])
-      
+      // pinList 초기화
+      mapStore.pinList = data
     } catch (error) {
       console.log(error)
     }

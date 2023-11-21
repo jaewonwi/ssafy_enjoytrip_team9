@@ -12,7 +12,7 @@
   </div>
 
   <div class="untree_co-section">
-    <div class="container justify-content-center" style="height: 750px">
+    <div class="container justify-content-center" style="height: 1000px">
       <select-location></select-location>
       <kakao-map></kakao-map>
     </div>

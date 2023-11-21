@@ -11,7 +11,8 @@
 
   <nav class="navbar navbar-expand-lg navbar-light navbar-color">
     <div class="container">
-      <a href="/" class="logo m-0 under-line-none">Tour</a>
+      <router-link to="/"><img :src="Logo" class="logo m-0 under-line-none" style="max-width: 100px; max-height: 60px" /></router-link>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -41,11 +42,7 @@
 
           <!-- User 기능  -->
           <li class="nav-item pt-2" v-show="loginStore.isLogin">
-            <img
-              v-bind:src="loginStore.userProfileImageUrl"
-              alt=""
-              style="width: 24px; height: 24px; border-radius: 50%"
-            />
+            <img v-bind:src="loginStore.userProfileImageUrl" alt="" style="width: 24px; height: 24px; border-radius: 50%" />
           </li>
           <li class="nav-item" v-show="!loginStore.isLogin">
             <router-link to="/login" class="nav-link text-white">로그인</router-link>
@@ -63,9 +60,9 @@
 </template>
 
 <script setup>
+import Logo from '/src/assets/logo/Logo.png'
 import { useLoginStore } from '@/stores/loginStore'
 const { loginStore, logout } = useLoginStore()
-
 </script>
 
 <style scoped>

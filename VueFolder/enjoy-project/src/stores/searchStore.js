@@ -82,7 +82,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     try {
         console.log("getSidoList")
         let { data } = await http.get('/sidoList')
-        // console.log(data)
+        console.log(data)
         searchStore.sidoList=data;
     } catch (error) {
         console.log(error);

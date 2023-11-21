@@ -40,15 +40,15 @@
           <div v-for="attraction in store.searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3">
             <div class="media-1 position-relative">
               <!-- <img id="bookmark" :src="bookMarkUrl" class="position-absolute m-1 rounded-0" style="max-width: 50px; max-height: 40px" /> -->
-              <!-- gpt에서 질문했음 -->
-              <input
-                class="position-absolute m-1 rounded-0"
-                type="checkbox"
-                style="max-width: 50px; max-height: 40px"
-                data-toggle="toggle"
-                data-onlabel="<img :src='bookMarkONUrl'/>"
-                data-offlabel="<img :src='bookMarkOFFUrl'/>"
-              />
+              <!--  -->
+                <img
+                  class="position-absolute m-1 rounded-0"
+                  type="checkbox"
+                  style="max-width: 50px; max-height: 40px"
+                  :id="attraction.contentId"
+                  :src="bookMarkOFFUrl"
+                  @click="changeImageUrlHandler(attraction.contentId)"
+                />
               <a href="#" class="d-block mb-3">
                 <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid" />
                 <img v-else :src="noImageUrl" class="img-fluid rounded-3 w-100 h-100" />
@@ -69,11 +69,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, onUpdated } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
 
 import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
-import bookMarkONUrl from '/src/assets/bookmark/bookmarkOFF.png'
+import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
 import http from '@/common/axios.js'
@@ -84,5 +84,19 @@ const altImage = ref(noImageUrl)
 store.getSidoList()
 const getAttractionList = async () => {
   store.attractionList()
+}
+
+// toggle event handler
+const changeImageUrlHandler = (contentId) => {
+  // event.target
+  const curImgTag = document.getElementById(contentId)
+  const imagePath = curImgTag.src.replace(window.location.origin, '') // http://localhost:5173/ 까지 제거
+  if (imagePath == bookMarkOFFUrl) {
+    curImgTag.src = bookMarkONUrl
+    // 북마크 등록
+  } else {
+    curImgTag.src = bookMarkOFFUrl
+    // 북마크 삭제
+  }
 }
 </script>

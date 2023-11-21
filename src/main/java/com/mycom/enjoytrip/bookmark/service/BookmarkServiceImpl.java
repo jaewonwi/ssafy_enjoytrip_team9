@@ -15,7 +15,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 	BookmarkDao dao;
 	
 	@Override
-	public int bookmarkInsert(int userId, int contentId) {
+	public int bookmarkInsert(BookmarkDto dto) {
+		int contentId = dto.getContentId();
+		int userId = dto.getUserId();
+		System.out.println("bookmarkInsert: " + userId + " " + contentId);
 		return dao.bookmarkInsert(userId, contentId);
 	}
 

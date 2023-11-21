@@ -71,6 +71,8 @@
 <script setup>
 import { ref, reactive, computed, watch, onUpdated } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
+import { useBookmarkStore } from '@/stores/bookmarkStore'
+import { useLoginStore } from '@/stores/loginStore'
 
 import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
 import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
@@ -80,10 +82,15 @@ import http from '@/common/axios.js'
 
 const store = useSearchStore()
 const altImage = ref(noImageUrl)
+const {bookmarkStore, insertBookmark, deleteBookmark} = useBookmarkStore()
+const {loginStore} = useLoginStore()
 
 store.getSidoList()
 const getAttractionList = async () => {
   store.attractionList()
+
+  // 유저가 선택한 북마크가 있으면 보여주기
+
 }
 
 // toggle event handler
@@ -92,11 +99,16 @@ const changeImageUrlHandler = (contentId) => {
   const curImgTag = document.getElementById(contentId)
   const imagePath = curImgTag.src.replace(window.location.origin, '') // http://localhost:5173/ 까지 제거
   if (imagePath == bookMarkOFFUrl) {
+    // 북마크 등록( userId, contentId(관광지) 필요 )
+    console.log("userId: ", loginStore.userId)
+    insertBookmark(loginStore.userId, contentId)
+
     curImgTag.src = bookMarkONUrl
-    // 북마크 등록
   } else {
+    // 북마크 삭제( userId, contentId(관광지) 필요 )
+    deleteBookmark(loginStore.userId, contentId)
+
     curImgTag.src = bookMarkOFFUrl
-    // 북마크 삭제
   }
 }
 </script>

@@ -12,7 +12,7 @@ import { RouterView } from 'vue-router'
 import NavBar from './components/common/NavBar.vue'
 import FooterComp from './components/common/Footer.vue'
 
-const { setLogin } = useLoginStore()
+const { loginStore, setLogin, detail } = useLoginStore()
 
 // 로그인 이후에 App.vue
 let isLogin = sessionStorage.getItem('isLogin')
@@ -34,6 +34,12 @@ if (isLogin == 'true') {
     userClsf: userClsf
   })
 }
+
+// result == login 인 경우 자동 로그아웃 만들기
+if (loginStore.isLogin == true) {
+  detail()
+}
+
 </script>
 
 <style scoped></style>

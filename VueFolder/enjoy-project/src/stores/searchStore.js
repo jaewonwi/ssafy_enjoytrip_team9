@@ -80,7 +80,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   const getSidoList = async () => {
     try {
-        console.log("getSidoList")
+        // console.log("getSidoList")
         let { data } = await http.get('/sidoList')
         console.log(data)
         searchStore.sidoList=data;
@@ -91,7 +91,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   const getGugunList = async () => {
     try {
-        console.log("getGugunList: sidoCode : "+ searchStore.sidoCode)
+        // console.log("getGugunList: sidoCode : "+ searchStore.sidoCode)
         let { data } = await http.get('/gugunList/'+searchStore.sidoCode)
         // console.log(data)
         searchStore.gugunCode = 0;
@@ -115,17 +115,17 @@ export const useSearchStore = defineStore('searchStore', () => {
 
     try {
       let { data } = await http.get("/attractionList", { params }); // params: params shorthand property, let response 도 제거
-      console.log("attractionList: data : ");
-      console.log(params)
-      console.log(data)
+      //console.log("attractionList: data : ");
+      //console.log(params)
+      //console.log(data)
        if (data.result == "login") {     // 로그인하지 않았으면 접근 X
           router.push("/login");
        } else {
         setAttractionList(data.list);
         setTotalListItemCount(data.count);
 
-        console.log("총 건수 : "+data.count);
-        console.log("pageCount : "+pageCount.value)
+        //console.log("총 건수 : "+data.count);
+        //console.log("pageCount : "+pageCount.value)
        }
     } catch (error) {
        console.error(error);

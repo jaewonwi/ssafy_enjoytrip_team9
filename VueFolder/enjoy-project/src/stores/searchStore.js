@@ -31,8 +31,8 @@ export const useSearchStore = defineStore('searchStore', () => {
 
     // detail
     contentId: 0,
-	contentTypeId: 0,
-	title: '',
+    contentTypeId: 0,
+    title: '',
     addr1: '',
     addr2: '',
     firstImage: '',
@@ -82,7 +82,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     try {
         console.log("getSidoList")
         let { data } = await http.get('/sidoList')
-        // console.log(data)
+        console.log(data)
         searchStore.sidoList=data;
     } catch (error) {
         console.log(error);

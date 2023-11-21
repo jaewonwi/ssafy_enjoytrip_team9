@@ -37,7 +37,8 @@
   
       <div class="container">
         <div class="row">
-          <div v-for="(attraction) in store.searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3">
+          <div v-for="(attraction) in store.searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3"
+            @click="goAttractionDetail(attraction.contentId)">
             <div class="media-1">
               <a href="#" class="d-block mb-3">
                 <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid">
@@ -67,14 +68,15 @@
   import noImageUrl from "/src/assets/noImage.png"
 
   import http from "@/common/axios.js";
+  import router from 'vue-router';
 
   const store = useSearchStore();
   const altImage = ref(noImageUrl)
 
   store.getSidoList();
   const getAttractionList = async() => {
-    store.attractionList()
-    
+    store.attractionList() 
   }
 
+  const goAttractionDetail = () => router.push('', attraction.contentId)
 </script>

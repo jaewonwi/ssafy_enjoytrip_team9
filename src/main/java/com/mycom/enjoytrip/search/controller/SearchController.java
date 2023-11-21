@@ -50,21 +50,21 @@ public class SearchController {
 		if (sido) {
 			if (gugun) {
 				if (contentType) {	// 시도, 구군, 분류코드
-					searchAttractionResultDto = service.attractionListBySidoGugunContentTypeId(sidoCode, gugunCode, contentTypeId);
+					searchAttractionResultDto = service.attractionListBySidoGugunContentTypeId(searchParamDto);
 					System.out.println("시도, 구군, 분류코드");
 				} else {			// 시도, 구군
-					searchAttractionResultDto = service.attractionListBySidoGugun(sidoCode, gugunCode);
+					searchAttractionResultDto = service.attractionListBySidoGugun(searchParamDto);
 					System.out.println("시도, 구군");
 				}
 			} else if (contentType) {	// 시도, 분류코드
-				searchAttractionResultDto = service.attractionListBySidoContentTypeId(sidoCode, contentTypeId);
+				searchAttractionResultDto = service.attractionListBySidoContentTypeId(searchParamDto);
 				System.out.println("시도, 분류코드");
 			} else if (!contentType) {	// 시도
-				searchAttractionResultDto = service.attractionListBySido(sidoCode);
+				searchAttractionResultDto = service.attractionListBySido(searchParamDto);
 				System.out.println("시도");
 			}
 		} else if (!sido && contentType) {		// 분류코드
-			searchAttractionResultDto = service.attractionListByContentTypeId(contentTypeId);
+			searchAttractionResultDto = service.attractionListByContentTypeId(searchParamDto);
 			System.out.println("분류코드");
 		}
 

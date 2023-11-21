@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.mycom.enjoytrip.dto.AttractionDto;
+import com.mycom.enjoytrip.attraction.dto.AttractionDto;
 
 @Mapper
 public interface AttractionDao {

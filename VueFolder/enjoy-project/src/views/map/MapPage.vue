@@ -14,19 +14,20 @@
   <div class="untree_co-section">
     <div class="container justify-content-center" style="height: 750px">
       <select-location></select-location>
-      <kakao-map ></kakao-map>
+      <kakao-map></kakao-map>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 
-import KakaoMap from '@/components/map/KakaoMap.vue';
+import KakaoMap from '@/components/map/KakaoMap.vue'
 import SelectLocation from '@/components/map/SelectLocation.vue'
 
-const sidoList = ref([]);
-const gugunList = ref([]);
+import { useMapStore } from '@/stores/mapStore'
+const { mapStore } = useMapStore()
 
-
+// mapStore.pinList
+// mapStore.selectLoc
 </script>

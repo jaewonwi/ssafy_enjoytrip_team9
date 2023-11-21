@@ -1,8 +1,8 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.attraction.service;
 
 import java.util.List;
 
-import com.mycom.enjoytrip.dto.AttractionDto;
+import com.mycom.enjoytrip.attraction.dto.AttractionDto;
 
 public interface AttractionService {
 

@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.controller;
+package com.mycom.enjoytrip.attraction.controller;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.enjoytrip.dto.AttractionDto;
-import com.mycom.enjoytrip.service.AttractionService;
+import com.mycom.enjoytrip.attraction.dto.AttractionDto;
+import com.mycom.enjoytrip.attraction.service.AttractionService;
 
 @RestController
 public class AttractionController {
@@ -41,6 +41,9 @@ public class AttractionController {
 	@GetMapping("/attractions/{sidoCode}/{gugunCode}")
 	public List<AttractionDto> pinList(@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) {
 		List<AttractionDto> list = service.pinList(sidoCode, gugunCode);
+		for (AttractionDto dto : list) {
+			System.out.println("pinList: " + dto);
+		}
 		return list;
 	}
 
@@ -48,6 +51,7 @@ public class AttractionController {
 	@GetMapping("/attractions/{contentId}")
 	public AttractionDto detail(@PathVariable int contentId) {
 		AttractionDto dto = service.detail(contentId);
+		System.out.println("관광지 선택: " + dto);
 		return dto;
 	}
 

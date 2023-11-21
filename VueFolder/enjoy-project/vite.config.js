@@ -12,5 +12,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    outDir: 'C:/Users/SSAFY/Desktop/repository/ssafy_enjoytrip_team9/src/main/resources/static'
   }
 })

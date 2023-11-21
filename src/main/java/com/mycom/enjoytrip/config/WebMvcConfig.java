@@ -34,6 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		.excludePathPatterns(				// 적용하지 않는 경로
 				// static
 				"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
+				"/index.html",
 				
 				// RestController
 				"/",
@@ -41,7 +42,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/users",					// 회원가입
 				"/codes/**",					// 공통 코드
 				"/attractions/**",
-				"/search/**"
+				"/search/**",
+				"/assets/**"
 				
 		);	
 		

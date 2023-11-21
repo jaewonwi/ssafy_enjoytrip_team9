@@ -14,6 +14,8 @@ import BoardEditor from '@/components/board/BoardEditor.vue'
 import MapPage from '@/views/map/MapPage.vue'
 
 import AttractionSearch from '@/components/attraction/AttractionSearch.vue'
+import { useLoginStore } from '@/stores/loginStore'
+
 
 
 // import { useAuthStore } from '@/stores/authStore'
@@ -41,15 +43,17 @@ const router = createRouter({
       name: 'Board',
       path: '/board',
       component: BoardPage,
-      // beforeEnter: (to, from, next) => {
-      //   const { authStore } = useAuthStore()
+      beforeEnter: (to, from, next) => {
+        console.log("before enter")
+        const { loginStore } = useLoginStore()
 
-      //   let isLogin = sessionStorage.getItem('isLogin')
-      //   if (authStore.isLogin || isLogin == 'true'){
-      //     return next();
-      //   } else {
-      //     next('/login');
-      //   }
+        let isLogin = sessionStorage.getItem('isLogin')
+        if (loginStore.isLogin || isLogin == 'true') {
+          return next();
+        } else {
+          next('/login');
+        }
+      },
       
       // jaewon
       children: [

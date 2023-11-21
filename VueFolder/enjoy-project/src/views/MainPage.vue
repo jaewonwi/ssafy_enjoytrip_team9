@@ -4,10 +4,7 @@
       <div class="row align-items-center">
         <div class="col-lg-7">
           <div class="intro-wrap">
-            <h1 class="mb-4">
-              <span class="d-block">여행을 계획해볼까요?</span> <span class="typed-words"></span>는
-              어떠세요?
-            </h1>
+            <h1 class="mb-4"><span class="d-block">여행을 계획해볼까요?</span> <span class="typed-words"></span>는 어떠세요?</h1>
 
             <div class="row">
               <div class="col-12">
@@ -36,12 +33,12 @@
         </div>
         <div class="col-lg-5">
           <div class="slides">
-            <img src="images/hero-slider-1.jpg" alt="Image" class="img-fluid active" />
-            <img src="images/hero-slider-2.jpg" alt="Image" class="img-fluid" />
-            <img src="images/hero-slider-3.jpg" alt="Image" class="img-fluid" />
-            <img src="images/hero-slider-4.jpg" alt="Image" class="img-fluid" />
-            <img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid" />
-            <img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid" />
+            <img src="/images/hero-slider-1.jpg" alt="Image" class="img-fluid active" />
+            <img src="/images/hero-slider-2.jpg" alt="Image" class="img-fluid" />
+            <img src="/images/hero-slider-3.jpg" alt="Image" class="img-fluid" />
+            <img src="/images/hero-slider-4.jpg" alt="Image" class="img-fluid" />
+            <img src="/images/hero-slider-5.jpg" alt="Image" class="img-fluid" />
+            <img src="/images/hero-slider-5.jpg" alt="Image" class="img-fluid" />
           </div>
         </div>
       </div>

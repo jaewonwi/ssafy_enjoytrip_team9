@@ -17,20 +17,19 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println("LoginInterceptor >>> " + request.getRequestURI());
 		
-		// CORS 에서  put, delete 등 오류 해결 코드
-//		if (request.getMethod().equals("OPTIONS")) {
-//			return true;
-//		}
-//		
-//		HttpSession session = request.getSession();
-//		UserDto userDto = (UserDto) session.getAttribute("userDto");
-//		System.out.println("loginInterceptor의 userDto: " + userDto);
-//		if (userDto == null) {
-//			// login이 필요하다는 응답을 보내준다.
-//			System.out.println("userDto가 null 입니다.");
-//			response.getWriter().write(jsonStr);
-//			return false;
-//		}
+//		 CORS 에서  put, delete 등 오류 해결 코드
+		if (request.getMethod().equals("OPTIONS")) {
+			return true;
+		}
+		
+		HttpSession session = request.getSession();
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		if (userDto == null) {
+			// login이 필요하다는 응답을 보내준다.
+			System.out.println("userDto가 null 입니다.");
+			response.getWriter().write(jsonStr);
+			return false;
+		}
 		
 		return true;
 	}

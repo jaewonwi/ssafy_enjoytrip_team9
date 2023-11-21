@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycom.enjoytrip.dao.LoginDao">
+<mapper namespace="com.mycom.enjoytrip.login.dao.LoginDao">
 
-	<select id="login" parameterType="string" resultType="com.mycom.enjoytrip.dto.UserDto">
+	<select id="login" parameterType="string" resultType="com.mycom.enjoytrip.user.dto.UserDto">
 		select userId, userEmail, userPwd, userNm, userPhone, userProfile, userClsf
 		 from users 
 		 where userEmail = #{userEmail}

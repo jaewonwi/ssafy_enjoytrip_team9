@@ -1,6 +1,6 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.login.service;
 
-import com.mycom.enjoytrip.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
 
 public interface LoginService {
 	

@@ -15,7 +15,7 @@ import com.mycom.enjoytrip.board.dto.BoardDto;
 import com.mycom.enjoytrip.board.dto.BoardParamDto;
 import com.mycom.enjoytrip.board.dto.BoardResultDto;
 import com.mycom.enjoytrip.board.service.BoardService;
-import com.mycom.enjoytrip.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
 
 @RestController
 // @CrossOrigin(origins="*", allowedHeaders="*")

@@ -1,4 +1,4 @@
-package com.mycom.enjoytrip.controller;
+package com.mycom.enjoytrip.bookmark.controller;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.enjoytrip.dto.BookmarkDto;
-import com.mycom.enjoytrip.service.BookmarkService;
+import com.mycom.enjoytrip.bookmark.dto.BookmarkDto;
+import com.mycom.enjoytrip.bookmark.service.BookmarkService;
 
 @RestController
 public class BookmarkController {

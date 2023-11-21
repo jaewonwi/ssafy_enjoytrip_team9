@@ -1,11 +1,11 @@
-package com.mycom.enjoytrip.dao;
+package com.mycom.enjoytrip.bookmark.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.mycom.enjoytrip.dto.BookmarkDto;
+import com.mycom.enjoytrip.bookmark.dto.BookmarkDto;
 
 @Mapper
 public interface BookmarkDao {

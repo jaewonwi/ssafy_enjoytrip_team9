@@ -165,7 +165,7 @@ const update = () => {
   formData.append('userEmail', loginStore.userEmail)
   formData.append('userNm', loginStore.userNm)
   formData.append('userPhone', loginStore.userPhone)
-  formData.append('userPwd', loginStore.userPwd)
+  formData.append('userPwd', userPwd.value)
   // changeProfile에서 프로필 경로 가져온다.
   let attachFiles = document.querySelector('#inputFileUploadUpdate').files
   if (attachFiles.length > 0) {
@@ -183,6 +183,10 @@ const update = () => {
   }
 
   updateUser(formData, options)
+
+  // alert() 이후 비밀번호 안 보이게 함
+  userPwd.value = ''
+  userPwd2.value = ''
 }
 
 const del = () => {

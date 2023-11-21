@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycom.enjoytrip.dao.UserDao">
+<mapper namespace="com.mycom.enjoytrip.user.dao.UserDao">
 
-	<insert id="regist" parameterType="com.mycom.enjoytrip.dto.UserDto">
+	<insert id="regist" parameterType="com.mycom.enjoytrip.user.dto.UserDto">
 		insert into users (userEmail, userPwd, userNm, userClsf) 
 		 values ( #{userEmail}, #{userPwd}, #{userNm}, "002")
 	</insert>
 	
-	<select id="detail" parameterType="string" resultType="com.mycom.enjoytrip.dto.UserDto">
+	<select id="detail" parameterType="string" resultType="com.mycom.enjoytrip.user.dto.UserDto">
 		select userId, userEmail, userNm, userPhone, userProfile 
 		 from users 
 		 where userEmail = #{userEmail}
 	</select>
 	
-	<select id="profileDetail" parameterType="int" resultType="com.mycom.enjoytrip.dto.UserProfileDto">
+	<select id="profileDetail" parameterType="int" resultType="com.mycom.enjoytrip.user.dto.UserProfileDto">
         SELECT profileId, userId, profileNm, profileSize, profileContentType, 
                profileUrl, regDt
           FROM user_profile
          WHERE userId = #{userId}
     </select>
 	
-	<update id="update" parameterType="com.mycom.enjoytrip.dto.UserDto">
+	<update id="update" parameterType="com.mycom.enjoytrip.user.dto.UserDto">
 		update users
 		 set userPwd = #{userPwd},
 		 	 userNm = #{userNm},
@@ -53,7 +53,7 @@
          WHERE userId = #{userId}
     </delete>
     
-    <insert id="profileInsert" parameterType="com.mycom.enjoytrip.dto.UserProfileDto">
+    <insert id="profileInsert" parameterType="com.mycom.enjoytrip.user.dto.UserProfileDto">
         INSERT INTO user_profile ( userId, profileNm, profileSize, profileContentType, profileUrl )
          VALUES ( #{userId}, #{profileNm}, #{profileSize}, #{profileContentType}, #{profileUrl} )
     </insert>

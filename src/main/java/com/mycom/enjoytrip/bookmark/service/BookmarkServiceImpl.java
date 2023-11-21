@@ -1,12 +1,12 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.bookmark.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mycom.enjoytrip.dao.BookmarkDao;
-import com.mycom.enjoytrip.dto.BookmarkDto;
+import com.mycom.enjoytrip.bookmark.dao.BookmarkDao;
+import com.mycom.enjoytrip.bookmark.dto.BookmarkDto;
 
 @Service
 public class BookmarkServiceImpl implements BookmarkService {

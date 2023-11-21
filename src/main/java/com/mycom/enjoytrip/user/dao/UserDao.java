@@ -1,9 +1,9 @@
-package com.mycom.enjoytrip.dao;
+package com.mycom.enjoytrip.user.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.mycom.enjoytrip.dto.UserDto;
-import com.mycom.enjoytrip.dto.UserProfileDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserProfileDto;
 
 @Mapper
 public interface UserDao {

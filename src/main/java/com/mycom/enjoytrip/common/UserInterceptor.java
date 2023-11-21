@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.mycom.enjoytrip.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
 
 /* 일반 회원 Interceptor
  * group_code: 001 - 회원 구분

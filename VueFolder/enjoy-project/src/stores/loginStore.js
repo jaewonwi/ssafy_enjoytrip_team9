@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
 import notLoginUserProfileImageUrl from '/src/assets/profile/noProfile.png'
+// import notLoginUserProfileImageUrl from '/upload/defaultProfile/noProfile.png' // build 이후에 사용
 
 export const useLoginStore = defineStore('loginStore', () => {
   const router = useRouter()
@@ -46,10 +47,12 @@ export const useLoginStore = defineStore('loginStore', () => {
       if (data.result == 'success') {
         // sessionStorage와 loginStore 갱신
         setUpdate({
+          userNm: data.userNm,
           userPhone: data.userPhone,
-          userEmail: data.userEmail,
           userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
         })
+        
+        alert('수정완료!')
       } else if (data.result == 'inputPwd') {
         alert('비밀번호를 입력하세요')
       } else if (data.result == 'inputPhone') {
@@ -63,34 +66,12 @@ export const useLoginStore = defineStore('loginStore', () => {
     } catch (error) {
       console.log(error)
     }
-    
-    // try { 
-    //   // put이 아니라 post
-    //   let { data } = await http.put('/users', updateUserObj, formData, options)
-    //   console.log(data)
-
-    //   if (data.result == 'success') {
-    //     setUpdate({
-    //       userNm: data.userNm,
-    //       userPhone: data.userPhone,
-    //       userEmail: data.userEmail,
-    //       userProfileImageUrl: data.userProfileImageUrl,  // data.userProfileImageUrl
-    //       userClsf: data.userClsf
-    //     })
-    //   } if (data.result == 'login') {
-    //     setLogout()
-    //     alert('time-out으로 인한 로그아웃!')
-    //   } else {
-    //     alert('수정 형식에 맞춰주세요!!')
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }
 
-  const deleteUser = async (payload) => {
+  // user와 user_profile 삭제
+  const deleteUser = async (email) => {
     try {
-      let { data } = await http.delete('/users/' + payload)
+      let { data } = await http.delete('/users/' + email)
       console.log(data)
       if (data.result == 'success') {
         // session 삭제는 백에서 진행

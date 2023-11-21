@@ -1,9 +1,9 @@
-package com.mycom.enjoytrip.service;
+package com.mycom.enjoytrip.user.service;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.mycom.enjoytrip.dto.UserDto;
-import com.mycom.enjoytrip.dto.UserResultDto;
+import com.mycom.enjoytrip.user.dto.UserDto;
+import com.mycom.enjoytrip.user.dto.UserResultDto;
 
 public interface UserService {
 	

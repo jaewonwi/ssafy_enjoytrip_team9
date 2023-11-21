@@ -69,7 +69,7 @@
 
     const router = useRouter();
     
-    const { boardStore, boardList, setBoardMovePage, setBoardDetail } = useBoardStore();
+    const { boardStore, boardList, setBoardMovePage } = useBoardStore();
     const { loginStore } = useLoginStore();
 
     const boardDetail = async (boardId) => {

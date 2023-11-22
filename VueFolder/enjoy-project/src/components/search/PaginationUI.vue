@@ -9,7 +9,7 @@ route url 이 board 에서 / 로 변경되는 문제 발생 -->
         </a>
       </li>
       <li v-for="index in ( endPageIndex-startPageIndex + 1 )" :key="index"
-          v-bind:class="{active: (startPageIndex + index - 1 == boardStore.currentPageIndex)}" class="page-item">
+          v-bind:class="{active: (startPageIndex + index - 1 == searchStore.currentPageIndex)}" class="page-item">
         <a @click="paginationChanged(startPageIndex + index - 1)" 
            class="page-link">{{ startPageIndex + index - 1 }}</a> <!-- href 는 그대로, 커서 모양 유지-->
       </li>
@@ -20,14 +20,14 @@ route url 이 board 에서 / 로 변경되는 문제 발생 -->
       </li>
     </ul>
   </nav>
-  {{  boardStore.startPageIndex  }}
+  {{  searchStore.startPageIndex  }}
 </template>
 
 <script setup>
 
-  import { useBoardStore } from '@/stores/boardStore'
+  import { useSearchStore } from '@/stores/searchStore'
   import { storeToRefs } from 'pinia'
-  const { boardStore, startPageIndex, endPageIndex, prev, next, pageCount } = storeToRefs(useBoardStore());
+  const { searchStore, startPageIndex, endPageIndex, prev, next, pageCount } = storeToRefs(useSearchStore());
 
   const emit = defineEmits(['call-parent'])
   const paginationChanged = (pageIndex) => {

@@ -95,15 +95,9 @@ const insertBoard = async () => {
 
 const updateBoard = async () => {
     let result = confirm('수정을 완료하시겠습니까?')
-    // console.log(boardId[0]);
-
-    // // 해당 게시글을 작성한 사용자와 로그인한 사용자(세션)가 일치하는지 비교
-    // if (sameUser){
-
-    // }
 
     let formData = {
-      boardId: boardId[0],
+      boardId: boardId,
       boardTitle: editorDataTitle.value,
       boardContent: editorDataContent.value
     };

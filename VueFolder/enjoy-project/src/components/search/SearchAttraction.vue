@@ -6,26 +6,26 @@
         <!-- col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4 -->
         <div class="col-10 d-flex justify-content-evenly">
           <div class="col-4">
-            <select name id="area1List" class="form-control custom-select" v-model="store.searchStore.sidoCode" @change="store.getGugunList(store.searchStore.sidoCode)">
+            <select name id="area1List" class="form-control custom-select" v-model="searchStore.sidoCode" @change="getGugunList(searchStore.sidoCode)">
               <option value="0">시도</option>
-              <option v-for="sido in store.searchStore.sidoList" :key="sido.sidoCode" :value="sido.sidoCode">
+              <option v-for="sido in searchStore.sidoList" :key="sido.sidoCode" :value="sido.sidoCode">
                 {{ sido.sidoName }}
               </option>
             </select>
           </div>
           <div class="col-4">
-            <select name id="area2List" class="form-control custom-select" v-model="store.searchStore.gugunCode">
+            <select name id="area2List" class="form-control custom-select" v-model="searchStore.gugunCode">
               <option value="0">구군</option>
-              <option v-for="gugun in store.searchStore.gugunList" :key="gugun.gugunCode" :value="gugun.gugunCode">
+              <option v-for="gugun in searchStore.gugunList" :key="gugun.gugunCode" :value="gugun.gugunCode">
                 {{ gugun.gugunName }}
               </option>
             </select>
           </div>
 
           <div class="col-4">
-            <select name id="area2List" class="form-control custom-select" v-model="store.searchStore.contentTypeId">
+            <select name id="area2List" class="form-control custom-select" v-model="searchStore.contentTypeId">
               <option value="0">전체</option>
-              <option v-for="contentType in store.searchStore.contentTypeList" :key="contentType.code" :value="contentType.code">
+              <option v-for="contentType in searchStore.contentTypeList" :key="contentType.code" :value="contentType.code">
                 {{ contentType.name }}
               </option>
             </select>
@@ -37,7 +37,7 @@
 
       <div class="container">
         <div class="row">
-          <div v-for="attraction in store.searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3">
+          <div v-for="attraction in searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3" @click="attractionDetail(attraction.contentId)">
             <div class="media-1 position-relative">
               <img
                 class="position-absolute m-1 rounded-0"
@@ -66,25 +66,29 @@
 </template>
 
 <script setup>
+// basic
 import { ref, reactive, computed, watch, onUpdated } from 'vue'
+import http from '@/common/axios.js'
+
+// store
 import { useSearchStore } from '@/stores/searchStore'
-import { useBookmarkStore } from '@/stores/bookmarkStore'
-import { useLoginStore } from '@/stores/loginStore'
+
+// router
+import { useRouter } from 'vue-router'
 
 import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
 import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
-import http from '@/common/axios.js'
-
-const store = useSearchStore()
+const { searchStore, getSidoList, getGugunList, attractionList } = useSearchStore()
 const altImage = ref(noImageUrl)
 const { bookmarkStore, insertBookmark, deleteBookmark } = useBookmarkStore()
 const { loginStore } = useLoginStore()
+const router = useRouter()
 
-store.getSidoList()
+getSidoList()
 const getAttractionList = async () => {
-  store.attractionList()
+  attractionList()
 
   // 유저가 선택한 북마크가 있으면 보여주기
 }
@@ -100,11 +104,22 @@ const changeImageUrlHandler = (contentId) => {
     insertBookmark(loginStore.userId, contentId)
 
     curImgTag.src = bookMarkONUrl
+    // 북마크 등록
   } else {
-    // 북마크 삭제( userId, contentId(관광지) 필요 )
-    deleteBookmark(loginStore.userId, contentId)
-
     curImgTag.src = bookMarkOFFUrl
+    // 북마크 삭제
+  }
+}
+
+const attractionDetail = async (contentId) => {
+  try {
+    router.push({
+      name: 'SearchAttractionDetail',
+      params: { contentId }
+    })
+  } catch (error) {
+    console.log('attractionDetailVue: error: ')
+    console.log(error)
   }
 }
 </script>

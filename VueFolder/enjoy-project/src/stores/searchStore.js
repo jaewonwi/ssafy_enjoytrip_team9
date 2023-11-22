@@ -57,11 +57,11 @@ export const useSearchStore = defineStore('searchStore', () => {
     searchStore.currentPageIndex = pageIndex
   }
 
-  const setSearchAttractionDetail = (payload) => {
+  const setSearchAttractionDetail = async (payload) => {
     searchStore.contentId = payload.contentId;
     searchStore.contentTypeId = payload.contentTypeId;
 
-    searchStore.title = payload.boardTitle;
+    searchStore.title = payload.title;
     searchStore.addr1 = payload.addr1;
     searchStore.addr2 = payload.addr2;
     searchStore.firstImage = payload.firstImage;
@@ -73,17 +73,20 @@ export const useSearchStore = defineStore('searchStore', () => {
     searchStore.gugunCode = payload.gugunCode;  // 구군
     searchStore.sidoName = payload.sidoName;
     searchStore.gugunName = payload.gugunName;
-    searchStore.cat1 = payload.cat1;            // 대중소 분류
-    searchStore.cat2 = payload.cat2;
-    searchStore.cat3 = payload.cat3;
+    // searchStore.cat1 = payload.cat1;            // 대중소 분류
+    // searchStore.cat2 = payload.cat2;
+    // searchStore.cat3 = payload.cat3;
   }
 
   const getSidoList = async () => {
     try {
         // console.log("getSidoList")
         let { data } = await http.get('/sidoList')
-        console.log(data)
-        searchStore.sidoList=data;
+        // console.log(data)
+        // searchStore.sidoCode = 0; 
+        // searchStore.gugunCode = 0;   
+        // searchStore.list = [];
+        searchStore.sidoList = data;
     } catch (error) {
         console.log(error);
     }

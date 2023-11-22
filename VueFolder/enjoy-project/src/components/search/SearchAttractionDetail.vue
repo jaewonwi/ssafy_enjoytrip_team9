@@ -2,29 +2,18 @@
   <div class="untree_co-section">
     <div class="container">
       <div class="row">
-        <div class="col-lg-7">
-          <div class="owl-single dots-absolute owl-carousel">
-            <img src="images/slider-1.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-            <img src="images/slider-2.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-            <img src="images/slider-3.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-            <img src="images/slider-4.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-            <img src="images/slider-5.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+        <div class="col-lg-7 mb-3">
+          <div class="">
+            <img v-if="searchStore.firstImage" :src="searchStore.firstImage" class="img-fluid rounded-20 w-100">
+            <img v-else src="@/assets/noImage.png" class="img-fluid rounded-20 w-100">
           </div>
         </div>
+        
         <div class="col-lg-5 pl-lg-5 ml-auto">
-          <h2 class="section-title mb-4">About Tours</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          <ul class="list-unstyled two-col clearfix">
-            <li>Outdoor recreation activities</li>
-            <li>Airlines</li>
-            <li>Car Rentals</li>
-            <li>Cruise Lines</li>
-            <li>Hotels</li>
-            <li>Railways</li>
-            <li>Travel Insurance</li>
-            <li>Package Tours</li>
-            <li>Insurance</li>
-            <li>Guide Books</li>
+          <h2 class="section-title mb-4">{{ searchStore.title }}</h2>
+          <p>{{ searchStore.overview }}</p>
+          <ul class="list-unstyled clearfix">
+            <li>💛 &nbsp;주소: {{ searchStore.addr1 }} {{ searchStore.addr2 }}</li>  
           </ul>
         </div>
       </div>
@@ -34,4 +23,37 @@
 </template>
 
 <script setup>
+  import http from '@/common/axios.js'
+  import { ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router';
+
+// store
+import { useSearchStore } from '@/stores/searchStore'
+
+  // route, router
+  const route = useRoute();
+  const router = useRouter();
+
+  const { searchStore, setSearchAttractionDetail }  = useSearchStore()
+
+
+  const contentId = route.params.contentId
+  console.log("contentId : "+contentId)
+
+  const getDetail = async () => {
+    try {
+      let { data } = await http.get('/detail/'+contentId);
+
+      console.log("get Detail : ")
+      console.log(data);
+
+      setSearchAttractionDetail(data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getDetail()
+
 </script>

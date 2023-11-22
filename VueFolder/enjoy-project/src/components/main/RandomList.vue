@@ -2,18 +2,18 @@
 <div class="untree_co-section">
 		<div class="container">
 			<div class="row text-center justify-content-center mb-5">
-				<div class="title col-lg-7"><h2 class="section-title text-center">여기는 어떠세요?</h2></div>
+				<div class="title col-lg-7"><h2 class="section-title text-center">인기 여행지</h2></div>
 			</div>
 
 			<!-- tour -->
 			<div class="d-inline">
 				<div class="row">
 
-					<div v-if="mainSearchStore.tour && mainSearchStore.tour.length" class="col-3 owl-carousel owl-4-slider w-25" >	
+				<div v-if="mainSearchStore.tour && mainSearchStore.tour.length" class="col-3 owl-carousel owl-4-slider w-25" >	
 					<div class="item p-2"
 						v-for="(attraction) in mainSearchStore.tour" :key="attraction.contentId" :value="attraction.contentId">
 					<a class="media-thumb" :href="attraction.firstImage" data-fancybox="gallery">
-						<div class="media-text p-3">
+						<div class="media-text p-3 w-100 h-100">
 							<h3>{{ attraction.title }}</h3>
 							<span class="location">{{ attraction.addr1 }}</span>
 						</div>
@@ -27,7 +27,7 @@
 					<div class="item p-2"
 						v-for="(attraction) in mainSearchStore.culture" :key="attraction.contentId" :value="attraction.contentId">
 					<a class="media-thumb" :href="attraction.firstImage" data-fancybox="gallery">
-						<div class="media-text p-3">
+						<div class="media-text p-3 w-100 h-100">
 							<h3>{{ attraction.title }}</h3>
 							<span class="location">{{ attraction.addr1 }}</span>
 						</div>
@@ -35,12 +35,13 @@
 					</a> 
 					</div>
 				</div>
+
 				<!-- festival -->
 				<div v-if="mainSearchStore.festival && mainSearchStore.festival.length" class="col-3 owl-carousel owl-4-slider w-25" >	
 					<div class="item p-2"
 						v-for="(attraction) in mainSearchStore.festival" :key="attraction.contentId" :value="attraction.contentId">
 					<a class="media-thumb" :href="attraction.firstImage" data-fancybox="gallery">
-						<div class="media-text p-3">
+						<div class="media-text p-3 w-100 h-100">
 							<h3>{{ attraction.title }}</h3>
 							<span class="location">{{ attraction.addr1 }}</span>
 						</div>
@@ -51,10 +52,9 @@
 
 				<!-- leisure -->
 				<div v-if="mainSearchStore.leisure && mainSearchStore.leisure.length" class="col-3 owl-carousel owl-4-slider w-25" >	
-					<div class="item p-2"
-						v-for="(attraction) in mainSearchStore.leisure" :key="attraction.contentId" :value="attraction.contentId">
+					<div class="item p-2" v-for="(attraction) in mainSearchStore.leisure" :key="attraction.contentId" :value="attraction.contentId">
 					<a class="media-thumb" :href="attraction.firstImage" data-fancybox="gallery">
-						<div class="media-text p-3">
+						<div class="media-text p-3 w-100 h-100">
 							<h3>{{ attraction.title }}</h3>
 							<span class="location">{{ attraction.addr1 }}</span>
 						</div>
@@ -62,10 +62,9 @@
 					</a> 
 					</div>
 				</div>
-			</div>
 				</div>
+			</div>
 				
-			
 		</div>
 	</div>
 </template>
@@ -118,5 +117,18 @@
 <style scoped>
 img{
  height: 250px;
+}
+.media-thumb .media-text {
+	top: 0px;
+	left: 0px;
+	margin-top: 0px;
+	text-align: center;
+}
+.media-thumb {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 </style>

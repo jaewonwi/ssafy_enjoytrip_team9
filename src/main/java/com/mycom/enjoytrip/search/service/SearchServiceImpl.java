@@ -135,10 +135,10 @@ public class SearchServiceImpl implements SearchService {
 	}
 	
 	@Override
-	public SearchAttractionResultDto randomAttractionList(int limit) {
+	public SearchAttractionResultDto recommendAttractionList(int limit, int contentTypeId) {
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 		try {
-			List<SearchAttractionDto> list = dao.randomAttractionList(limit);
+			List<SearchAttractionDto> list = dao.recommendAttractionList(limit, contentTypeId);
 			searchAttractionResultDto.setList(list);
 			searchAttractionResultDto.setResult(SUCCESS);
 	        

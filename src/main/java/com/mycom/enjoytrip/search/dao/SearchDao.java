@@ -3,6 +3,7 @@ package com.mycom.enjoytrip.search.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchParamDto;
@@ -31,6 +32,6 @@ public interface SearchDao {
 	int totalCountBySidoGugunContentTypeId(SearchParamDto searchParamDto);		// 시도, 구군, 분류코드
 
 	// 관광지 랜덤 추출
-	List<SearchAttractionDto> randomAttractionList(int limit);
+	List<SearchAttractionDto> recommendAttractionList(@Param("limit") int limit, @Param("contentTypeId") int contentTypeId);
 
 }

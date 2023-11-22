@@ -48,12 +48,14 @@
     </div>
   </div>
 
+  <div class="untree_co-section"></div>
+  
   <random-list></random-list>
 
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
 import http from "@/common/axios.js";
 
@@ -66,7 +68,6 @@ store.getSidoList();
 const getAttractionList = async() => {
   store.attractionList()  
 }
-
 
 $(function () {
   var slides = $('.slides'),

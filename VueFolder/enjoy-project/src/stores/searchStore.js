@@ -23,6 +23,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     gugunList: [],
     contentTypeList: [{ code: 12, name: "관광지" },
     { code: 14, name: "문화시설" },
+    { code: 15, name: "축제공연행사" },
     { code: 25, name: "여행코스" },
     { code: 28, name: "레포츠" },
     { code: 32, name: "숙박" },
@@ -46,6 +47,13 @@ export const useSearchStore = defineStore('searchStore', () => {
     cat1: '',
     cat2: '',
     cat3: '',
+  })
+
+  const mainSearchStore = reactive({
+    tour: [],
+    culture: [],
+    festival: [],
+    leisure: [],
   })
 
   const setSidoList = (list) => searchStore.sidoList = list
@@ -135,18 +143,34 @@ export const useSearchStore = defineStore('searchStore', () => {
     }
   }
 
-  // random list
-  const attractionRandomList = async () => {
+  // recommend list - main
+  const setRecommendTourList = async () => {
+    let { data } = await http.get("/search/recommendList/6/"+12); // params: params shorthand property, let response 도 제거
+    mainSearchStore.tour = data.list
+    console.log(data.list)
+  }
+  const setRecommendCultureList = async () => {
+    let { data } = await http.get("/search/recommendList/6/"+14); // params: params shorthand property, let response 도 제거
+    mainSearchStore.culture = data.list
+    console.log(data.list)
+  }
+  const setRecommendFestivalList = async () => {
+    let { data } = await http.get("/search/recommendList/6/"+15); // params: params shorthand property, let response 도 제거
+    mainSearchStore.festival = data.list
+    console.log(data.list)
+  }
+  const setRecommendLeisureList = async () => {
+    let { data } = await http.get("/search/recommendList/6/"+28); // params: params shorthand property, let response 도 제거
+    mainSearchStore.leisure = data.list
+    console.log(data.list)
+  }
+
+  const attractionMainList = async () => {
     try {
-      let { data } = await http.get("/search/randomList/6"); // params: params shorthand property, let response 도 제거
-      console.log("attractionRandomList: data : ");
-      console.log(data)
-       if (data.result == "login") {     // 로그인하지 않았으면 접근 X
-          router.push("/login");
-       } else {
-        setAttractionList(data.list);
-        // setTotalListItemCount(data.count);
-       }
+      setRecommendTourList();
+      setRecommendCultureList();
+      setRecommendFestivalList();
+      setRecommendLeisureList();
     } catch (error) {
        console.error(error);
     }
@@ -179,8 +203,8 @@ export const useSearchStore = defineStore('searchStore', () => {
     Math.floor(pageCount / searchStore.pageLinkCount) * searchStore.pageLinkCount < searchStore.currentPageIndex ? false : true)
 
   return { 
-    searchStore,
-    getSidoList, setSidoList, getGugunList, setGugunList, setAttractionList, attractionRandomList,
+    searchStore, mainSearchStore,
+    getSidoList, setSidoList, getGugunList, setGugunList, setAttractionList, attractionMainList,
     setSearchMovePage, setTotalListItemCount, setSearchAttractionDetail, attractionList,
     pageCount, startPageIndex, endPageIndex, prev, next 
   }

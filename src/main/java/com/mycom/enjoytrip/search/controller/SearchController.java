@@ -79,9 +79,9 @@ public class SearchController {
 	}
 	
 	// 관광지 목록 랜덤
-	@GetMapping(value="/search/randomList/{limit}")
-	public SearchAttractionResultDto randomAttractionList(@PathVariable int limit) {
-		return service.randomAttractionList(limit);
+	@GetMapping(value="/search/recommendList/{limit}/{contentTypeId}")
+	public SearchAttractionResultDto recommendAttractionList(@PathVariable int limit, @PathVariable int contentTypeId) {
+		return service.recommendAttractionList(limit, contentTypeId);
 	}	
 	
 }

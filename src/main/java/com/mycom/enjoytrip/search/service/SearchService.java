@@ -29,5 +29,5 @@ public interface SearchService {
 	SearchAttractionResultDto attractionListBySidoGugunContentTypeId(SearchParamDto searchParamDto);		// 시도, 구군, 분류코드
 
 	// 관광지 목록 랜덤
-	SearchAttractionResultDto randomAttractionList(int limit);
+	SearchAttractionResultDto recommendAttractionList(int limit, int contentTypeId);
 }

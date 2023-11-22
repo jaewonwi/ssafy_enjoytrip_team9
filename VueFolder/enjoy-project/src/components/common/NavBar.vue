@@ -28,16 +28,16 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 float-right">
           <li class="active nav-item">
-            <router-link to="/" class="nav-link text-white">Home</router-link>
+            <router-link to="/" class="nav-link text-white">홈</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/board" class="nav-link text-white">게시판</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/search" class="nav-link text-white">Search</router-link>
+            <router-link to="/search" class="nav-link text-white">관광지 검색</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/map" class="nav-link text-white">지도</router-link>
+            <router-link to="/map" class="nav-link text-white">관광지 지도</router-link>
           </li>
 
           <!-- User 기능  -->

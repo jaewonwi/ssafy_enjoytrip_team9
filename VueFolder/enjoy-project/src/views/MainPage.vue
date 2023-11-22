@@ -1,5 +1,5 @@
 <template>
-  <div class="hero">
+  <div class="hero" style="background-color: #1A374D;">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7">
@@ -47,12 +47,15 @@
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
 import http from "@/common/axios.js";
+
 
 const store = useSearchStore();
 

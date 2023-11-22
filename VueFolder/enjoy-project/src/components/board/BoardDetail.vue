@@ -63,7 +63,7 @@
 
     // store
     import { useBoardStore } from '@/stores/boardStore'
-    import { useLoginStore } from '@/stores/loginStore';
+    import { useLoginStore } from '@/stores/loginStore'
 
     const route = useRoute();
     const router = useRouter();

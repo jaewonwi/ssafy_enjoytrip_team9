@@ -12,12 +12,15 @@ import com.mycom.enjoytrip.user.dto.UserDto;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 	
+	private final String USER_CLSF = "001";
+	private final String ADMIN_CLSF = "002";
+	
 	private final String jsonStr = "{\"result\":\"login\"}";
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println("LoginInterceptor >>> " + request.getRequestURI());
 		
-//		 CORS 에서  put, delete 등 오류 해결 코드
+		// CORS 에서  put, delete 등 오류 해결 코드
 		if (request.getMethod().equals("OPTIONS")) {
 			return true;
 		}
@@ -30,6 +33,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 			response.getWriter().write(jsonStr);
 			return false;
 		}
+		
+//		// 로그인했고, 유저인 경우
+//		if (userDto.getUserClsf().equals(USER_CLSF)) {
+//			return true;
+//		} else if (userDto.getUserClsf().equals(ADMIN_CLSF)) {	// 로그인했고, 관리자인 경우
+//			
+//		}
 		
 		return true;
 	}

@@ -112,6 +112,11 @@ const getAttractionList = async () => {
 
 // toggle event handler
 const changeImageUrlHandler = (contentId) => {
+  if (loginStore.isLogin == false) {
+    alert('로그인 해주세요!')
+    router.push('/login')
+  }
+
   // event.target
   const curImgTag = document.getElementById(contentId)
   const imagePath = curImgTag.src.replace(window.location.origin, '')

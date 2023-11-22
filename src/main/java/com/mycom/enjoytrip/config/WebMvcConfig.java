@@ -29,37 +29,30 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		// 로그인 여부
-		registry.addInterceptor(loginInterceptor)
-		.addPathPatterns("/**")				// 모든 경로에 적용한다.
-		.excludePathPatterns(				// 적용하지 않는 경로
-				// static
-				"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
-				"/index.html",
-				
-				// RestController
-				"/",
-				"/login",
-				"/users",					// 회원가입
-				"/codes/**",					// 공통 코드
-				"/attractions/**",
-				"/search/**",
-				"/assets/**",
-				"/search/**"
-				
-		);	
-		
-		
-		// 일반 회원
-//		registry.addInterceptor(userInterceptor).addPathPatterns("/**") // 모든 경로에 적용한다.
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/**") // 모든 경로에 적용한다.
+				.excludePathPatterns( // 적용하지 않는 경로
+						// static
+						"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
+						"/index.html",
+
+						// RestController
+						"/", "/login", "/users", // 회원가입
+						"/codes/**", // 공통 코드
+						"/attractions/**", "/search/**", "/assets/**", "/search/**"
+
+				);
+
+		// 관리자
+		// 관리자로 로그인 한 경우 -  1. 공지사항 작성, 수정, 삭제
+		//					   2. 모든 사용자 계정 삭제
+		//					   3. 모든 게시글 삭제
+//		registry.addInterceptor(adminInterceptor).addPathPatterns("/**") // 모든 경로에 적용한다.
 //				.excludePathPatterns( // 적용하지 않는 경로( URI 및 Path )
 //						// static
 //						"/css/**", "/scss/**", "/js/**", "/images/**", "img/**", "/favicon.ico", "/fonts/**",
 //
 //						// RestController: 페이지는 통제는 vue에서 관리
-//						"/", "/users/login", "/codes/**"
-//				);
-
-		// 관리자
+//						"/", "/users/login", "/codes/**");
 
 	}
 

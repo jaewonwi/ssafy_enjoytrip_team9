@@ -36,7 +36,16 @@ const router = createRouter({
     },
     {
       path: '/mypage',
-      component: MyPage
+      component: MyPage,
+      beforeEnter: (to, from, next) => {
+        const { loginStore } = useLoginStore()
+        let isLogin = sessionStorage.getItem('isLogin')
+        if (loginStore.isLogin == 'true') {
+          return next();
+        } else {
+          next('/login');
+        }
+      }
     },
     {
       name: 'Board',
@@ -47,7 +56,7 @@ const router = createRouter({
         const { loginStore } = useLoginStore()
 
         let isLogin = sessionStorage.getItem('isLogin')
-        if (loginStore.isLogin || isLogin == 'true') {
+        if (loginStore.isLogin == 'true') {
           return next();
         } else {
           next('/login');

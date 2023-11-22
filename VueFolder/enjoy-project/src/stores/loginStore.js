@@ -88,7 +88,7 @@ export const useLoginStore = defineStore('loginStore', () => {
 
   // login 후에 현재 user 정보를 sessionStorage와 authStore에 반영
   const setLogin = (payload) => {
-    console.log('setLogin: ' + payload)
+    console.log('setLogin: ', payload)
     sessionStorage.setItem('isLogin', 'true')
     sessionStorage.setItem('userId', payload.userId)
     sessionStorage.setItem('userNm', payload.userNm)
@@ -104,7 +104,7 @@ export const useLoginStore = defineStore('loginStore', () => {
     loginStore.userEmail = payload.userEmail
     loginStore.userProfileImageUrl = payload.userProfileImageUrl
     loginStore.userClsf = payload.userClsf
-    console.log('setLogin: ' + loginStore)
+    console.log('setLogin: ', loginStore)
   }
 
   const setLogout = () => {

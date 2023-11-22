@@ -23,8 +23,8 @@ public class AttractionDto {
 	private String firstImage;
 	private int sidoCode;			// sido  key
 	private int gugunCode;			// gugun key
-	private int latitude;
-	private int longitude;
+	private String latitude;
+	private String longitude;
 	
 	private String sidoName;
 	private String gugunName;

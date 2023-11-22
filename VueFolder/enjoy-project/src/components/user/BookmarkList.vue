@@ -5,69 +5,38 @@
         <div class="col-lg-7"><h2 class="section-title text-center">북마크</h2></div>
       </div>
 
-      <div class="owl-carousel owl-3-slider">
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-1.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>Pragser Wildsee</h3>
-              <span class="location">Italy</span>
-            </div>
-            <img src="/images/hero-slider-1.jpg" alt="Image" class="img-fluid" />
+      <div v-for="attraction in store.searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3">
+        <div class="media-1 position-relative">
+          <img
+            class="position-absolute m-1 rounded-0"
+            type="checkbox"
+            style="max-width: 50px; max-height: 40px"
+            :id="attraction.contentId"
+            :src="bookMarkOFFUrl"
+            @click="changeImageUrlHandler(attraction.contentId)"
+          />
+          <a href="#" class="d-block mb-3">
+            <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid" />
+            <img v-else :src="noImageUrl" class="img-fluid rounded-3 w-100 h-100" />
           </a>
-        </div>
-
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-2.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>Oia</h3>
-              <span class="location">Greece</span>
+          <div class="d-flex">
+            <div>
+              <span class="">{{ attraction.title }}</span>
+              <p>{{ attraction.addr1 }}</p>
             </div>
-            <img src="/images/hero-slider-2.jpg" alt="Image" class="img-fluid" />
-          </a>
-        </div>
-
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-3.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>Perhentian Islands</h3>
-              <span class="location">Malaysia</span>
-            </div>
-            <img src="/images/hero-slider-3.jpg" alt="Image" class="img-fluid" />
-          </a>
-        </div>
-
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-4.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>Rialto Bridge</h3>
-              <span class="location">Italy</span>
-            </div>
-            <img src="/images/hero-slider-4.jpg" alt="Image" class="img-fluid" />
-          </a>
-        </div>
-
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-5.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>San Francisco, United States</h3>
-              <span class="location">United States</span>
-            </div>
-            <img src="/images/hero-slider-5.jpg" alt="Image" class="img-fluid" />
-          </a>
-        </div>
-
-        <div class="item">
-          <a class="media-thumb" href="/images/hero-slider-1.jpg" data-fancybox="gallery">
-            <div class="media-text">
-              <h3>Lake Thun</h3>
-              <span class="location">Switzerland</span>
-            </div>
-            <img src="/images/hero-slider-2.jpg" alt="Image" class="img-fluid" />
-          </a>
+          </div>
         </div>
       </div>
+      <!--  -->
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, reactive } from 'vue'
+import { useBookmarkStore } from '@/stores/bookmarkStore'
+import { useLoginStore } from '@/stores/loginStore'
+
+const { bookmarkStore, insertBookmark, deleteBookmark } = useBookmarkStore()
+const { loginStore } = useLoginStore()
+</script>

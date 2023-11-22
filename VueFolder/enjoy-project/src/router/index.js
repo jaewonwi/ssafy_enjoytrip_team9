@@ -42,7 +42,7 @@ const router = createRouter({
         console.log("before enter")
         const { loginStore } = useLoginStore()
         let isLogin = sessionStorage.getItem('isLogin')
-        if (isLogin || loginStore.isLogin == true) {
+        if ((isLogin || loginStore.isLogin == true) && loginStore.userClsf == '002') {
           return next();
         } else {
           console.log("before enter: 통과못함")

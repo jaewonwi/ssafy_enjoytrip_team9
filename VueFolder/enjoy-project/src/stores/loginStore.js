@@ -22,10 +22,6 @@ export const useLoginStore = defineStore('loginStore', () => {
 
     // 일반 사용자와 관리자
     userClsf: '',
-
-    // 관리자만 접근 가능
-    // 사용자 리스트
-    userList: []
   })
 
   const logout = async () => {
@@ -181,10 +177,5 @@ export const useLoginStore = defineStore('loginStore', () => {
     }
   }
 
-  const getUserList = () => {
-    
-  }
-
-
-  return { loginStore, setLogin, logout, updateUser, deleteUser, detail, getUserList }
+  return { loginStore, setLogin, logout, updateUser, deleteUser, detail }
 })

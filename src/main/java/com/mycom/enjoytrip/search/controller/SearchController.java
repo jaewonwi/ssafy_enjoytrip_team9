@@ -46,8 +46,8 @@ public class SearchController {
 			searchParamDto.setUserId(userId);
 		}
 
-		System.out.println("/attractionList");
-		System.out.println(searchParamDto);
+		// System.out.println("/attractionList");
+		// System.out.println(searchParamDto);
 
 		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 
@@ -63,21 +63,21 @@ public class SearchController {
 			if (gugun) {
 				if (contentType) { // 시도, 구군, 분류코드
 					searchAttractionResultDto = service.attractionListBySidoGugunContentTypeId(searchParamDto);
-					System.out.println("시도, 구군, 분류코드");
+					// System.out.println("시도, 구군, 분류코드");
 				} else { // 시도, 구군
 					searchAttractionResultDto = service.attractionListBySidoGugun(searchParamDto);
-					System.out.println("시도, 구군");
+					// System.out.println("시도, 구군");
 				}
 			} else if (contentType) { // 시도, 분류코드
 				searchAttractionResultDto = service.attractionListBySidoContentTypeId(searchParamDto);
-				System.out.println("시도, 분류코드");
+				// System.out.println("시도, 분류코드");
 			} else if (!contentType) { // 시도
 				searchAttractionResultDto = service.attractionListBySido(searchParamDto);
-				System.out.println("시도");
+				// System.out.println("시도");
 			}
 		} else if (!sido && contentType) { // 분류코드
 			searchAttractionResultDto = service.attractionListByContentTypeId(searchParamDto);
-			System.out.println("분류코드");
+			// System.out.println("분류코드");
 		}
 
 		return searchAttractionResultDto;
@@ -86,7 +86,7 @@ public class SearchController {
 	// 현재 유저가 북마크한 관광지 리스트 불러오기
 	@GetMapping(value = "/search/bookmarkList/{userId}")
 	public List<SearchAttractionBookmarkDto> bookmarkList(@PathVariable int userId) {
-		System.out.println("/search/bookmarkList: " + userId);
+		// System.out.println("/search/bookmarkList: " + userId);
 		List<SearchAttractionBookmarkDto> list = service.getBookmarkList(userId);
 		return list;
 	}

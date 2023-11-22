@@ -35,7 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 
 		// 로그인했는데 관리자가 아닌 경우
-		if (request.getRequestURI().equals("/users/userList") && !userDto.getUserClsf().equals(ADMIN_CLSF)) {	
+		if (request.getRequestURI().equals("/users/userList") && userDto.getUserClsf().equals(ADMIN_CLSF)) {	
 			System.out.println("관리자만 회원 관리에 관한 데이터를 요청할 수 있습니다.");
 			return false;
 		}

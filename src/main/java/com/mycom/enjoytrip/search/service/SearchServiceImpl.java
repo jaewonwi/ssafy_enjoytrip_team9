@@ -27,14 +27,14 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<SidoGugunDto> sidoList() {
 		List<SidoGugunDto> list = dao.sidoList();
-		System.out.println("sidoList"+list.toString());
+		// System.out.println("sidoList"+list.toString());
 		return list;
 	}
 
 	@Override
 	public List<SidoGugunDto> gugunList(int sidoCode) {
 		List<SidoGugunDto> list = dao.gugunList(sidoCode);
-		System.out.println("gugunList"+list.toString());
+		// System.out.println("gugunList"+list.toString());
 		return list;
 	}
 	

@@ -11,14 +11,10 @@
     </div>
   </div>
   <user-info></user-info>
-  <user-list v-if="isManager"></user-list>
-  <bookmark-list v-else></bookmark-list>
+  <bookmark-list></bookmark-list>
 </template>
 
 <script setup>
 import UserInfo from '@/components/user/UserInfo.vue'
 import BookmarkList from '@/components/user/BookMarkList.vue'
-import UserList from '@/components/user/UserList.vue';
-
-const isManager = true
 </script>

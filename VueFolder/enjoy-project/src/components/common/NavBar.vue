@@ -52,7 +52,7 @@
             <router-link to="/mypage" class="nav-link text-white">마이페이지</router-link>
           </li>
           <!-- admin 기능 -->
-          <li class="nav-item" v-show="loginStore.isLogin  && loginStore.userClsf == '002'">
+          <li class="nav-item" v-show="loginStore.isLogin  && loginStore.userClsf == '001'">
             <router-link to="/manager" class="nav-link text-white">회원 관리</router-link>
           </li>
           <li class="nav-item" v-show="loginStore.isLogin">

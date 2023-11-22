@@ -37,7 +37,7 @@
 
 <script setup>
   import http from '@/common/axios.js'
-  import { useAdminStore } from '../../stores/adminStore';
+  import { useAdminStore } from '@/stores/adminStore';
 
   import noImageUrl from '@/assets/noProfile.png'
 

@@ -8,8 +8,8 @@
        </div>
 
        <div class="container">
-        <div class="row text-center justify-content-center mb-5" >
-        <div v-for="user in adminStore.userlist" :key="user.userId" class="col-6 col-md-6 col-lg-3">
+        <div class="row text-center mb-5" >
+        <div v-for="user in adminStore.userlist" :key="user.userId" class="col-6 col-md-6 col-lg-3 mb-3">
           <div class="media-1 position-relative">
             <button
               class="position-absolute btn btn-primary m-2 rounded-1"
@@ -46,8 +46,13 @@
   const userDelete = async (userEmail) => {
     let result = confirm('해당 사용자를 삭제하시겠습니까?')
     if (result) {
-      await http.delete("/users/"+userEmail);
-      
+      try {
+        let { data } = await http.delete("/users/"+userEmail);  
+        console.log(userEmail + "님을 삭제합니다.")
+        userList()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 

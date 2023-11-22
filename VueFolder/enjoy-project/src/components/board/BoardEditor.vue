@@ -59,73 +59,76 @@ console.log("loginStore : ")
 console.log(loginStore)
 
 const insertBoard = async () => {
+  // 게시글 등록할 사용자도 세션에서 받아와주기 => userId에 넣어야함
+  let formData = {
+    boardTitle: editorDataTitle.value,
+    boardContent: editorDataContent.value,
+    userId: loginStore.userId
+  };
 
-    // 게시글 등록할 사용자도 세션에서 받아와주기 => userId에 넣어야함
-    let formData = {
-      boardTitle: editorDataTitle.value,
-      boardContent: editorDataContent.value,
-      userId: loginStore.userId
-    };
-
-    let result = confirm('게시글을 등록하시겠습니까?')
-    if (result){
-      if (editorDataTitle.value != '' && editorDataContent.value != ''){
-        try {
-          console.log(formData)
-
-          let { data } = await http.post('/boards', formData)
-
-          console.log(data.result)
-          alert('등록이 완료되었습니다.')
-
-          router.push({
-              path: '/board'
-          })
-        } catch (error) {
-          console.log(error)
-        }
-      } else {
-        alert('입력을 확인해주세요')
-      }
-    }
-}
-    
-
-
-
-const updateBoard = async () => {
-    let result = confirm('수정을 완료하시겠습니까?')
-
-    let formData = {
-      boardId: boardId,
-      boardTitle: editorDataTitle.value,
-      boardContent: editorDataContent.value
-    };
-    
-    if (result) {
+  let result = confirm('게시글을 등록하시겠습니까?')
+  if (result){
+    if (editorDataTitle.value != '' && editorDataContent.value != ''){
       try {
-        let { data } = await http.post('/boards/'+boardId, formData)
-        // console.log("updated data : " + data.result)
+        console.log(formData)
+        let { data } = await http.post('/boards', formData)
 
-        // if (data.result == "login"){
-        //   // doLogout()
-        // } else {
-          alert('글이 수정되었습니다')
-          router.push({
-            name: 'BoardDetail',
-            params: boardId
-          })  
-        // }
+        console.log(data.result)
+        alert('등록이 완료되었습니다.')
 
+        router.push({
+            path: '/board'
+        })
       } catch (error) {
         console.log(error)
       }
-      
+    } else {
+      alert('입력을 확인해주세요')
     }
+  }
+}
+    
+const updateBoard = async () => {
+  let result = confirm('수정을 완료하시겠습니까?')
 
+  let formData = {
+    boardId: boardId,
+    boardTitle: editorDataTitle.value,
+    boardContent: editorDataContent.value
+  };
+  
+  if (result) {
+    try {
+      let { data } = await http.post('/boards/'+boardId, formData)
+      // console.log("updated data : " + data.result)
+
+      // if (data.result == "login"){
+      //   // doLogout()
+      // } else {
+        alert('글이 수정되었습니다')
+        router.push({
+          name: 'BoardDetail',
+          params: boardId
+        })  
+      // }
+
+    } catch (error) {
+      console.log(error)
+    } 
+  }
 }
 
+const insertNotice = () => {
+  let formData = {
+    boardTitle: editorDataTitle.value,
+    boardContent: editorDataContent.value,
+    userId: loginStore.userId
+  };
+}
+
+
 initEditor()
+
 </script>
 
 

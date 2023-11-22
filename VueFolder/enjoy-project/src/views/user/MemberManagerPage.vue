@@ -20,9 +20,12 @@ import MemberManager from '@/components/user/MemberManager.vue';
 import UserList from '@/components/user/UserList.vue';
 
 import { useLoginStore } from '@/stores/loginStore'
+import { useAdminStore } from '@/stores/adminStore'
 import { useRouter } from 'vue-router'
 
 const { loginStore } = useLoginStore()
+const { adminStore, userList } = useAdminStore()
+
 const router = useRouter()
 
 </script>

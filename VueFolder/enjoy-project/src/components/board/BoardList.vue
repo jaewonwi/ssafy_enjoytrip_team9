@@ -3,14 +3,12 @@
     <div class="input-group col-12">
         <input v-model="boardStore.searchWord"  @keydown.enter="boardList" type="text" class="form-control" 
             style="border-radius: 10px;" placeholder="Search">
-        &nbsp;
+        &nbsp; 
         <button @click="boardList" class="btn btn-primary rounded-3" type="button">Search</button>
     </div>
-    
-    <!-- board List
-    <board-list></board-list> -->
 
-    <div class="col-12 mt-3">
+    <!-- board List -->
+    <div class="col-12 mt-4">
         <div class="table-responsive rounded-4">
             <table class="text-nowrap mb-0 table">
                 <thead class="table-light">
@@ -41,13 +39,13 @@
             
             <div class="divider m-5"></div>
 
+            <div class="row m-4 d-flex justify-content-end">
+                <button v-if="isManager" @click="goEditor" class="btn btn-danger col-2">공지사항 등록하기</button>    
+                <button v-else @click="goEditor" class="btn btn-primary col-1">글쓰기</button>                
+            </div>
+            
             <PaginationUI v-on:call-parent="movePage"></PaginationUI>
             
-            <div class="row m-4 justify-content-end">
-                <div class="mx-4">
-                    <button @click="goEditor" class="btn btn-primary" >글쓰기</button>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -89,17 +87,19 @@
     }
 
     // 관리자 여부
-    const isManager = reactive(true)
+    let isManager = ref(false)
 
     // 초기 작업
     boardStore.searchWord = ''
     boardList();
-    console.log("login : ")  // login 확인
-    console.log(loginStore)
+    // console.log("login : ")  // login 확인
+    // console.log(loginStore)
+    // console.log(loginStore.userClsf)
+
     
-    // if (loginStore.userClsf == '001'){
-    //     isManager = true
-    // }
+    if (loginStore.userClsf == '001'){
+        isManager.value = true
+    }
 
     // pagination
     const movePage= (pageIndex) => {

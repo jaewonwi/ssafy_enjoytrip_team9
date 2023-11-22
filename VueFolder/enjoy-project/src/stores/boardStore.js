@@ -79,6 +79,23 @@ export const useBoardStore = defineStore('boardStore', () => {
     }
   }
 
+  // delete
+  const deleteBoard = async () => {
+    let result = confirm("정말로 삭제하시겠습니까?")
+    console.log(result)
+    if (result) {
+        try {
+            let { data } = await axios.delete('/boards/'+boardId)
+            console.log(data)
+            router.push('/board')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+  }
+
+
+
   // pagination
   const pageCount = computed(() => Math.ceil(boardStore.totalListItemCount / boardStore.listRowCount))
   const startPageIndex = computed(() => {
@@ -90,19 +107,22 @@ export const useBoardStore = defineStore('boardStore', () => {
     }
   })
 
-  const endPageIndex = pageCount
-  // const endPageIndex = computed(() => {
-  //   if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
-  //     //10, 20...맨마지막
-  //     return (boardStore.currentPageIndex / boardStore.pageLinkCount - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-  //   } else {
-  //     return Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
-  //   }
-  // })
-
+  const endPageIndex = computed(() => {
+    let tempEndPageIndex = 0;
+    if (boardStore.currentPageIndex % boardStore.pageLinkCount == 0) {
+      //10, 20...맨마지막
+      tempEndPageIndex = ((boardStore.currentPageIndex / boardStore.pageLinkCount) - 1) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+    } else {
+      tempEndPageIndex = Math.floor(boardStore.currentPageIndex / boardStore.pageLinkCount) * boardStore.pageLinkCount + boardStore.pageLinkCount;
+    }
+    // endPageIndex 가 전체 pageCount(페이지 전체 수) 보다 크면 페이지 전체 수로 보정 
+    if( tempEndPageIndex > pageCount.value ) tempEndPageIndex = pageCount.value
+    return tempEndPageIndex;
+  })
+  
+  
   const prev = computed(() => boardStore.currentPageIndex <= boardStore.pageLinkCount ? false : true)
-  const next = computed(() => 
-    Math.floor(pageCount / boardStore.pageLinkCount) * boardStore.pageLinkCount < boardStore.currentPageIndex ? false : true)
+  const next = computed(() => endPageIndex.value == pageCount.value ? false : true) // 위에서 더 큰 값은 보정했으므로 같은 지만 비교
 
   return { 
     boardStore, 

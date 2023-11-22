@@ -72,6 +72,11 @@
         </div>
       </div>
     </div>
+
+    
+    <PaginationUI v-on:call-parent="movePage"></PaginationUI>
+            
+
   </div>
 </template>
 
@@ -88,11 +93,14 @@ import { useLoginStore } from '@/stores/loginStore'
 // router
 import { useRouter } from 'vue-router'
 
+// component
+import PaginationUI from "@/components/search/PaginationUI.vue";
+
 import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
 import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
-const { searchStore, getSidoList, getGugunList, attractionList } = useSearchStore()
+const { searchStore, getSidoList, getGugunList, attractionList, setSearchMovePage } = useSearchStore()
 const { bookmarkStore, insertBookmark, deleteBookmark, getBookmarkListOfCurUser } = useBookmarkStore()
 const { loginStore } = useLoginStore()
 const router = useRouter()
@@ -145,4 +153,13 @@ const attractionDetail = async (contentId) => {
     console.log(error)
   }
 }
+
+
+// pagination
+const movePage= (pageIndex) => {
+    console.log("BoardMainVue : movePage : pageIndex : " + pageIndex);
+    setSearchMovePage(pageIndex);
+    attractionList();
+}
+
 </script>

@@ -21,16 +21,20 @@
                         <th>등록일</th>
                         <th>조회수</th>
                         <!-- <th>좋아요</th> -->
+                        <th v-if="isManager">글삭제</th>    <!-- 관리자 전용 -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(board) in boardStore.list" v-bind:key="board.boardId" @click="boardDetail(board.boardId)">
+                    <tr v-for="(board) in boardStore.list" v-bind:key="board.boardId" @click.stop="boardDetail(board.boardId)">
                         <td>{{ board.boardId }}</td>
                         <td>{{ board.boardTitle }}</td>
                         <td>{{ board.userNm }}</td>
                         <td>{{ util.makeDateStr(board.boardRegDate.date, '.') }}</td>
                         <td>{{ board.boardReadCount }}</td>
                         <!-- <td>{{ board.boardLike }}</td> -->
+                        <td v-if="isManager">    <!-- 관리자 전용 -->
+                            <button class="btn btn-primary btn-sm" @click.stop="deleteBoard(board.boardId)">삭제</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -51,7 +55,7 @@
 <script setup>
     // const props = defineProps(['boardList']);
     // basic
-    import { ref, onMounted } from 'vue';
+    import { ref, reactive, onMounted } from 'vue';
 
     // common
     import http from '@/common/axios.js'
@@ -74,29 +78,28 @@
 
     const boardDetail = async (boardId) => {
         try {
-            // let { data } = await http.get("/boards/" + boardId);
-
-            // if (data.result == "login") {
-            //     doLogout();
-            // } else {
-                // let { dto } = data;
-                // setBoardDetail(dto);
-                router.push({
-                    name: 'BoardDetail',
-                    params: { boardId: boardId }
-                })
-            // }
+            router.push({
+                name: 'BoardDetail',
+                params: { boardId: boardId }
+            })
         } catch (error) {
             console.log("BoardMainVue: error : ");
             console.log(error);
         }
     }
 
+    // 관리자 여부
+    const isManager = reactive(true)
+
     // 초기 작업
     boardStore.searchWord = ''
     boardList();
-    // console.log("login : ")  // login 확인
-    // console.log(loginStore)
+    console.log("login : ")  // login 확인
+    console.log(loginStore)
+    
+    // if (loginStore.userClsf == '001'){
+    //     isManager = true
+    // }
 
     // pagination
     const movePage= (pageIndex) => {
@@ -107,6 +110,19 @@
 
     const goEditor = () => router.push('board/editor')
 
+    const deleteBoard = async (boardId) => {
+        let result = confirm("해당 게시글을 삭제하시겠습니까?")
+        if (result) {
+            try {
+                let { data } = await http.delete('/boards/'+boardId)
+                console.log(data)
+                boardList();
+                // router.push('/board')
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 </script>
 
 <style scoped>

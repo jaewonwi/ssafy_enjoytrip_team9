@@ -21,7 +21,10 @@ export const useLoginStore = defineStore('loginStore', () => {
     userProfileImageUrl: notLoginUserProfileImageUrl, // build했을 때 image를 가져올 수 있도록 세팅
 
     // 일반 사용자와 관리자
-    userClsf: ''
+    userClsf: '',
+
+    // 사용자 리스트
+    userList: []
   })
 
   const logout = async () => {
@@ -176,6 +179,11 @@ export const useLoginStore = defineStore('loginStore', () => {
       console.log(error)
     }
   }
+
+  const getUserList = () => {
+
+  }
+
 
   return { loginStore, setLogin, logout, updateUser, deleteUser, detail }
 })

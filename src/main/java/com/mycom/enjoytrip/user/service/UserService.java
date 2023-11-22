@@ -17,5 +17,5 @@ public interface UserService {
 
 
 	// 유저 목록 (관리자)
-	List<UserDto> userList();
+	UserResultDto userList();
 }

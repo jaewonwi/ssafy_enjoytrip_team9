@@ -34,12 +34,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		
-//		// 로그인했고, 유저인 경우
-//		if (userDto.getUserClsf().equals(USER_CLSF)) {
-//			return true;
-//		} else if (userDto.getUserClsf().equals(ADMIN_CLSF)) {	// 로그인했고, 관리자인 경우
-//			
-//		}
+		// 로그인했고, 유저인 경우
+		if (userDto.getUserClsf().equals(USER_CLSF)) {
+			return true;
+		} else if (userDto.getUserClsf().equals(ADMIN_CLSF)) {	// 로그인했고, 관리자인 경우
+			
+		}
 		
 		return true;
 	}

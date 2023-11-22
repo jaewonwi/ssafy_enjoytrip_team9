@@ -50,7 +50,7 @@
 
   <div class="untree_co-section"></div>
   
-  <random-list></random-list>
+  <popular-list></popular-list>
 
 </template>
 
@@ -60,7 +60,7 @@ import { useSearchStore } from '@/stores/searchStore'
 import http from "@/common/axios.js";
 
 // component
-import RandomList from '@/components/main/RandomList.vue'
+import PopularList from '@/components/main/PopularList.vue'
 
 const store = useSearchStore();
 

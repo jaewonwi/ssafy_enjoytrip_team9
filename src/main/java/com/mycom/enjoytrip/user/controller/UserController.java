@@ -127,4 +127,9 @@ public class UserController {
 		map.put("result", "fail");
 		return map;
 	}
+	
+	@GetMapping("users/userList")
+	public UserResultDto userList() {
+		return userService.userList();
+	}
 }

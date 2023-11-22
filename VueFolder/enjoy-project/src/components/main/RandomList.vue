@@ -119,16 +119,9 @@ img{
  height: 250px;
 }
 .media-thumb .media-text {
-	top: 0px;
+	top: 90px;
 	left: 0px;
 	margin-top: 0px;
 	text-align: center;
-}
-.media-thumb {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 }
 </style>

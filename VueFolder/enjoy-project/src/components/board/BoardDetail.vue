@@ -80,6 +80,8 @@
     const getDetail = async () => {
         try {
             let { data } = await http.get('/boards/'+boardId);
+            console.log("-----------------------");
+            console.log(boardId)
             // board.value = data.dto;
 
             console.log("getDetail : ")

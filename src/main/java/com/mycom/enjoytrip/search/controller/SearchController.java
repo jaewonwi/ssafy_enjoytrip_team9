@@ -22,80 +22,81 @@ public class SearchController {
 
 	@Autowired
 	SearchService service;
-	
-	@GetMapping(value="/sidoList")
-	public List<SidoGugunDto> sidoList(){
+
+	@GetMapping(value = "/search/sidoList")
+	public List<SidoGugunDto> sidoList() {
 		return service.sidoList();
 	}
-	
-	@GetMapping(value="/gugunList/{sidoCode}")
-	public List<SidoGugunDto> gugunList(@PathVariable int sidoCode){
+
+	@GetMapping(value = "/search/gugunList/{sidoCode}")
+	public List<SidoGugunDto> gugunList(@PathVariable int sidoCode) {
 		return service.gugunList(sidoCode);
 	}
-	
 
 	// 관광지 목록
-	@GetMapping(value="/attractionList")
-	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto, HttpSession session) {
-		
+	@GetMapping(value = "/search/attractionList")
+	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto) {
 		int userId = ((UserDto) session.getAttribute("userDto")).getUserId();
-		
-        System.out.println("/attractionList");
+
+		System.out.println("/attractionList");
 		System.out.println(searchParamDto);
-		
-        SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
+
+		SearchAttractionResultDto searchAttractionResultDto = new SearchAttractionResultDto();
 
 		boolean sido = searchParamDto.getSidoCode() == 0 ? false : true;
 		boolean gugun = searchParamDto.getGugunCode() == 0 ? false : true;
 		boolean contentType = searchParamDto.getContentTypeId() == 0 ? false : true;
-		
+
 		int sidoCode = searchParamDto.getSidoCode();
 		int gugunCode = searchParamDto.getGugunCode();
 		int contentTypeId = searchParamDto.getContentTypeId();
-		
+
 		// 현재 유저의 북마크 표시
 		searchParamDto.setUserId(userId);
-		
+
 		if (sido) {
 			if (gugun) {
-				if (contentType) {	// 시도, 구군, 분류코드
+				if (contentType) { // 시도, 구군, 분류코드
 					searchAttractionResultDto = service.attractionListBySidoGugunContentTypeId(searchParamDto);
 					System.out.println("시도, 구군, 분류코드");
-				} else {			// 시도, 구군
+				} else { // 시도, 구군
 					searchAttractionResultDto = service.attractionListBySidoGugun(searchParamDto);
 					System.out.println("시도, 구군");
 				}
-			} else if (contentType) {	// 시도, 분류코드
+			} else if (contentType) { // 시도, 분류코드
 				searchAttractionResultDto = service.attractionListBySidoContentTypeId(searchParamDto);
 				System.out.println("시도, 분류코드");
-			} else if (!contentType) {	// 시도
+			} else if (!contentType) { // 시도
 				searchAttractionResultDto = service.attractionListBySido(searchParamDto);
 				System.out.println("시도");
 			}
-		} else if (!sido && contentType) {		// 분류코드
+		} else if (!sido && contentType) { // 분류코드
 			searchAttractionResultDto = service.attractionListByContentTypeId(searchParamDto);
 			System.out.println("분류코드");
 		}
 
 		return searchAttractionResultDto;
 	}
-	
+
 	// 현재 유저가 북마크한 관광지 리스트 불러오기
-	@GetMapping(value="/search/bookmarkList/{userId}")
+	@GetMapping(value = "/search/bookmarkList/{userId}")
 	public List<SearchAttractionBookmarkDto> bookmarkList(@PathVariable int userId) {
-        System.out.println("/search/bookmarkList: " + userId);
-        List<SearchAttractionBookmarkDto> list = service.getBookmarkList(userId);
+		System.out.println("/search/bookmarkList: " + userId);
+		List<SearchAttractionBookmarkDto> list = service.getBookmarkList(userId);
 		return list;
 	}
-	
-	
+
 	// 관광지 상세 정보
-	@GetMapping(value="/detail/{contentId}")
+	@GetMapping(value = "/search/detail/{contentId}")
 	public SearchAttractionDto attractionDetail(@PathVariable int contentId) {
 		SearchAttractionDto searchAttractionDto = service.attractionDetail(contentId);
 		return searchAttractionDto;
 	}
-	
-	
-	
+
+	// 관광지 목록 랜덤
+	@GetMapping(value = "/search/recommendList/{limit}/{contentTypeId}")
+	public SearchAttractionResultDto recommendAttractionList(@PathVariable int limit, @PathVariable int contentTypeId) {
+		return service.recommendAttractionList(limit, contentTypeId);
+	}
+
 }

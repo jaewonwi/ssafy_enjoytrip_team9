@@ -77,7 +77,7 @@
 
 <script setup>
 // basic
-import { ref, reactive, computed, watch, onUpdated } from 'vue'
+import { ref } from 'vue'
 import http from '@/common/axios.js'
 
 // store
@@ -93,7 +93,6 @@ import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
 const { searchStore, getSidoList, getGugunList, attractionList } = useSearchStore()
-const altImage = ref(noImageUrl)
 const { bookmarkStore, insertBookmark, deleteBookmark, getBookmarkListOfCurUser } = useBookmarkStore()
 const { loginStore } = useLoginStore()
 const router = useRouter()
@@ -111,7 +110,7 @@ const getAttractionList = async () => {
 const changeImageUrlHandler = (contentId) => {
   // event.target
   const curImgTag = document.getElementById(contentId)
-  const imagePath = curImgTag.src.replace(window.location.origin, '') // http://localhost:5173/ 까지 제거
+  const imagePath = curImgTag.src.replace(window.location.origin, '')
   if (imagePath == bookMarkOFFUrl) {
     // 북마크 등록( userId, contentId(관광지) 필요 )
     console.log('userId: ', loginStore.userId)

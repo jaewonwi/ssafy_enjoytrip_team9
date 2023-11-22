@@ -24,7 +24,7 @@
 
 <script setup>
   import http from '@/common/axios.js'
-  import { ref } from 'vue'
+  import { computed, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router';
 
 // store
@@ -42,7 +42,7 @@ import { useSearchStore } from '@/stores/searchStore'
 
   const getDetail = async () => {
     try {
-      let { data } = await http.get('/detail/'+contentId);
+      let { data } = await http.get('/search/detail/'+contentId);
 
       console.log("get Detail : ")
       console.log(data);

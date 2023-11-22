@@ -33,12 +33,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 			response.getWriter().write(jsonStr);
 			return false;
 		}
-		
-		// 로그인했고, 유저인 경우
-		if (userDto.getUserClsf().equals(USER_CLSF)) {
-			return true;
-		} else if (userDto.getUserClsf().equals(ADMIN_CLSF)) {	// 로그인했고, 관리자인 경우
-			
+
+		// 로그인했는데 관리자가 아닌 경우
+		if (request.getRequestURI().equals("/users/userList") && !userDto.getUserClsf().equals(ADMIN_CLSF)) {	
+			System.out.println("관리자만 회원 관리에 관한 데이터를 요청할 수 있습니다.");
+			return false;
 		}
 		
 		return true;

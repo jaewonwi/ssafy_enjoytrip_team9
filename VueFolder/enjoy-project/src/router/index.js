@@ -12,6 +12,7 @@ import BoardDetail from '@/components/board/BoardDetail.vue'
 import BoardEditor from '@/components/board/BoardEditor.vue'
 
 import MapPage from '@/views/map/MapPage.vue'
+import MemberManager from '@/views/user/MemberManagerPage.vue'
 
 import SearchAttraction from '@/components/search/SearchAttraction.vue'
 import SearchAttractionDetail from '@/components/search/SearchAttractionDetail.vue'
@@ -41,7 +42,7 @@ const router = createRouter({
         console.log("before enter")
         const { loginStore } = useLoginStore()
         let isLogin = sessionStorage.getItem('isLogin')
-        if (loginStore.isLogin == true) {
+        if (isLogin || loginStore.isLogin == true) {
           return next();
         } else {
           console.log("before enter: 통과못함")
@@ -58,7 +59,7 @@ const router = createRouter({
         const { loginStore } = useLoginStore()
 
         let isLogin = sessionStorage.getItem('isLogin')
-        if (loginStore.isLogin == true) {
+        if (isLogin || loginStore.isLogin == true) {
           return next();
         } else {
           console.log("before enter: 통과못함")
@@ -85,6 +86,22 @@ const router = createRouter({
         {path: 'detail/:contentId', name: 'SearchAttractionDetail', component: SearchAttractionDetail},
         // {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]
+    },
+    {
+      path: '/manager',
+      component: MemberManager,
+      beforeEnter: (to, from, next) => {
+        console.log("before enter")
+        const { loginStore } = useLoginStore()
+
+        let isLogin = sessionStorage.getItem('isLogin')
+        if ((isLogin || loginStore.isLogin == true) && loginStore.userClsf == '001') {
+          return next();
+        } else {
+          console.log("before enter: 관리자만 이용할 수 있음")
+          next('/login');
+        }
+      },
     }
   ]
 })

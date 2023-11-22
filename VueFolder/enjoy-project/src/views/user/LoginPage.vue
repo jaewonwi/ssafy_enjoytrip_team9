@@ -59,6 +59,11 @@ import { useRouter } from 'vue-router'
 const { loginStore, setLogin } = useLoginStore()
 const router = useRouter()
 
+if (loginStore.isLogin == true) {
+  console.log("로그인 했으면 mainPage로 이동")
+  router.push('/')
+}
+
 const login = async () => {
   let loginObj = {
     // v-model은 input tag의 value와 연결하기 때문에 value 속성에 기본값이 있으면 안 된다.

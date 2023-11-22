@@ -43,7 +43,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/codes/**",					// 공통 코드
 				"/attractions/**",
 				"/search/**",
-				"/assets/**"
+				"/assets/**",
+				"/search/**"
 				
 		);	
 		

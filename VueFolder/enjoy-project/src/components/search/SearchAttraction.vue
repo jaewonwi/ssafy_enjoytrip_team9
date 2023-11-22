@@ -100,7 +100,11 @@ const router = useRouter()
 const flag = ref(true)
 
 getSidoList()
-getBookmarkListOfCurUser(loginStore.userId)
+
+// 로그인 했으면 수행
+if (loginStore.isLogin == true) {
+  getBookmarkListOfCurUser(loginStore.userId)
+}
 
 const getAttractionList = async () => {
   attractionList()

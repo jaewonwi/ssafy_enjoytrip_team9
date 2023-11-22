@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto;
@@ -35,8 +36,16 @@ public class SearchController {
 
 	// 관광지 목록
 	@GetMapping(value = "/search/attractionList")
-	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto) {
-		int userId = ((UserDto) session.getAttribute("userDto")).getUserId();
+	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto, HttpSession session) {
+		
+		// 사용자가 아닌 사람들도 검색할 수 있다.
+		// 사용자인 경우에는 해당 유저의 북마크를 검사해서 표시한다.
+		if ((UserDto) session.getAttribute("userDto") != null) {
+			int userId = ((UserDto) session.getAttribute("userDto")).getUserId();
+			// 현재 유저의 북마크 표시
+			searchParamDto.setUserId(userId);
+		}
+		
 
 		System.out.println("/attractionList");
 		System.out.println(searchParamDto);
@@ -51,8 +60,7 @@ public class SearchController {
 		int gugunCode = searchParamDto.getGugunCode();
 		int contentTypeId = searchParamDto.getContentTypeId();
 
-		// 현재 유저의 북마크 표시
-		searchParamDto.setUserId(userId);
+		
 
 		if (sido) {
 			if (gugun) {

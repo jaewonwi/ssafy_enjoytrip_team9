@@ -72,6 +72,8 @@ import http from '@/common/axios.js'
 
 // store
 import { useSearchStore } from '@/stores/searchStore'
+import { useBookmarkStore } from '@/stores/bookmarkStore'
+import { useLoginStore } from '@/stores/loginStore'
 
 // router
 import { useRouter } from 'vue-router'

@@ -40,7 +40,7 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         const { loginStore } = useLoginStore()
         let isLogin = sessionStorage.getItem('isLogin')
-        if (loginStore.isLogin == 'true') {
+        if (loginStore.isLogin == true) {
           return next();
         } else {
           next('/login');
@@ -56,7 +56,7 @@ const router = createRouter({
         const { loginStore } = useLoginStore()
 
         let isLogin = sessionStorage.getItem('isLogin')
-        if (loginStore.isLogin == 'true') {
+        if (loginStore.isLogin == true) {
           return next();
         } else {
           next('/login');

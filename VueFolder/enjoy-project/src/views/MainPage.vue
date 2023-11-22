@@ -48,6 +48,7 @@
     </div>
   </div>
 
+  <random-list></random-list>
 
 </template>
 
@@ -56,6 +57,8 @@ import { ref, reactive, computed, watch } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
 import http from "@/common/axios.js";
 
+// component
+import RandomList from '@/components/main/RandomList.vue'
 
 const store = useSearchStore();
 

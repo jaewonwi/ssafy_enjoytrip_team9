@@ -81,7 +81,7 @@ export const useSearchStore = defineStore('searchStore', () => {
   const getSidoList = async () => {
     try {
         // console.log("getSidoList")
-        let { data } = await http.get('/sidoList')
+        let { data } = await http.get('/search/sidoList')
         // console.log(data)
         // searchStore.sidoCode = 0; 
         // searchStore.gugunCode = 0;   
@@ -95,7 +95,7 @@ export const useSearchStore = defineStore('searchStore', () => {
   const getGugunList = async () => {
     try {
         // console.log("getGugunList: sidoCode : "+ searchStore.sidoCode)
-        let { data } = await http.get('/gugunList/'+searchStore.sidoCode)
+        let { data } = await http.get('/search/gugunList/'+searchStore.sidoCode)
         // console.log(data)
         searchStore.gugunCode = 0;
         searchStore.gugunList = data;
@@ -117,7 +117,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     };
 
     try {
-      let { data } = await http.get("/attractionList", { params }); // params: params shorthand property, let response 도 제거
+      let { data } = await http.get("/search/attractionList", { params }); // params: params shorthand property, let response 도 제거
       //console.log("attractionList: data : ");
       //console.log(params)
       //console.log(data)
@@ -134,6 +134,24 @@ export const useSearchStore = defineStore('searchStore', () => {
        console.error(error);
     }
   }
+
+  // random list
+  const attractionRandomList = async () => {
+    try {
+      let { data } = await http.get("/search/randomList/6"); // params: params shorthand property, let response 도 제거
+      console.log("attractionRandomList: data : ");
+      console.log(data)
+       if (data.result == "login") {     // 로그인하지 않았으면 접근 X
+          router.push("/login");
+       } else {
+        setAttractionList(data.list);
+        // setTotalListItemCount(data.count);
+       }
+    } catch (error) {
+       console.error(error);
+    }
+  }
+
 
   // pagination
   const pageCount = computed(() => Math.ceil(searchStore.totalListItemCount / searchStore.listRowCount))
@@ -162,8 +180,8 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   return { 
     searchStore,
-    getSidoList, setSidoList, getGugunList, setGugunList, 
-    setAttractionList, setSearchMovePage, setTotalListItemCount, setSearchAttractionDetail, attractionList,
+    getSidoList, setSidoList, getGugunList, setGugunList, setAttractionList, attractionRandomList,
+    setSearchMovePage, setTotalListItemCount, setSearchAttractionDetail, attractionList,
     pageCount, startPageIndex, endPageIndex, prev, next 
   }
 

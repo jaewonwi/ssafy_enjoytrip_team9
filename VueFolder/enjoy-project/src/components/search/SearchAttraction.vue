@@ -67,7 +67,7 @@
 
 <script setup>
 // basic
-import { ref, reactive, computed, watch, onUpdated } from 'vue'
+import { ref } from 'vue'
 import http from '@/common/axios.js'
 
 // store
@@ -83,7 +83,6 @@ import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
 const { searchStore, getSidoList, getGugunList, attractionList } = useSearchStore()
-const altImage = ref(noImageUrl)
 const { bookmarkStore, insertBookmark, deleteBookmark } = useBookmarkStore()
 const { loginStore } = useLoginStore()
 const router = useRouter()

@@ -27,4 +27,7 @@ public interface SearchService {
 	SearchAttractionResultDto attractionListByContentTypeId(SearchParamDto searchParamDto);				// 분류코드
 	SearchAttractionResultDto attractionListBySidoContentTypeId(SearchParamDto searchParamDto);			// 시도, 분류코드		
 	SearchAttractionResultDto attractionListBySidoGugunContentTypeId(SearchParamDto searchParamDto);		// 시도, 구군, 분류코드
+
+	// 관광지 목록 랜덤
+	SearchAttractionResultDto randomAttractionList(int limit);
 }

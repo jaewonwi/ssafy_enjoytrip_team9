@@ -105,4 +105,12 @@
 		 where i.content_id = #{contentId} and i.content_id = d.content_id
 	</select>
 	
+	<!--  관광지 랜덤 10개 추천  -->
+	<select id="randomAttractionList" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
+		select content_id, content_type_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
+		  from attraction_info 
+		 order by rand() 
+		 limit #{limit} 
+	</select>
+		
 </mapper>

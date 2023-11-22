@@ -20,19 +20,19 @@ public class SearchController {
 	@Autowired
 	SearchService service;
 	
-	@GetMapping(value="/sidoList")
+	@GetMapping(value="/search/sidoList")
 	public List<SidoGugunDto> sidoList(){
 		return service.sidoList();
 	}
 	
-	@GetMapping(value="/gugunList/{sidoCode}")
+	@GetMapping(value="/search/gugunList/{sidoCode}")
 	public List<SidoGugunDto> gugunList(@PathVariable int sidoCode){
 		return service.gugunList(sidoCode);
 	}
 	
 
 	// 관광지 목록
-	@GetMapping(value="/attractionList")
+	@GetMapping(value="/search/attractionList")
 	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto) {
         System.out.println("/attractionList");
 		System.out.println(searchParamDto);
@@ -72,12 +72,16 @@ public class SearchController {
 	}
 	
 	// 관광지 상세 정보
-	@GetMapping(value="/detail/{contentId}")
+	@GetMapping(value="/search/detail/{contentId}")
 	public SearchAttractionDto attractionDetail(@PathVariable int contentId) {
 		SearchAttractionDto searchAttractionDto = service.attractionDetail(contentId);
 		return searchAttractionDto;
 	}
 	
-	
+	// 관광지 목록 랜덤
+	@GetMapping(value="/search/randomList/{limit}")
+	public SearchAttractionResultDto randomAttractionList(@PathVariable int limit) {
+		return service.randomAttractionList(limit);
+	}	
 	
 }

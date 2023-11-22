@@ -153,22 +153,22 @@ export const useSearchStore = defineStore('searchStore', () => {
   const setRecommendTourList = async () => {
     let { data } = await http.get("/search/recommendList/6/"+12); // params: params shorthand property, let response 도 제거
     mainSearchStore.tour = data.list
-    console.log(data.list)
+    // console.log(data.list)
   }
   const setRecommendCultureList = async () => {
     let { data } = await http.get("/search/recommendList/6/"+14); // params: params shorthand property, let response 도 제거
     mainSearchStore.culture = data.list
-    console.log(data.list)
+    // console.log(data.list)
   }
   const setRecommendFestivalList = async () => {
     let { data } = await http.get("/search/recommendList/6/"+15); // params: params shorthand property, let response 도 제거
     mainSearchStore.festival = data.list
-    console.log(data.list)
+    // console.log(data.list)
   }
   const setRecommendLeisureList = async () => {
     let { data } = await http.get("/search/recommendList/6/"+28); // params: params shorthand property, let response 도 제거
     mainSearchStore.leisure = data.list
-    console.log(data.list)
+    // console.log(data.list)
   }
 
   const attractionMainList = async () => {

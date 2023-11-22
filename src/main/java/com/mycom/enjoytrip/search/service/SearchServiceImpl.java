@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.mycom.enjoytrip.board.dto.BoardDto;
 import com.mycom.enjoytrip.board.dto.BoardResultDto;
 import com.mycom.enjoytrip.search.dao.SearchDao;
+import com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionResultDto;
 import com.mycom.enjoytrip.search.dto.SearchParamDto;
@@ -225,5 +226,13 @@ public class SearchServiceImpl implements SearchService {
 	    
 	    return searchAttractionResultDto;
 	}
+
+	@Override
+	public List<SearchAttractionBookmarkDto> getBookmarkList(int userId) {
+		List<SearchAttractionBookmarkDto> list = dao.getBookmarkList(userId);
+		return list;
+	}
+	
+	
 
 }

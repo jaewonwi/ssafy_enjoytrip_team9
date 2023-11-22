@@ -17,44 +17,63 @@
 	<!-- 관광지 목록 -->
 	<!-- 지역별 관광지 정보 목록 (시도) -->
 	<select id="attractionListBySido" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
-		  from attraction_info
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
+		  from attraction_info ai
 		 where sido_code = #{sidoCode}
+		 order by ai.content_id
 		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- 지역별 관광지 정보 목록 (시도, 구군) -->
 	<select id="attractionListBySidoGugun" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
-		  from attraction_info
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
+		  from attraction_info ai
 		 where sido_code = #{sidoCode} and gugun_code = #{gugunCode}
+		 order by ai.content_id
 		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- (분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListByContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
-		  from attraction_info
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
+		  from attraction_info ai
 		 where content_type_id = #{contentTypeId}
+		 order by ai.content_id
 		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- (시도 + 분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListBySidoContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
-		  from attraction_info
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
+		  from attraction_info ai
 		 where sido_code = #{sidoCode}
 		   and content_type_id = #{contentTypeId}
+		 order by ai.content_id
 		 limit ${limit} offset #{offset}
 	</select>
 	
 	<!-- ((시도+구군) + 분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListBySidoGugunContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
-		  from attraction_info
-		 where content_type_id = #{contentTypeId}
-		   and sido_code = #{sidoCode} and gugun_code = #{gugunCode}
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		 (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
+		  from attraction_info ai
+		 where ai.content_type_id = #{contentTypeId}
+		   and ai.sido_code = #{sidoCode} and ai.gugun_code = #{gugunCode}
+		 order by ai.content_id
 		 limit ${limit} offset #{offset}
+	</select>
+	
+	<!-- 현재 유저가 선택한 북마크 리스트 -->
+	<select id="getBookmarkList" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto">
+		select a.content_id, a.title, a.addr1, a.first_image, b.bookmarkId, b.userId
+ 			from attraction_info a, bookmarks b
+ 			where a.content_id = b.contentId
+ 			and b.userId = #{userId}
+ 			order by b.contentId
 	</select>
 	
 	

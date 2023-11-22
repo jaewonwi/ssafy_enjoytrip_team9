@@ -2,6 +2,7 @@ package com.mycom.enjoytrip.search.service;
 
 import java.util.List;
 
+import com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionResultDto;
 import com.mycom.enjoytrip.search.dto.SearchParamDto;
@@ -27,4 +28,7 @@ public interface SearchService {
 	SearchAttractionResultDto attractionListByContentTypeId(SearchParamDto searchParamDto);				// 분류코드
 	SearchAttractionResultDto attractionListBySidoContentTypeId(SearchParamDto searchParamDto);			// 시도, 분류코드		
 	SearchAttractionResultDto attractionListBySidoGugunContentTypeId(SearchParamDto searchParamDto);		// 시도, 구군, 분류코드
+	
+	// 현재 유저의 북마크 리스트 목록
+	List<SearchAttractionBookmarkDto> getBookmarkList(int userId);
 }

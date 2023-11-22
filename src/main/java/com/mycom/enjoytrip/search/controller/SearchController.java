@@ -2,17 +2,20 @@ package com.mycom.enjoytrip.search.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionResultDto;
 import com.mycom.enjoytrip.search.dto.SearchParamDto;
 import com.mycom.enjoytrip.search.dto.SidoGugunDto;
 import com.mycom.enjoytrip.search.service.SearchService;
+import com.mycom.enjoytrip.user.dto.UserDto;
 
 @RestController
 public class SearchController {
@@ -33,7 +36,10 @@ public class SearchController {
 
 	// 관광지 목록
 	@GetMapping(value="/attractionList")
-	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto) {
+	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto, HttpSession session) {
+		
+		int userId = ((UserDto) session.getAttribute("userDto")).getUserId();
+		
         System.out.println("/attractionList");
 		System.out.println(searchParamDto);
 		
@@ -46,6 +52,9 @@ public class SearchController {
 		int sidoCode = searchParamDto.getSidoCode();
 		int gugunCode = searchParamDto.getGugunCode();
 		int contentTypeId = searchParamDto.getContentTypeId();
+		
+		// 현재 유저의 북마크 표시
+		searchParamDto.setUserId(userId);
 		
 		if (sido) {
 			if (gugun) {
@@ -70,6 +79,15 @@ public class SearchController {
 
 		return searchAttractionResultDto;
 	}
+	
+	// 현재 유저가 북마크한 관광지 리스트 불러오기
+	@GetMapping(value="/search/bookmarkList/{userId}")
+	public List<SearchAttractionBookmarkDto> bookmarkList(@PathVariable int userId) {
+        System.out.println("/search/bookmarkList: " + userId);
+        List<SearchAttractionBookmarkDto> list = service.getBookmarkList(userId);
+		return list;
+	}
+	
 	
 	// 관광지 상세 정보
 	@GetMapping(value="/detail/{contentId}")

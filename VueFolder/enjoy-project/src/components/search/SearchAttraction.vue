@@ -42,10 +42,20 @@
               <img
                 class="position-absolute m-1 rounded-0"
                 type="checkbox"
-                style="max-width: 50px; max-height: 40px"
+                style="max-width: 50px; max-height: 40px; pointer-events: auto"
+                :id="attraction.contentId"
+                :src="bookMarkONUrl"
+                v-if="attraction.isBookmark"
+                @click.stop="changeImageUrlHandler(attraction.contentId)"
+              />
+              <img
+                class="position-absolute m-1 rounded-0"
+                type="checkbox"
+                style="max-width: 50px; max-height: 40px; pointer-events: auto"
                 :id="attraction.contentId"
                 :src="bookMarkOFFUrl"
-                @click="changeImageUrlHandler(attraction.contentId)"
+                v-if="!attraction.isBookmark"
+                @click.stop="changeImageUrlHandler(attraction.contentId)"
               />
               <a href="#" class="d-block mb-3">
                 <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid" />
@@ -84,15 +94,17 @@ import noImageUrl from '/src/assets/noImage.png'
 
 const { searchStore, getSidoList, getGugunList, attractionList } = useSearchStore()
 const altImage = ref(noImageUrl)
-const { bookmarkStore, insertBookmark, deleteBookmark } = useBookmarkStore()
+const { bookmarkStore, insertBookmark, deleteBookmark, getBookmarkListOfCurUser } = useBookmarkStore()
 const { loginStore } = useLoginStore()
 const router = useRouter()
 
+const flag = ref(true)
+
 getSidoList()
+getBookmarkListOfCurUser(loginStore.userId)
+
 const getAttractionList = async () => {
   attractionList()
-
-  // 유저가 선택한 북마크가 있으면 보여주기
 }
 
 // toggle event handler
@@ -106,10 +118,11 @@ const changeImageUrlHandler = (contentId) => {
     insertBookmark(loginStore.userId, contentId)
 
     curImgTag.src = bookMarkONUrl
-    // 북마크 등록
   } else {
-    curImgTag.src = bookMarkOFFUrl
     // 북마크 삭제
+    deleteBookmark(loginStore.userId, contentId)
+
+    curImgTag.src = bookMarkOFFUrl
   }
 }
 

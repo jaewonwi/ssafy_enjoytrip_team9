@@ -11,15 +11,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SearchParamDto {
-	private int limit;
-	private int offset;
-	private String searchWord;
+public class SearchAttractionBookmarkDto {
 	
-	private int sidoCode;
-	private int gugunCode;
-	private int contentTypeId;
+	private int contentId;
+	private String title;
+	private String addr1;
+	private String firstImage;
 	
-	// 현재 사용자를 가져와서 북마크 표시를 남기기 위함
+	private int bookmarkId;
 	private int userId;
+	
 }

@@ -124,15 +124,22 @@ export const useSearchStore = defineStore('searchStore', () => {
        if (data.result == "login") {     // 로그인하지 않았으면 접근 X
           router.push("/login");
        } else {
+        //  list = [{
+        //    isBookmark: true false,
+        //  }]
         setAttractionList(data.list);
         setTotalListItemCount(data.count);
 
+         
+         console.log(data.list)
         //console.log("총 건수 : "+data.count);
         //console.log("pageCount : "+pageCount.value)
        }
     } catch (error) {
        console.error(error);
     }
+
+
   }
 
   // pagination

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.mycom.enjoytrip.search.dto.SearchAttractionBookmarkDto;
 import com.mycom.enjoytrip.search.dto.SearchAttractionDto;
 import com.mycom.enjoytrip.search.dto.SearchParamDto;
 import com.mycom.enjoytrip.search.dto.SidoGugunDto;
@@ -60,5 +61,8 @@ public interface SearchDao {
 	int totalCountByContentTypeId(SearchParamDto searchParamDto);					// 분류코드
 	int totalCountBySidoContentTypeId(SearchParamDto searchParamDto);				// 시도, 분류코드
 	int totalCountBySidoGugunContentTypeId(SearchParamDto searchParamDto);		// 시도, 구군, 분류코드
+	
+	// 현재 유저의 북마크 리스트 목록
+	List<SearchAttractionBookmarkDto> getBookmarkList(int userId);
 
 }

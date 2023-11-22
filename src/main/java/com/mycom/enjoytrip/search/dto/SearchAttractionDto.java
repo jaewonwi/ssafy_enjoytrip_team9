@@ -33,4 +33,7 @@ public class SearchAttractionDto {
 	private String cat2;
 	private String cat3;
 	
+	// 현재 유저의 북마크를 표시한다.
+	private int isBookmark;
+	
 }

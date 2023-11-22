@@ -199,8 +199,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> userList() {
-		return userDao.userList();
+	public UserResultDto userList() {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		List<UserDto> list = userDao.userList();
+		userResultDto.setList(list);
+		
+		return userResultDto;
 	}
 
 }

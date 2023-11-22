@@ -1,4 +1,5 @@
 <template>
+  <hr />
   <div class="untree_co-section">
     <div class="container">
       <div class="row text-center justify-content-center mb-5">

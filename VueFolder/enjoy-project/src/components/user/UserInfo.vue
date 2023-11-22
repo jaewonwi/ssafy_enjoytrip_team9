@@ -8,7 +8,7 @@
               <h1 class="h2 text-gray-900 mb-3 section-title text-center">내 정보</h1>
               <div class="row mb-3 thumbnail-wrapper">
                 <div class="container">
-                  <img id="imgFileUploadUpdateThumbnail" class="col" v-bind:src="loginStore.userProfileImageUrl" alt="" style="width: 100px; height: 100px; border-radius: 50%" />
+                  <img id="imgFileUploadUpdateThumbnail" class="col" v-bind:src="loginStore.userProfileImageUrl" alt="" style="width: 150px; height: 150px; border-radius: 50%" />
                   <input name="myFile" id="inputFileUploadUpdate" class="col" @change="changeProfile" type="file" multiple />
                 </div>
               </div>

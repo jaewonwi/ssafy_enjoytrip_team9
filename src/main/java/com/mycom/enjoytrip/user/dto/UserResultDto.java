@@ -18,4 +18,5 @@ public class UserResultDto {
 	private UserProfileDto userProfileDto;
 	private UserDto userDto;
 
+	private List<UserDto> list;
 }

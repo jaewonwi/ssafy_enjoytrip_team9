@@ -35,7 +35,7 @@ public class SearchController {
 
 	// 관광지 목록
 	@GetMapping(value = "/search/attractionList")
-	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto) {
+	public SearchAttractionResultDto attractionList(SearchParamDto searchParamDto, HttpSession session) {
 		int userId = ((UserDto) session.getAttribute("userDto")).getUserId();
 
 		System.out.println("/attractionList");

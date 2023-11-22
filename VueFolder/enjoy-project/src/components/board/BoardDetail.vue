@@ -104,7 +104,9 @@
         }
     }
 
+    // 글 목록
     const moveList = () => router.push('/board')
+    // 글 수정
     const moveModify = () => {
         // 로그인된 사용자가 쓴 글이라면
         try {
@@ -117,13 +119,13 @@
             console.log(error)
         }
     }
-
+    // 글 삭제
     const deleteBoard = async () => {
         let result = confirm("정말로 삭제하시겠습니까?")
         console.log(result)
         if (result) {
             try {
-                let { data } = await axios.delete('/boards/'+boardId)
+                let { data } = await http.delete('/boards/'+boardId)
                 console.log(data)
                 router.push('/board')
             } catch (error) {

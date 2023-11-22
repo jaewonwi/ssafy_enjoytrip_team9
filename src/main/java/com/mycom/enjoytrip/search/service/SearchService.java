@@ -43,4 +43,5 @@ public interface SearchService {
 
 	// 현재 유저의 북마크 리스트 목록
 	List<SearchAttractionBookmarkDto> getBookmarkList(int userId);
+	
 }

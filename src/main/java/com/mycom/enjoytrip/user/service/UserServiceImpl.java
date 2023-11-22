@@ -198,4 +198,9 @@ public class UserServiceImpl implements UserService {
 		return userResultDto;
 	}
 
+	@Override
+	public List<UserDto> userList() {
+		return userDao.userList();
+	}
+
 }

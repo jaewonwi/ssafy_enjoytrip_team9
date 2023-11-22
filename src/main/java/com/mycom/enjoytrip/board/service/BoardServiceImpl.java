@@ -62,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
         
         try {
             dao.boardReadCountDelete(boardId);
-            dao.boardLikeDelete(boardId);
+//            dao.boardLikeDelete(boardId);
             dao.boardDelete(boardId);        
             boardResultDto.setResult(SUCCESS);
             

@@ -1,5 +1,7 @@
 package com.mycom.enjoytrip.user.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycom.enjoytrip.user.dto.UserDto;
@@ -13,4 +15,7 @@ public interface UserService {
 	UserResultDto update(UserDto dto, MultipartHttpServletRequest request);
 	int delete(String userEmail);				// 마이페이지 회원 탈퇴
 
+
+	// 유저 목록 (관리자)
+	List<UserDto> userList();
 }

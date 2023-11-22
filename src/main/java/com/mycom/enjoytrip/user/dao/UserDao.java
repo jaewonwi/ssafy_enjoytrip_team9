@@ -1,5 +1,7 @@
 package com.mycom.enjoytrip.user.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mycom.enjoytrip.user.dto.UserDto;
@@ -27,4 +29,8 @@ public interface UserDao {
 
 	
 	// 로그인할 때는 필요없다.
+	
+	
+	// 사용자 목록 (관리자 전용)
+	List<UserDto> userList();
 }

@@ -79,6 +79,23 @@ export const useBoardStore = defineStore('boardStore', () => {
     }
   }
 
+  // delete
+  const deleteBoard = async () => {
+    let result = confirm("정말로 삭제하시겠습니까?")
+    console.log(result)
+    if (result) {
+        try {
+            let { data } = await axios.delete('/boards/'+boardId)
+            console.log(data)
+            router.push('/board')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+  }
+
+
+
   // pagination
   const pageCount = computed(() => Math.ceil(boardStore.totalListItemCount / boardStore.listRowCount))
   const startPageIndex = computed(() => {

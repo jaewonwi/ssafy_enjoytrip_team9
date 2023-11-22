@@ -13,9 +13,11 @@
   <user-info></user-info>
   <hr />
   <bookmark-list></bookmark-list>
+  <user-list></user-list>
 </template>
 
 <script setup>
 import UserInfo from '@/components/user/UserInfo.vue'
 import BookmarkList from '@/components/user/BookMarkList.vue'
+import UserList from '../../components/user/UserList.vue';
 </script>

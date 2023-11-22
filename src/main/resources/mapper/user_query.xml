@@ -57,4 +57,13 @@
         INSERT INTO user_profile ( userId, profileNm, profileSize, profileContentType, profileUrl )
          VALUES ( #{userId}, #{profileNm}, #{profileSize}, #{profileContentType}, #{profileUrl} )
     </insert>
+    
+    
+    <!-- 사용자 목록 가져오기 (관리자 전용) -->
+    <select id="userList" resultType="com.mycom.enjoytrip.user.dto.UserDto">
+    	select userId, userEmail, userPwd, userNm, userPhone, userProfile, userClsf
+  		  from users
+ 		 where userClsf != '001'
+    </select>
+    
 </mapper>

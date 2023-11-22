@@ -38,11 +38,13 @@ const router = createRouter({
       path: '/mypage',
       component: MyPage,
       beforeEnter: (to, from, next) => {
+        console.log("before enter")
         const { loginStore } = useLoginStore()
         let isLogin = sessionStorage.getItem('isLogin')
         if (loginStore.isLogin == true) {
           return next();
         } else {
+          console.log("before enter: 통과못함")
           next('/login');
         }
       }
@@ -59,6 +61,7 @@ const router = createRouter({
         if (loginStore.isLogin == true) {
           return next();
         } else {
+          console.log("before enter: 통과못함")
           next('/login');
         }
       },

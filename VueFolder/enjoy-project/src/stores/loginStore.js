@@ -14,8 +14,8 @@ export const useLoginStore = defineStore('loginStore', () => {
     userId: '',
     userNm: '',
     userPhone: '',
-    userEmail: 'admin@n.com',
-    userPwd: '1234',
+    userEmail: 'kdh1@n.com',
+    userPwd: '!qwer0001',
     // userEmail: 'kdh@n.com',
     // userPwd: '1234',
     userProfileImageUrl: notLoginUserProfileImageUrl, // build했을 때 image를 가져올 수 있도록 세팅

@@ -17,11 +17,6 @@ export const  useMapStore = defineStore('mapStore', () => {
     // pin
     // contentId, title, addr1, addr2, firstImage, latitude, longitude
     pinList: [{ title: 'tesst', latitude: 33.450701, longitude: 126.570667 }],        
-
-    // 상세정보
-    selectLoc: {
-      
-    }
   })
 
 

@@ -95,12 +95,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   const getSidoList = async () => {
     try {
-        // console.log("getSidoList")
         let { data } = await http.get('/search/sidoList')
-        // console.log(data)
-        // searchStore.sidoCode = 0; 
-        // searchStore.gugunCode = 0;   
-        // searchStore.list = [];
         searchStore.sidoList = data;
     } catch (error) {
         console.log(error);
@@ -109,9 +104,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   const getGugunList = async () => {
     try {
-        // console.log("getGugunList: sidoCode : "+ searchStore.sidoCode)
         let { data } = await http.get('/search/gugunList/'+searchStore.sidoCode)
-        // console.log(data)
         searchStore.gugunCode = 0;
         searchStore.gugunList = data;
     } catch (error) {
@@ -119,8 +112,20 @@ export const useSearchStore = defineStore('searchStore', () => {
     }
   }
 
+  const getTypeList = async () => {
+    try {
+      searchStore.contentTypeId = 0;
+    } catch (error) {
+        console.log(error);
+    }
+  }
   // list
   const attractionList = async () => {
+    // console.log(searchStore.sidoCode);
+    // console.log(searchStore.gugunCode);
+    // console.log(searchStore.contentTypeId);
+
+
     let params = {
        limit: searchStore.limit,
        offset: searchStore.offset,
@@ -219,7 +224,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   return { 
     searchStore, mainSearchStore,
-    getSidoList, setSidoList, getGugunList, setGugunList, setAttractionList, attractionMainList,
+    getSidoList, setSidoList, getGugunList, setGugunList, getTypeList, setAttractionList, attractionMainList,
     setSearchMovePage, setTotalListItemCount, setSearchAttractionDetail, attractionList,
     pageCount, startPageIndex, endPageIndex, prev, next, pageCount 
   }

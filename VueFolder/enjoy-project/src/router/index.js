@@ -67,7 +67,6 @@ const router = createRouter({
         }
       },
       
-      // jaewon
       children: [
         {path: '', name: 'BoardList', component: BoardList},
         {path: 'detail/:boardId', name: 'BoardDetail', component: BoardDetail},
@@ -84,7 +83,6 @@ const router = createRouter({
       children: [
         {path: '', name: 'SearchList', component: SearchList},
         {path: 'detail/:contentId', name: 'SearchDetail', component: SearchDetail},
-        // {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]
     },
     {

@@ -119,7 +119,7 @@
 	
 	<!-- 관광지 상세 정보 (한 개) -->
 	<select id="attractionDetail" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select i.content_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.sido_code, i.gugun_code, i.latitude, i.longitude, d.overview
+		select i.content_id, i.content_type_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.sido_code, i.gugun_code, i.latitude, i.longitude, d.overview
   		  from attraction_info i, attraction_description d
 		 where i.content_id = #{contentId} and i.content_id = d.content_id
 	</select>

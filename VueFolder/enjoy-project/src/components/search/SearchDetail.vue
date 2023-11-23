@@ -17,8 +17,17 @@
               <span v-if="searchStore.zipcode">( 우편번호: {{ searchStore.zipcode }} )</span>
             </li>
             <li v-if="searchStore.tel">💛 &nbsp;전화: {{ searchStore.tel }} </li>
+            
           </ul>
+          <div class="divider m-5"></div>
+          <a class="btn btn-primary ml-auto"
+          :href=" 'https://map.kakao.com/link/search/' + searchStore.title "
+          >카카오맵 이동</a>
+          
         </div>
+
+        
+
       </div>
     </div>
   </div>
@@ -39,9 +48,9 @@ import { useSearchStore } from '@/stores/searchStore'
 
   const { searchStore, setSearchAttractionDetail }  = useSearchStore()
 
-
   const contentId = route.params.contentId
-  console.log("contentId : "+contentId)
+  // console.log("contentId : "+contentId)
+  // console.log("contentTypeId : "+searchStore.contentTypeId)
 
   const getDetail = async () => {
     try {

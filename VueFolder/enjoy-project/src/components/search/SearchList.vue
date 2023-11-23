@@ -14,7 +14,7 @@
             </select>
           </div>
           <div class="col-4">
-            <select name id="area2List" class="form-control custom-select" v-model="searchStore.gugunCode">
+            <select name id="area2List" class="form-control custom-select" v-model="searchStore.gugunCode" @change="getTypeList">
               <option value="0">구군</option>
               <option v-for="gugun in searchStore.gugunList" :key="gugun.gugunCode" :value="gugun.gugunCode">
                 {{ gugun.gugunName }}
@@ -30,14 +30,13 @@
               </option>
             </select>
           </div>
-
-          <button type="button" class="btn btn-primary h-100" @click="getAttractionList">Search</button>
+          <button type="button" class="btn btn-primary h-100" @click="attractionList()">Search</button>
         </div>
       </div>
 
       <div class="container">
         <div class="row">
-          <div v-for="attraction in searchStore.list" :key="attraction.contentId" class="col-6 col-md-6 col-lg-3" @click="attractionDetail(attraction.contentId)">
+          <div v-for="attraction in searchStore.list" :key="attraction.contentId" class="p-1 col-6 col-md-6 col-lg-3" @click="attractionDetail(attraction.contentId)">
             <div class="media-1 position-relative">
               <img
                 class="position-absolute m-1 rounded-0"
@@ -100,22 +99,36 @@ import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
 import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
 import noImageUrl from '/src/assets/noImage.png'
 
-const { searchStore, getSidoList, getGugunList, attractionList, setSearchMovePage } = useSearchStore()
+const { searchStore, getSidoList, getGugunList, getTypeList, attractionList, setSearchMovePage } = useSearchStore()
 const { bookmarkStore, insertBookmark, deleteBookmark, getBookmarkListOfCurUser } = useBookmarkStore()
 const { loginStore } = useLoginStore()
+
 const router = useRouter()
 
-const flag = ref(true)
+// 페이지 로딩 시 init
+const initList = async () => {
+  getSidoList()
+  attractionList()
+}
 
-getSidoList()
+initList()
+
+const attractionDetail = async (contentId) => {
+  try {
+    router.push({
+      name: 'SearchDetail',
+      params: { contentId }
+    })
+  } catch (error) {
+    console.log('attractionDetailVue: error: ')
+    console.log(error)
+  }
+}
+
 
 // 로그인 했으면 수행
 if (loginStore.isLogin == true) {
   getBookmarkListOfCurUser(loginStore.userId)
-}
-
-const getAttractionList = async () => {
-  attractionList()
 }
 
 // toggle event handler
@@ -141,19 +154,6 @@ const changeImageUrlHandler = (contentId) => {
     curImgTag.src = bookMarkOFFUrl
   }
 }
-
-const attractionDetail = async (contentId) => {
-  try {
-    router.push({
-      name: 'SearchDetail',
-      params: { contentId }
-    })
-  } catch (error) {
-    console.log('attractionDetailVue: error: ')
-    console.log(error)
-  }
-}
-
 
 // pagination
 const movePage= (pageIndex) => {

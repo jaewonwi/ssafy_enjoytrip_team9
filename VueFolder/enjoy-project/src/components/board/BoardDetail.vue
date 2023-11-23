@@ -20,7 +20,7 @@
                             <!-- {{ util.makeDateStr(board.boardRegDate.date, '.') }} &nbsp; -->
                             <span class="icon-eye"></span> {{ boardStore.readCount }} &nbsp;
                             <span class="icon-heart-o me-2"></span> {{ boardStore.like }} &nbsp;
-                            <span class="icon-commenting-o me-2"></span> 0
+                            <!-- <span class="icon-commenting-o me-2"></span> -->
                         </span>
                     </div>
                 </div>

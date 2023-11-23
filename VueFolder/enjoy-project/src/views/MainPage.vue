@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-2">
                       <!-- <button type="button" class="btn btn-primary h-100" @click="getAttractionList">Search</button> -->
-                      <router-link to="/search" type="button" class="btn btn-primary h-100">Search</router-link>
+                      <router-link to="/search" @click="searchFromMain(sido.sidoCode, gugun.gugunCode)" type="button" class="btn btn-primary h-100">Search</router-link>
                     </div>
                   </div>
                 </form>
@@ -69,6 +69,12 @@ store.searchStore.sidoCode = 0
 store.searchStore.gugunCode = 0
 const getAttractionList = async() => {
   store.attractionList()  
+}
+
+const searchFromMain = async (sidoCode, gugunCode) => {
+  searchStore.sidoCode = sidoCode
+  searchStore.gugunCode = gugunCode
+  searchStore.contentTypeId = 0
 }
 
 $(function () {

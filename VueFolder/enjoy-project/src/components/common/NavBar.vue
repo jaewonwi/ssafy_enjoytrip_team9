@@ -34,7 +34,7 @@
             <router-link to="/board" class="nav-link text-white">게시판</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/search" class="nav-link text-white">관광지 검색</router-link>
+            <router-link to="/search" @click="initSearch" class="nav-link text-white">관광지 검색</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/map" class="nav-link text-white">관광지 지도</router-link>
@@ -67,7 +67,17 @@
 <script setup>
 import Logo from '/src/assets/logo/Logo.png'
 import { useLoginStore } from '@/stores/loginStore'
+import { useSearchStore } from '@/stores/searchStore'
+
 const { loginStore, logout } = useLoginStore()
+const { searchStore } = useSearchStore()
+
+const initSearch = async () => {
+  searchStore.list = []
+  searchStore.sidoCode = 0
+  searchStore.gugunCode = 0
+  searchStore.contentTypeId = 0
+}
 </script>
 
 <style scoped>

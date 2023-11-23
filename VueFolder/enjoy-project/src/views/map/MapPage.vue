@@ -25,9 +25,13 @@ import { ref, onMounted } from 'vue'
 import KakaoMap from '@/components/map/KakaoMap.vue'
 import SelectLocation from '@/components/map/SelectLocation.vue'
 
-import { useMapStore } from '@/stores/mapStore'
-const { mapStore } = useMapStore()
-
-// mapStore.pinList
-// mapStore.selectLoc
+// import { useMapStore } from '@/stores/mapStore'
+// const { mapStore } = useMapStore()
 </script>
+
+<style scoped>
+#map {
+  width: 100%;
+  height: 100%;
+}
+</style>

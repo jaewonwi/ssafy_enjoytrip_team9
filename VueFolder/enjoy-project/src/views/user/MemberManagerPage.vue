@@ -12,12 +12,11 @@
   </div>
   <member-manager></member-manager>
   <user-list></user-list>
-
 </template>
 
 <script setup>
-import MemberManager from '@/components/user/MemberManager.vue';
-import UserList from '@/components/user/UserList.vue';
+import MemberManager from '@/components/user/MemberManager.vue'
+import UserList from '@/components/user/UserList.vue'
 
 import { useLoginStore } from '@/stores/loginStore'
 import { useAdminStore } from '@/stores/adminStore'
@@ -27,5 +26,4 @@ const { loginStore } = useLoginStore()
 const { adminStore, userList } = useAdminStore()
 
 const router = useRouter()
-
 </script>

@@ -84,10 +84,4 @@ public class BoardController {
         
         return boardResultDto;
     }
-    
-    @PostMapping(value="/boards/{boardId}/boardLike")
-    public void boardLikeUpdate(@PathVariable int temp){
-    	
-
-    }
 }

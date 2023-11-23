@@ -1,6 +1,6 @@
 <template>
-  <button class="btn btn-primary" @click="setStartPoint">현재위치</button>
-  <div id="map"></div>
+    <button class="btn btn-primary col-1 float-end mb-3" @click="setStartPoint">현재위치</button>
+    <div id="map"></div>
 </template>
 
 <script setup>

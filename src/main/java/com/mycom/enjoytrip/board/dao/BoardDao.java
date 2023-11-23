@@ -24,7 +24,6 @@ public interface BoardDao {
 	
 	// map - Dto
     int boardUserReadCount(BoardParamDto boardParamDto); 
-    int boardUserLikeCount(BoardParamDto boardParamDto); 
    
     // map - @param
     int boardUserReadInsert(
@@ -32,14 +31,8 @@ public interface BoardDao {
            @Param("userId") int userId );
     int boardReadCountUpdate(int boardId);
     
-    int boardUserLikeInsert(
-            @Param("boardId") int boardId, 
-            @Param("userId") int userId );
-     int boardLikeUpdate(int boardId);	
-   
     int boardDelete(int boardId);				// 게시글 삭제    
     int boardReadCountDelete(int boardId);		// 게시글 조회수도 삭제 
-    int boardLikeDelete(int boardId);			// 게시글 좋아요도 삭제 
     
     int boardUpdate(BoardDto dto);
 }

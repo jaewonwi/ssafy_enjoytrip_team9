@@ -139,24 +139,5 @@ public class BoardServiceImpl implements BoardService {
         return boardResultDto;
     }
     
-    @Override
-    public BoardResultDto boardLikeUpdate(BoardParamDto boardParamDto) {
-    	BoardResultDto boardResultDto = new BoardResultDto();
-    	
-    	try {
-            int userLikeCnt = dao.boardUserLikeCount(boardParamDto);
-            if( userLikeCnt == 0 ) {
-                dao.boardUserLikeInsert(boardParamDto.getBoardId(), boardParamDto.getUserId());		// 게시글 좋아요 증가(사용자 당 한번)
-                dao.boardLikeUpdate(boardParamDto.getBoardId());
-                
-                boardResultDto.setResult(SUCCESS);
-            }
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		boardResultDto.setResult(FAIL);
-    	}
-    	
-        return boardResultDto;
-    }
 
 }

@@ -85,16 +85,17 @@
          where boardId = #{boardId}
     </update>
     
-    <update id="boardReadCountDelete" parameterType="int">
+    <delete id="boardReadCountDelete" parameterType="int">
         delete from board_user_read where boardId = #{boardId}
-    </update>
+    </delete>
     
     
     <!-- 좋아요 -->
     <!-- Dao use Dto -->
-    <select id="boardUserLikeCount" parameterType="map" resultType="int">
-        select count(*) from board_user_like 
-        where boardId = #{boardId} and userId = #{userId}
+    <select id="boardReactionCount" parameterType="int" resultType="map">
+        select good, bad
+          from board_reaction
+         where boardId = #{boardId}
     </select>
     
     <!-- Dao use @param -->

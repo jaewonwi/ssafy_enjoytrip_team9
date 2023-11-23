@@ -119,8 +119,6 @@ public class UserController {
 	public Map<String, String> delete(@PathVariable String userEmail, HttpSession session) {
 		session.invalidate();
 		Map<String, String> map = new HashMap<>();
-
-		System.out.println("사용자 삭제!!!");
 		
 		if (userService.delete(userEmail) == 1) {
 			map.put("result", "success");
@@ -134,5 +132,21 @@ public class UserController {
 	@GetMapping("users/userList")
 	public UserResultDto userList() {
 		return userService.userList();
+	}
+	
+
+	@DeleteMapping("/users/admin/{userEmail}") 
+	public Map<String, String> deleteOnlyAdmin(@PathVariable String userEmail, HttpSession session) {
+		Map<String, String> map = new HashMap<>();
+
+		System.out.println("관리자 >> 사용자 삭제!!!");
+		
+		if (userService.userDelete(userEmail) == 1) {
+			map.put("result", "success");
+			return map;
+		}
+		
+		map.put("result", "fail");
+		return map;
 	}
 }

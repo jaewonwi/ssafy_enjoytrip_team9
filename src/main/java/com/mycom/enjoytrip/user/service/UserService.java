@@ -18,4 +18,7 @@ public interface UserService {
 
 	// 유저 목록 (관리자)
 	UserResultDto userList();
+	
+	// 사용자 삭제 (관리자)
+	int userDelete(String userEmail);
 }

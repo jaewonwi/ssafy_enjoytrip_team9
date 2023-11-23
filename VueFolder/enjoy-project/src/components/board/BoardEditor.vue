@@ -6,8 +6,9 @@
         <div>
             <ckeditor :editor="editor" v-model="editorDataContent" :config="editorConfig"></ckeditor>
             <div class="divider my-2"></div>
-            <button type="button" class="btn btn-primary mt-2" @click="insertBoard" v-show="!boardType">등록</button>
-            <button type="button" class="btn btn-primary mt-2" @click="updateBoard" v-show="boardType">수정</button>        
+            <button type="button" class="btn btn-primary mt-2" @click="insertNotice" v-if="isManager" v-show="!boardType">공지사항 등록</button>
+            <button type="button" class="btn btn-primary mt-2" @click="insertBoard" v-else v-show="!boardType">등록</button>
+            <button type="button" class="btn btn-primary mt-2" @click="updateBoard" v-show="boardType">수정</button>
         </div>
     </div>
 </template>
@@ -41,6 +42,12 @@ const editorDataContent = ref('')
 const editorConfig = {}
 
 const boardId = route.params.boardId;   // 아이디가 있다면 아이디를 받아오자
+
+const isManager = ref(false)
+if (sessionStorage.userClsf = '001'){
+  isManager.value = true;
+}
+
 let boardType = false;
 console.log("boardId :")
 console.log(boardId)
@@ -49,7 +56,8 @@ const initEditor = async () => {
   if (boardId){
     boardType = true
     let { data } = await http.get('/boards/' + boardId);
-    console.log("Load Data : " + data.result)
+
+    // console.log("Load Data : " + data.result)
     editorDataTitle.value = data.dto.boardTitle
     editorDataContent.value = data.dto.boardContent
   }
@@ -63,7 +71,8 @@ const insertBoard = async () => {
   let formData = {
     boardTitle: editorDataTitle.value,
     boardContent: editorDataContent.value,
-    userId: loginStore.userId
+    userId: loginStore.userId,
+    boardClsf: loginStore.boardClsf
   };
 
   let result = confirm('게시글을 등록하시겠습니까?')
@@ -118,14 +127,36 @@ const updateBoard = async () => {
   }
 }
 
-const insertNotice = () => {
+const insertNotice = async () => {
   let formData = {
     boardTitle: editorDataTitle.value,
     boardContent: editorDataContent.value,
-    userId: loginStore.userId
+    userId: loginStore.userId,
+    boardClsf: '001'
   };
-}
 
+  
+  let result = confirm('게시글을 등록하시겠습니까?')
+  if (result){
+    if (editorDataTitle.value != '' && editorDataContent.value != ''){
+      try {
+        console.log(formData)
+        let { data } = await http.post('/boards', formData)
+
+        console.log(data.result)
+        alert('공지사항 등록이 완료되었습니다.')
+
+        router.push({
+            path: '/board'
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      alert('입력을 확인해주세요')
+    }
+  }
+}
 
 initEditor()
 

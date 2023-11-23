@@ -14,8 +14,8 @@ import BoardEditor from '@/components/board/BoardEditor.vue'
 import MapPage from '@/views/map/MapPage.vue'
 import MemberManager from '@/views/user/MemberManagerPage.vue'
 
-import SearchAttraction from '@/components/search/SearchAttraction.vue'
-import SearchAttractionDetail from '@/components/search/SearchAttractionDetail.vue'
+import SearchList from '@/components/search/SearchList.vue'
+import SearchDetail from '@/components/search/SearchDetail.vue'
 import { useLoginStore } from '@/stores/loginStore'
 
 // import { useAuthStore } from '@/stores/authStore'
@@ -82,8 +82,8 @@ const router = createRouter({
       path: '/search',
       component: SearchPage,
       children: [
-        {path: '', name: 'SearchAttraction', component: SearchAttraction},
-        {path: 'detail/:contentId', name: 'SearchAttractionDetail', component: SearchAttractionDetail},
+        {path: '', name: 'SearchList', component: SearchList},
+        {path: 'detail/:contentId', name: 'SearchDetail', component: SearchDetail},
         // {path: 'editor/:boardId*', name: 'BoardEditor', component: BoardEditor},
       ]
     },

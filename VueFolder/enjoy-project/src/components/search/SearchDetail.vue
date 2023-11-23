@@ -11,9 +11,12 @@
         
         <div class="col-lg-5 pl-lg-5 ml-auto">
           <h2 class="section-title mb-4">{{ searchStore.title }}</h2>
-          <p>{{ searchStore.overview }}</p>
+          <p class="text-secondary">{{ searchStore.overview }}</p>
           <ul class="list-unstyled clearfix">
-            <li>💛 &nbsp;주소: {{ searchStore.addr1 }} {{ searchStore.addr2 }}</li>  
+            <li>💛 &nbsp;주소: {{ searchStore.addr1 }} {{ searchStore.addr2 }}
+              <span v-if="searchStore.zipcode">( 우편번호: {{ searchStore.zipcode }} )</span>
+            </li>
+            <li v-if="searchStore.tel">💛 &nbsp;전화: {{ searchStore.tel }} </li>
           </ul>
         </div>
       </div>

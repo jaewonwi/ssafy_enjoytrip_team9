@@ -29,13 +29,13 @@ public class UserController {
 //	private static final int NO_PWD = -2;
 //	private static final int UPDATE_PWD = 2;
 
-	@PostMapping("users")
+	@PostMapping("/users")
 	public int regist(@RequestBody UserDto dto) {
 		System.out.println(dto);
 		return userService.regist(dto);
 	}
 	
-	@GetMapping("users/{userEmail}")
+	@GetMapping("/users/{userEmail}")
 	public UserResultDto detail(@PathVariable String userEmail) {
 		// userResultDto - result, userDto, userProfileDto가 들어있다.
 		UserResultDto userResultDto = userService.detail(userEmail);
@@ -86,7 +86,7 @@ public class UserController {
 //	}
 	
 	// 프로필, 전화번호, 비밀번호를 수정한다.
-	@PostMapping("users/profiles")
+	@PostMapping("/users/profiles")
 	public Map<String, String> updateProfile(UserDto dto, MultipartHttpServletRequest request) {
 		System.out.println(dto);
 		Map<String, String> map = new HashMap<>();

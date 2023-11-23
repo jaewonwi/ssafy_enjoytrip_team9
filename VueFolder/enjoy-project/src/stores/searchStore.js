@@ -36,7 +36,10 @@ export const useSearchStore = defineStore('searchStore', () => {
     title: '',
     addr1: '',
     addr2: '',
+    zipcode: '',
+    tel: '',
     firstImage: '',
+    firstImage2: '',
     latitude: 0,        // 위도
     longitude: 0,       // 경도
     overview: '',       // 상세내용
@@ -72,7 +75,10 @@ export const useSearchStore = defineStore('searchStore', () => {
     searchStore.title = payload.title;
     searchStore.addr1 = payload.addr1;
     searchStore.addr2 = payload.addr2;
+    searchStore.zipcode = payload.zipcode;
+    searchStore.tel = payload.tel;
     searchStore.firstImage = payload.firstImage;
+    searchStore.firstImage2 = payload.firstImage2;
     searchStore.latitude = payload.latitude;
     searchStore.longitude = payload.longitude;
     searchStore.overview = payload.overview;    // 상세내용
@@ -81,6 +87,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     searchStore.gugunCode = payload.gugunCode;  // 구군
     searchStore.sidoName = payload.sidoName;
     searchStore.gugunName = payload.gugunName;
+    
     // searchStore.cat1 = payload.cat1;            // 대중소 분류
     // searchStore.cat2 = payload.cat2;
     // searchStore.cat3 = payload.cat3;

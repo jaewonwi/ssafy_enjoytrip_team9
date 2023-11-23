@@ -23,10 +23,13 @@ public class BoardDto {
 	private LocalDateTime boardRegDate;
 	private int boardLike;
 	private int boardReadCount;
+	private String boardClsf;
+	
 	private int userId;
 	private String userEmail;
 	private String userNm;
 	private String userProfile;
+	
 	private boolean sameUser;
 	
 	// regDt setter

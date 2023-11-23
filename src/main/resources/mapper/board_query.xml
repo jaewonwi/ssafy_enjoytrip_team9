@@ -4,27 +4,34 @@
 	
     <insert id="boardInsert"
         parameterType="com.mycom.enjoytrip.board.dto.BoardDto">
-        insert into board ( boardTitle, boardContent, userId )
-        	 		values ( #{boardTitle}, #{boardContent}, #{userId} )
+        insert into board ( boardTitle, boardContent, userId, boardClsf )
+        	 		values ( #{boardTitle}, #{boardContent}, #{userId}, #{boardClsf} )
     </insert>
     
+    <!-- board list 수정 전 -->
     <select id="boardList" parameterType="map" resultType="com.mycom.enjoytrip.board.dto.BoardDto">
         select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate,
-        		b.boardLike, b.boardReadCount, b.userId, u.userNm, u.userProfile
+        		b.boardLike, b.boardReadCount, b.boardClsf, b.userId, u.userNm, u.userProfile
           from board b 
          inner join users u 
             on u.userId = b.userId
          order by b.boardId desc
          limit ${limit} offset #{offset}
-    </select>
+    </select> 
+    
+    <!-- <select id="boardList">
+	    select distinct b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardReadCount, b.userId
+	  	  from board b inner join users u
+	  	 order by b.boardId desc
+	</select> -->
     
     <select id="boardListTotalCount" resultType="int">
         select count(*) from board
     </select>
     
     <select id="boardListSearchWord" parameterType="map" resultType="com.mycom.enjoytrip.board.dto.BoardDto">
-        select b.boardId, b.userId, u.userNm, u.userProfile,
-                 b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardReadCount
+        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate,
+        		b.boardLike, b.boardReadCount, b.boardClsf, b.userId, u.userNm, u.userProfile
           from board b, users u
           where b.userId = u.userId
             and b.boardTitle like concat('%', #{searchWord} ,'%')
@@ -40,7 +47,7 @@
     
     <select id="boardDetail" parameterType="int"
         resultType="com.mycom.enjoytrip.board.dto.BoardDto">
-        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardReadCount,
+        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardReadCount, b.boardClsf,
         		b.userId, u.userEmail, u.userNm, u.userProfile 
           from board b, users u 
          where b.boardId = #{boardId} 

@@ -25,7 +25,7 @@
                 <tbody>
                     <tr v-for="(board) in boardStore.list" v-bind:key="board.boardId" @click.stop="boardDetail(board.boardId)">
                         <td>{{ board.boardId }}</td>
-                        <td>{{ board.boardTitle }}</td>
+                        <td><span style="color: red;" v-if="isNotice(board.boardClsf)">[공지]</span> {{ board.boardTitle }}</td>
                         <td>{{ board.userNm }}</td>
                         <td>{{ util.makeDateStr(board.boardRegDate.date, '.') }}</td>
                         <td>{{ board.boardReadCount }}</td>
@@ -40,7 +40,7 @@
             <div class="divider m-5"></div>
 
             <div class="row m-4 d-flex justify-content-end">
-                <button v-if="isManager" @click="goEditor" class="btn btn-danger col-2">공지사항 등록하기</button>    
+                <button v-if="isManager" @click="goEditor" class="btn btn-danger col-1">글쓰기</button>    
                 <button v-else @click="goEditor" class="btn btn-primary col-1">글쓰기</button>                
             </div>
             
@@ -89,6 +89,13 @@
     // 관리자 여부
     let isManager = ref(false)
 
+    // 공지 여부
+    let isNotice = (boardClsf) => {
+        if (boardClsf == '001')
+            return true;
+        else return false;
+    }
+
     // 초기 작업
     boardStore.searchWord = ''
     boardList();
@@ -107,8 +114,8 @@
         setBoardMovePage(pageIndex);
         boardList();
     }
-
-    const goEditor = () => router.push('board/editor')
+    
+    const goEditor = () => router.push('board/editor/')
 
     const deleteBoard = async (boardId) => {
         let result = confirm("해당 게시글을 삭제하시겠습니까?")

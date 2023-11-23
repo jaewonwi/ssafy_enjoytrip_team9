@@ -198,6 +198,8 @@ public class UserServiceImpl implements UserService {
 		return userResultDto;
 	}
 
+	
+	// 관리자용 - 사용자 목록 조회
 	@Override
 	public UserResultDto userList() {
 		UserResultDto userResultDto = new UserResultDto();
@@ -208,4 +210,36 @@ public class UserServiceImpl implements UserService {
 		return userResultDto;
 	}
 
+
+	// 관리자용 - 사용자 삭제
+	@Override
+	@Transactional
+	public int userDelete(String userEmail) {
+		UserDto userDto = userDao.detail(userEmail);
+		int userId = userDto.getUserId();
+
+		// userId를 이용해서 user_profile, 파일 삭제
+		try {
+			// 폴더에 저장된 기존 프로필 경로를 삭제
+			String fileUrl = userDao.profileUrlSelect(userId);
+//			String rollbackFileUrl = fileUrl;
+			System.out.println("삭제시 fileUrl 확인: " + fileUrl);
+			File tempFile = new File(uploadPath + File.separator + fileUrl);
+			if (tempFile.exists()) {
+				System.out.println("삭제시 fileUrl이 있는 경우");
+				tempFile.delete();
+			}
+
+			// transactional 이용
+			int profileRet = userDao.profileUrlDelete(userId);
+			userDao.delete(userId);
+
+			return SUCCESS;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("UserServiceImpl: user_profile 또는 user 삭제 실패");
+			return FAIL;
+		}
+	}
 }

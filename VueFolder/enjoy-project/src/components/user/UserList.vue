@@ -47,7 +47,7 @@
     let result = confirm('해당 사용자를 삭제하시겠습니까?')
     if (result) {
       try {
-        let { data } = await http.delete("/users/"+userEmail);  
+        let { data } = await http.delete("/users/admin/"+userEmail);  
         console.log(userEmail + "님을 삭제합니다.")
         userList()
       } catch (error) {

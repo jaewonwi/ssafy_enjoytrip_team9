@@ -65,6 +65,8 @@ import PopularList from '@/components/main/PopularList.vue'
 const store = useSearchStore();
 
 store.getSidoList();
+store.searchStore.sidoCode = 0
+store.searchStore.gugunCode = 0
 const getAttractionList = async() => {
   store.attractionList()  
 }

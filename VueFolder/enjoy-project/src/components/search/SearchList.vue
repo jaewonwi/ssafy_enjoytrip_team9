@@ -57,7 +57,7 @@
                 v-if="!attraction.isBookmark"
                 @click.stop="changeImageUrlHandler(attraction.contentId)"
               />
-              <a href="#" class="d-block mb-3">
+              <a href="#" class="d-block mb-3" >
                 <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid" />
                 <img v-else :src="noImageUrl" class="img-fluid rounded-3 w-100 h-100" />
               </a>
@@ -145,7 +145,7 @@ const changeImageUrlHandler = (contentId) => {
 const attractionDetail = async (contentId) => {
   try {
     router.push({
-      name: 'SearchAttractionDetail',
+      name: 'SearchDetail',
       params: { contentId }
     })
   } catch (error) {

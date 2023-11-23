@@ -85,7 +85,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     console.log(result)
     if (result) {
         try {
-            let { data } = await axios.delete('/boards/'+boardId)
+            let { data } = await http.delete('/boards/'+boardId)
             console.log(data)
             router.push('/board')
         } catch (error) {
@@ -126,7 +126,7 @@ export const useBoardStore = defineStore('boardStore', () => {
 
   return { 
     boardStore, 
-    setBoardList, setBoardMovePage, setTotalListItemCount, setBoardMovePage, setBoardDetail, boardList,
+    setBoardList, setBoardMovePage, setTotalListItemCount, setBoardMovePage, setBoardDetail, boardList, deleteBoard,
     pageCount, startPageIndex, endPageIndex, prev, next 
   }
 

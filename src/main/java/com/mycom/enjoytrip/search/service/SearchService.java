@@ -38,7 +38,7 @@ public interface SearchService {
 
 	SearchAttractionResultDto attractionListBySidoGugunContentTypeId(SearchParamDto searchParamDto); // 시도, 구군, 분류코드
 
-	// 관광지 목록 랜덤
+	// 상위 관광지 목록
 	SearchAttractionResultDto recommendAttractionList(int limit, int contentTypeId);
 
 	// 현재 유저의 북마크 리스트 목록

@@ -35,7 +35,7 @@ public interface SearchDao {
 	// 현재 유저의 북마크 리스트 목록
 	List<SearchAttractionBookmarkDto> getBookmarkList(int userId);
 
-	// 관광지 랜덤 추출
+	// 분류별 상위 관광지 추출
 	List<SearchAttractionDto> recommendAttractionList(@Param("limit") int limit, @Param("contentTypeId") int contentTypeId);
 
 }

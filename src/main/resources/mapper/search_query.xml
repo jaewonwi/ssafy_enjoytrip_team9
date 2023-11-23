@@ -17,7 +17,7 @@
 	<!-- 관광지 목록 -->
 	<!-- 지역별 관광지 정보 목록 (시도) -->
 	<select id="attractionListBySido" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.zipcode, ai.tel, ai.first_image, ai.first_image2, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
 		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
 		  from attraction_info ai
 		 where sido_code = #{sidoCode}
@@ -27,7 +27,7 @@
 	
 	<!-- 지역별 관광지 정보 목록 (시도, 구군) -->
 	<select id="attractionListBySidoGugun" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.zipcode, ai.tel, ai.first_image, ai.first_image2, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
 		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
 		  from attraction_info ai
 		 where sido_code = #{sidoCode} and gugun_code = #{gugunCode}
@@ -37,7 +37,7 @@
 	
 	<!-- (분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListByContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.zipcode, ai.tel, ai.first_image, ai.first_image2, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
 		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
 		  from attraction_info ai
 		 where content_type_id = #{contentTypeId}
@@ -47,7 +47,7 @@
 	
 	<!-- (시도 + 분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListBySidoContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.zipcode, ai.tel, ai.first_image, ai.first_image2, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
 		  (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
 		  from attraction_info ai
 		 where sido_code = #{sidoCode}
@@ -58,7 +58,7 @@
 	
 	<!-- ((시도+구군) + 분류코드) 별 관광지 정보 목록 -->
 	<select id="attractionListBySidoGugunContentTypeId" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.first_image, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
+		select ai.content_id, ai.title, ai.addr1, ai.addr2, ai.zipcode, ai.tel, ai.first_image, ai.first_image2, ai.sido_code, ai.gugun_code, ai.latitude, ai.longitude,
 		 (select count(1) from bookmarks where contentId = ai.content_id and userId = #{userId}) isBookmark
 		  from attraction_info ai
 		 where ai.content_type_id = #{contentTypeId}
@@ -119,14 +119,14 @@
 	
 	<!-- 관광지 상세 정보 (한 개) -->
 	<select id="attractionDetail" parameterType="int" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select i.content_id, i.title, i.addr1, i.addr2, i.first_image, i.sido_code, i.gugun_code, i.latitude, i.longitude, d.overview
+		select i.content_id, i.title, i.addr1, i.addr2, i.zipcode, i.tel, i.first_image, i.first_image2, i.sido_code, i.gugun_code, i.latitude, i.longitude, d.overview
   		  from attraction_info i, attraction_description d
 		 where i.content_id = #{contentId} and i.content_id = d.content_id
 	</select>
 	
-	<!--  관광지 랜덤 10개 추천  -->
+	<!--  관광지 상위 10개 추천  -->
 	<select id="recommendAttractionList" parameterType="map" resultType="com.mycom.enjoytrip.search.dto.SearchAttractionDto">
-		select content_id, content_type_id, title, addr1, addr2, first_image, sido_code, gugun_code, latitude, longitude
+		select content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, sido_code, gugun_code, latitude, longitude
 		  from attraction_info 
 		 where content_type_id = #{contentTypeId}
 		   and first_image != ''

@@ -1,6 +1,6 @@
 <template>
-    <button class="btn btn-primary col-1 float-end mb-3" @click="setStartPoint">현재위치</button>
-    <div id="map"></div>
+  <button class="btn btn-primary col-1 float-end mb-3" @click="setStartPoint">현재위치</button>
+  <div id="map"></div>
 </template>
 
 <script setup>
@@ -127,6 +127,8 @@ const displayMarker = (locPosition, message) => {
 }
 
 const currentLocation = () => {
+  var locPosition
+  var message = `<div style="padding:5px;">현위치</div>`
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       var lat = position.coords.latitude // 위도
@@ -139,10 +141,10 @@ const currentLocation = () => {
       console.log('현재 위치(startLatLng): ', lat, lon)
 
       // 현재 위치
-      var locPosition = new kakao.maps.LatLng(lat, lon)
+      locPosition = new kakao.maps.LatLng(lat, lon)
 
-      // infowindow content
-      var message = `<div style="padding:5px;">현위치</div>`
+      // // infowindow content
+      // message = `<div style="padding:5px;">현위치</div>`
 
       displayMarker(locPosition, message)
     })
@@ -150,12 +152,18 @@ const currentLocation = () => {
     var locPosition = new kakao.maps.LatLng(37.4812845080678, 126.952713197762)
     var message = '현재 위치를 알 수 없어 기본 위치로 이동합니다.'
 
-    currentLatLon['lat'] = 35.09675
-    currentLatLon['lon'] = 128.8543
-    console.log('기본 위치: ', currentLatLon['lat'], currentLatLon['lon'])
+    console.log('기본 위치: ', 37.4812845080678, 126.952713197762)
 
     displayMarker(locPosition, message)
   }
+
+  // 현재 위치 차단된 경우
+  startLatLng = {
+    latitude: 37.4812845080678,
+    longitude: 126.952713197762
+  }
+  locPosition = new kakao.maps.LatLng(startLatLng.latitude, startLatLng.longitude)
+  displayMarker(locPosition, message)
   return true
 }
 // 현재 위치 표시하기 끝

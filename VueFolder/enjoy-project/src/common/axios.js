@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // axios.create(): axios 객체 생성
 export default axios.create({
-  baseURL: 'http://localhost:8080',   // server url
+  baseURL: 'http://192.168.203.126:8080',   // server url
   headers: {
     'Content-Type': 'application/json'
   },

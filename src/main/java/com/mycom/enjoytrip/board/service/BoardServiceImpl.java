@@ -87,6 +87,7 @@ public class BoardServiceImpl implements BoardService {
             }
             
             BoardDto dto = dao.boardDetail(boardParamDto);
+            System.out.println("userProfile 가져오기: " + dto.getUserProfile());
             boardResultDto.setDto(dto);
             boardResultDto.setResult(SUCCESS);
             

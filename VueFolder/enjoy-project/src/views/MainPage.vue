@@ -1,5 +1,5 @@
 <template>
-  <div class="hero" style="background-color: #1A374D;">
+  <div class="hero" style="background-color: #1a374d">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-7">
@@ -13,15 +13,17 @@
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
                       <select name id="area1List" class="form-control custom-select" v-model="store.searchStore.sidoCode" @change="store.getGugunList(store.searchStore.sidoCode)">
                         <option value="0">시도</option>
-                        <option v-for="(sido) in store.searchStore.sidoList" :key="sido.sidoCode" :value="sido.sidoCode">
-                          {{ sido.sidoName }}</option>
+                        <option v-for="sido in store.searchStore.sidoList" :key="sido.sidoCode" :value="sido.sidoCode">
+                          {{ sido.sidoName }}
+                        </option>
                       </select>
                     </div>
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
                       <select name id="area2List" class="form-control custom-select" v-model="store.searchStore.gugunCode">
                         <option value="0">구군</option>
-                        <option v-for="(gugun) in store.searchStore.gugunList" :key="gugun.gugunCode" :value="gugun.gugunCode">
-                          {{ gugun.gugunName }}</option>
+                        <option v-for="gugun in store.searchStore.gugunList" :key="gugun.gugunCode" :value="gugun.gugunCode">
+                          {{ gugun.gugunName }}
+                        </option>
                       </select>
                     </div>
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-2">
@@ -49,26 +51,25 @@
   </div>
 
   <div class="untree_co-section"></div>
-  
-  <popular-list></popular-list>
 
+  <popular-list></popular-list>
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { useSearchStore } from '@/stores/searchStore'
-import http from "@/common/axios.js";
+import http from '@/common/axios.js'
 
 // component
 import PopularList from '@/components/main/PopularList.vue'
 
-const store = useSearchStore();
+const store = useSearchStore()
 
-store.getSidoList();
+store.getSidoList()
 store.searchStore.sidoCode = 0
 store.searchStore.gugunCode = 0
-const getAttractionList = async() => {
-  store.attractionList()  
+const getAttractionList = async () => {
+  store.attractionList()
 }
 
 const searchFromMain = async (sidoCode, gugunCode) => {
@@ -101,7 +102,4 @@ $(function () {
     }
   })
 })
-
-
-
 </script>

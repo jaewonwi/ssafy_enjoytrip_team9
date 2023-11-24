@@ -34,12 +34,11 @@
             <router-link to="/board" class="nav-link text-white">게시판</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/search" @click="initSearch" class="nav-link text-white">관광지 검색</router-link>
+            <router-link to="/search" @click="initSearch" class="nav-link text-white">여행지 검색</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/map" class="nav-link text-white">관광지 지도</router-link>
+            <router-link to="/map" class="nav-link text-white">여행지 지도</router-link>
           </li>
-          
 
           <!-- User 기능  -->
           <li class="nav-item pt-2" v-show="loginStore.isLogin">
@@ -48,11 +47,11 @@
           <li class="nav-item" v-show="!loginStore.isLogin">
             <router-link to="/login" class="nav-link text-white">로그인</router-link>
           </li>
-          <li class="nav-item" v-show="loginStore.isLogin  && loginStore.userClsf == '002'">
+          <li class="nav-item" v-show="loginStore.isLogin && loginStore.userClsf == '002'">
             <router-link to="/mypage" class="nav-link text-white">마이페이지</router-link>
           </li>
           <!-- admin 기능 -->
-          <li class="nav-item" v-show="loginStore.isLogin  && loginStore.userClsf == '001'">
+          <li class="nav-item" v-show="loginStore.isLogin && loginStore.userClsf == '001'">
             <router-link to="/manager" class="nav-link text-white">회원 관리</router-link>
           </li>
           <li class="nav-item" v-show="loginStore.isLogin">

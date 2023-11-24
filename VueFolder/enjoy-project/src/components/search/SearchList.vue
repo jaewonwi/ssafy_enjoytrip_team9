@@ -38,25 +38,28 @@
         <div class="row">
           <div v-for="attraction in searchStore.list" :key="attraction.contentId" class="p-1 col-6 col-md-6 col-lg-3" @click="attractionDetail(attraction.contentId)">
             <div class="media-1 position-relative">
-              <img
-                class="position-absolute m-1 rounded-0"
-                type="checkbox"
-                style="max-width: 50px; max-height: 40px; pointer-events: auto"
-                :id="attraction.contentId"
-                :src="bookMarkONUrl"
-                v-if="attraction.isBookmark"
-                @click.stop="changeImageUrlHandler(attraction.contentId)"
-              />
-              <img
-                class="position-absolute m-1 rounded-0"
-                type="checkbox"
-                style="max-width: 50px; max-height: 40px; pointer-events: auto"
-                :id="attraction.contentId"
-                :src="bookMarkOFFUrl"
-                v-if="!attraction.isBookmark"
-                @click.stop="changeImageUrlHandler(attraction.contentId)"
-              />
-              <a href="#" class="d-block mb-3" >
+              <span v-if="loginStore.isLogin">
+                <img
+                  class="position-absolute m-1 rounded-0"
+                  type="checkbox"
+                  style="max-width: 50px; max-height: 40px; pointer-events: auto"
+                  :id="attraction.contentId"
+                  :src="bookMarkONUrl"
+                  v-if="attraction.isBookmark"
+                  @click.stop="changeImageUrlHandler(attraction.contentId)"
+                />
+                <img
+                  class="position-absolute m-1 rounded-0"
+                  type="checkbox"
+                  style="max-width: 50px; max-height: 40px; pointer-events: auto"
+                  :id="attraction.contentId"
+                  :src="bookMarkOFFUrl"
+                  v-if="!attraction.isBookmark"
+                  @click.stop="changeImageUrlHandler(attraction.contentId)"
+                />
+              </span>
+
+              <a href="#" class="d-block mb-3">
                 <img v-if="attraction.firstImage" :src="attraction.firstImage" class="img-fluid" />
                 <img v-else :src="noImageUrl" class="img-fluid rounded-3 w-100 h-100" />
               </a>
@@ -72,10 +75,7 @@
       </div>
     </div>
 
-    
     <PaginationUI v-on:call-parent="movePage"></PaginationUI>
-            
-
   </div>
 </template>
 
@@ -93,7 +93,7 @@ import { useLoginStore } from '@/stores/loginStore'
 import { useRouter } from 'vue-router'
 
 // component
-import PaginationUI from "@/components/search/PaginationUI.vue";
+import PaginationUI from '@/components/search/PaginationUI.vue'
 
 import bookMarkOFFUrl from '/src/assets/bookmark/bookmarkOFF.png'
 import bookMarkONUrl from '/src/assets/bookmark/bookmarkON.png'
@@ -125,7 +125,6 @@ const attractionDetail = async (contentId) => {
   }
 }
 
-
 // 로그인 했으면 수행
 if (loginStore.isLogin == true) {
   getBookmarkListOfCurUser(loginStore.userId)
@@ -156,10 +155,9 @@ const changeImageUrlHandler = (contentId) => {
 }
 
 // pagination
-const movePage= (pageIndex) => {
-    console.log("BoardMainVue : movePage : pageIndex : " + pageIndex);
-    setSearchMovePage(pageIndex);
-    attractionList();
+const movePage = (pageIndex) => {
+  console.log('BoardMainVue : movePage : pageIndex : ' + pageIndex)
+  setSearchMovePage(pageIndex)
+  attractionList()
 }
-
 </script>
